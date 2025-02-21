@@ -1,18 +1,12 @@
 # LearningShare
 
-## après le téléchargement de ce repo il faut initialiser les sous modules avec cette commande
-
-```
-git submodule update --init --recursive
-```
-
-## pré requis : installer l'utilitaire en ligne de commande symfony
+## peut ê nécessaire : installer l'utilitaire en ligne de commande symfony
 
 les instuctions d'instalation sont ici <https://symfony.com/download>
 
 ## instuctions pour le premier lancement du serv de dev avec docker
 
-## a ne lancer qu'une seule fois
+# a ne lancer qu'une seule fois
 
 1. au cas ou lancer cette commande si apache2 occupe déja l'adresse localhost
 
@@ -26,9 +20,9 @@ sudo systemctl stop apache2
 
 3. suivre ces instructions :
 
-   If not already done, install Docker Compose (v2.10+)
+    If not already done, install Docker Compose (v2.10+)
 
-   Run to build fresh images :
+    Run to build fresh images :
 
 ```
 docker compose build --no-cache
