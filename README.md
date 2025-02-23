@@ -48,3 +48,17 @@ docker compose down --remove-orphans
    `sudo docker compose up -d`
 2. fermer le docker
    `sudo docker compose down --remove-orphans`
+
+## instructions pour initier le hot-reload pnd le dev
+
+1. installer browser-sync de manière globale avec npm
+
+```
+npm install -g browser-sync
+```
+
+2. a la racine du dossier lancer cette commande :
+
+```
+browser-sync start --proxy "https://localhost:443" --files "**/*.php, **/*.css, **/*.js, **/*.html, **/*.twig, **/*.yaml, **/*.env, var/cache/**/*, var/logs/**/*" --https --no-inject-changes
+```
