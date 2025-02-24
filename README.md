@@ -150,10 +150,19 @@ bash
 
     php bin/console doctrine:database:create
 
-## les commandes pour reset la DDB
+## commandes pour reset la DDB
+
+```
 
 php bin/console doctrine:database:drop --force &&
 
 php bin/console doctrine:database:create &&
 
 php bin/console doctrine:migrations:migrate
+```
+
+## commande pour se connecter en cli a la base de dev
+
+```
+sudo psql -U app -h localhost -d app
+```

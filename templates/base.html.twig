@@ -19,7 +19,12 @@
             {% block body %}{% endblock %}
         </main>
 
-        <twig:Sidebar />
+<!-- show the sidebar onlyn when the user is loged -->
+        {% if app.user %}
+
+            <twig:Sidebar />
+
+        {% endif %}
 
     </body>
 </html>
