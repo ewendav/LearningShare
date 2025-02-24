@@ -2,13 +2,20 @@
     width: min(25rem, 25%);
     z-index: 10;
     will-change: transform;
+    overflow: hidden;
 }
 
 #sidebar-overlay {
-    display: none;
     opacity: 0;
     z-index: 5;
     cursor: pointer;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: opacity 200ms;
+    width: 100vw;
+    height: 100vh;
+    visibility: hidden;
 }
 
 /*responsive handling */
@@ -25,18 +32,13 @@
     }
 
     #sidebar.open {
+        display: block;
         transform: translateX(0%);
     }
 
     #sidebar.open + #sidebar-overlay {
-        display: block;
         opacity: 1;
-        transition: opacity 200ms;
-        width: 100vw;
-        height: 100vh;
         background-color: #80808080;
-        position: absolute;
-        top: 0;
-        left: 0;
+        visibility: visible;
     }
 }

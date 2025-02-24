@@ -1,0 +1,97 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DoctrineMigrations;
+
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
+
+/**
+ * Auto-generated Migration: Please modify to your needs!
+ */
+final class Version20250224102532 extends AbstractMigration
+{
+    public function getDescription(): string
+    {
+        return '';
+    }
+
+
+    public function up(Schema $schema): void
+    {
+        // Insert categories first
+        $this->addSql("INSERT INTO category (name) VALUES ('Programming');");
+        $this->addSql("INSERT INTO category (name) VALUES ('Languages');");
+        $this->addSql("INSERT INTO public.category (name) VALUES ('Music');");
+        $this->addSql("INSERT INTO public.category (name) VALUES ('Fitness');");
+        $this->addSql("INSERT INTO public.category (name) VALUES ('Cooking');");
+        $this->addSql("INSERT INTO public.category (name) VALUES ('Business');");
+        $this->addSql("INSERT INTO public.category (name) VALUES ('Literature');");
+        //
+        // Insert blacklist
+        $this->addSql("INSERT INTO public.blacklist (bad_words) VALUES ('[\"profanity\", \"offensive\", \"inappropriate\"]');");
+
+        // Insert skills after categories
+        $this->addSql("INSERT INTO public.skill (category_id, name, search_counter) VALUES (2, 'Photography', 30);");
+        $this->addSql("INSERT INTO public.skill (category_id, name, search_counter) VALUES (2, 'Graphic Design', 28);");
+        $this->addSql("INSERT INTO public.skill (category_id, name, search_counter) VALUES (5, 'Physics', 22);");
+        $this->addSql("INSERT INTO public.skill (category_id, name, search_counter) VALUES (5, 'Chemistry', 18);");
+        $this->addSql("INSERT INTO public.skill (category_id, name, search_counter) VALUES (6, 'Basketball', 35);");
+        $this->addSql("INSERT INTO public.skill (category_id, name, search_counter) VALUES (6, 'Tennis', 25);");
+        $this->addSql("INSERT INTO public.skill (category_id, name, search_counter) VALUES (7, 'Web Development', 45);");
+        $this->addSql("INSERT INTO public.skill (category_id, name, search_counter) VALUES (7, 'Mobile App Development', 40);");
+        $this->addSql("INSERT INTO public.skill (category_id, name, search_counter) VALUES (1, 'Python', 50);");
+        $this->addSql("INSERT INTO public.skill (category_id, name, search_counter) VALUES (2, 'French', 30);");
+
+        // Insert other data
+        $this->addSql("INSERT INTO public.location (adress, zip_code, city) VALUES ('123 Main St', '12345', 'New York');");
+        $this->addSql("INSERT INTO public.rate (name, amount) VALUES ('Hourly', 50);");
+        $this->addSql("INSERT INTO public.rate (name, amount) VALUES ('Per Session', 100);");
+        $this->addSql("INSERT INTO public.role (name) VALUES ('User');");
+        $this->addSql("INSERT INTO public.role (name) VALUES ('Admin');");
+
+        // Insert users
+
+
+
+        $this->addSql("INSERT INTO public.user (email, roles, password, firstname, lastname, biography, avatar_path, phone, balance) VALUES ('john@example.com', '[\"ROLE_USER\"]', 'hashed_password', 'John', 'Doe', 'Passionate learner', '/avatars/john.jpg', '1234567890', 100);");
+        $this->addSql("INSERT INTO public.user (email, roles, password, firstname, lastname, biography, avatar_path, phone, balance) VALUES ('jane@example.com', '[\"ROLE_USER\"]', 'hashed_password', 'Jane', 'Smith', 'Experienced teacher', '/avatars/jane.jpg', '0987654321', 200);");
+        $this->addSql("INSERT INTO public.user (email, roles, password, firstname, lastname, biography, avatar_path, phone, balance) VALUES ('emma@example.com', '[\"ROLE_USER\"]', 'hashed_password', 'Emma', 'Foster', 'Fitness enthusiast', '/avatars/emma.jpg', '1234567890', 180);");
+        $this->addSql("INSERT INTO public.user (email, roles, password, firstname, lastname, biography, avatar_path, phone, balance) VALUES ('frank@example.com', '[\"ROLE_USER\"]', 'hashed_password', 'Frank', 'Garcia', 'Master chef', '/avatars/frank.jpg', '2345678901', 220);");
+        $this->addSql("INSERT INTO public.user (email, roles, password, firstname, lastname, biography, avatar_path, phone, balance) VALUES ('grace@example.com', '[\"ROLE_USER\"]', 'hashed_password', 'Grace', 'Harris', 'Business consultant', '/avatars/grace.jpg', '3456789012', 350);");
+        $this->addSql("INSERT INTO public.user (email, roles, password, firstname, lastname, biography, avatar_path, phone, balance) VALUES ('henry@example.com', '[\"ROLE_USER\"]', 'hashed_password', 'Henry', 'Irwin', 'Literature professor', '/avatars/henry.jpg', '4567890123', 280);");
+
+        // Insert lessons
+        $this->addSql("INSERT INTO public.lesson (location_id, host_id, max_attendees) VALUES (1, 1, 10);");
+        $this->addSql("INSERT INTO public.lesson (location_id, host_id, max_attendees) VALUES (1, 3, 12);");
+        $this->addSql("INSERT INTO public.lesson (location_id, host_id, max_attendees) VALUES (1, 4, 18);");
+        $this->addSql("INSERT INTO public.lesson (location_id, host_id, max_attendees) VALUES (1, 5, 22);");
+        $this->addSql("INSERT INTO public.lesson (location_id, host_id, max_attendees) VALUES (1, 6, 28);");
+        $this->addSql("INSERT INTO public.lesson (location_id, host_id, max_attendees) VALUES (1, 3, 16);");
+        $this->addSql("INSERT INTO public.lesson (location_id, host_id, max_attendees) VALUES (1, 4, 24);");
+
+        // Insert sessions
+        $this->addSql("INSERT INTO public.session (cost_id, skill_taught_id, start_time, end_time, date, description) VALUES (1, 1, '14:00:00', '16:00:00', '2023-05-15', 'Introduction to Python programming');");
+
+        // Insert exchanges
+        $this->addSql("INSERT INTO public.exchange (skill_requested_id, requester_id, attendee_id) VALUES (1, 2, 1);");
+        $this->addSql("INSERT INTO public.exchange (skill_requested_id, requester_id, attendee_id) VALUES (2, 3, 4);");
+        $this->addSql("INSERT INTO public.exchange (skill_requested_id, requester_id, attendee_id) VALUES (1, 4, 5);");
+        $this->addSql("INSERT INTO public.exchange (skill_requested_id, requester_id, attendee_id) VALUES (3, 5, 6);");
+        $this->addSql("INSERT INTO public.exchange (skill_requested_id, requester_id, attendee_id) VALUES (3, 6, 3);");
+        $this->addSql("INSERT INTO public.exchange (skill_requested_id, requester_id, attendee_id) VALUES (3, 3, 5);");
+        $this->addSql("INSERT INTO public.exchange (skill_requested_id, requester_id, attendee_id) VALUES (4, 4, 6);");
+
+        // Insert reports
+        $this->addSql("INSERT INTO public.report (report_giver_id, report_receiver_id, content) VALUES (1, 2, 'Inappropriate behavior during the lesson');");
+        // Insert reviews
+        $this->addSql("INSERT INTO public.review (about_id, review_giver_id, content, rating) VALUES (1, 2, 'Great session, learned a lot!', 5);");
+        // Insert user lessons
+        $this->addSql("INSERT INTO public.user_lesson (user_id, lesson_id) VALUES (2, 1);");
+    }
+
+    public function down(Schema $schema): void
+    {
+    }
+}

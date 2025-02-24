@@ -21,6 +21,7 @@
 html {
     height: 100%;
 }
+
 .flex-center {
     display: flex;
     justify-content: start;
@@ -30,7 +31,7 @@ html {
 #bg {
     display: flex;
     gap: 2rem;
-
+    overflow: hidden;
     background: linear-gradient(to left, var(--main-green) 35%, white 0%);
     padding: 2rem;
     box-sizing: border-box;
