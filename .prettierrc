@@ -1,0 +1,3 @@
+{
+  "plugins": ["@zackad/prettier-plugin-twig"]
+}

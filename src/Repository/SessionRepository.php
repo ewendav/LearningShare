@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Session;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -40,4 +41,168 @@ class SessionRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+/**
+ * Returns all sessions having an Exchange attached.
+ *
+ * @return Session[]
+ */
+    public function findAllExchanges(): array
+    {
+        return $this->createQueryBuilder('s')
+        ->join('s.exchange', 'e')
+        ->getQuery()
+        ->getResult();
+    }
+
+/**
+ * Returns all sessions having a Lesson attached.
+ *
+ * @return Session[]
+ */
+    public function findAllLessons(): array
+    {
+        return $this->createQueryBuilder('s')
+        ->join('s.lesson', 'l')
+        ->getQuery()
+        ->getResult();
+    }
+
+/**
+ * OBSOLETE
+ * Returns all attendable Exchange sessions for the given user.
+ *
+ * @param User $user
+ * @return Session[]
+ */
+    public function findAttendableExchanges(User $user): array
+    {
+        return $this->createQueryBuilder('s')
+        ->join('s.exchange', 'e')
+        ->andWhere('e.attendee IS NULL')
+        ->andWhere('e.requester != :user')
+        ->setParameter('user', $user)
+        ->getQuery()
+        ->getResult();
+    }
+
+/**
+ * Returns all attendable Lesson sessions for the given user.
+ * OBSOLETE
+ *
+ * @param User $user
+ * @return Session[]
+ */
+    public function findAttendableLessons(User $user): array
+    {
+        $qb = $this->createQueryBuilder('s')
+        ->join('s.lesson', 'l')
+        ->leftJoin('l.attendees', 'a')
+        ->andWhere('l.host != :user')
+        ->andWhere(':user NOT MEMBER OF l.attendees')
+        ->setParameter('user', $user)
+        ->groupBy('l.id')
+        ->having('COUNT(a) < l.maxAttendees');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function searchLessons(?User $user, string $q, string $category, ?\DateTimeInterface $dateStart, ?\DateTimeInterface $dateEnd, string $timeStart, string $timeEnd): array
+    {
+        $qb = $this->createQueryBuilder('s')
+            ->join('s.lesson', 'l')
+            ->join('s.skillTaught', 'st');
+
+        if ($user) {
+            $qb->andWhere('l.host != :user')
+               ->andWhere(':user NOT MEMBER OF l.attendees')
+               ->setParameter('user', $user)
+               ->groupBy('l.id')
+               ->having('COUNT(l.attendees) < l.maxAttendees');
+        }
+
+        if ('' !== $q) {
+            $qb->andWhere('st.name LIKE :q')
+               ->setParameter('q', '%' . $q . '%');
+        }
+
+        if ('' !== $category) {
+            // Adjust this comparison if category is an entity
+            $qb->andWhere('st.category = :category')
+               ->setParameter('category', $category);
+        }
+
+        if ($dateStart) {
+            $qb->andWhere('s.date >= :dateStart')
+               ->setParameter('dateStart', $dateStart->format('Y-m-d'));
+        }
+
+        if ($dateEnd) {
+            $qb->andWhere('s.date <= :dateEnd')
+               ->setParameter('dateEnd', $dateEnd->format('Y-m-d'));
+        }
+
+        if ('' !== $timeStart) {
+            $qb->andWhere('s.startTime >= :timeStart')
+               ->setParameter('timeStart', $timeStart);
+        }
+
+        if ('' !== $timeEnd) {
+            $qb->andWhere('s.endTime <= :timeEnd')
+               ->setParameter('timeEnd', $timeEnd);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function searchExchanges(?User $user, string $q, string $category, string $skillFilter, ?\DateTimeInterface $dateStart, ?\DateTimeInterface $dateEnd, string $timeStart, string $timeEnd): array
+    {
+        $qb = $this->createQueryBuilder('s')
+            ->join('s.exchange', 'e')
+            ->join('s.skillTaught', 'st')
+            ->join('e.skillRequested', 'sr');
+
+        if ($user) {
+            $qb->andWhere('e.attendee IS NULL')
+               ->andWhere('e.requester != :user')
+               ->setParameter('user', $user);
+        }
+
+        if ('' !== $q) {
+            $qb->andWhere('st.name LIKE :q')
+               ->setParameter('q', '%' . $q . '%');
+        }
+
+        if ('' !== $category) {
+            $qb->andWhere('st.category = :category')
+               ->setParameter('category', $category);
+        }
+
+        if ('' !== $skillFilter) {
+            $qb->andWhere('sr.name LIKE :skillFilter')
+               ->setParameter('skillFilter', '%' . $skillFilter . '%');
+        }
+
+        if ($dateStart) {
+            $qb->andWhere('s.date >= :dateStart')
+               ->setParameter('dateStart', $dateStart->format('Y-m-d'));
+        }
+
+        if ($dateEnd) {
+            $qb->andWhere('s.date <= :dateEnd')
+               ->setParameter('dateEnd', $dateEnd->format('Y-m-d'));
+        }
+
+        if ('' !== $timeStart) {
+            $qb->andWhere('s.startTime >= :timeStart')
+               ->setParameter('timeStart', $timeStart);
+        }
+
+        if ('' !== $timeEnd) {
+            $qb->andWhere('s.endTime <= :timeEnd')
+               ->setParameter('timeEnd', $timeEnd);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

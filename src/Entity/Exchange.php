@@ -24,6 +24,9 @@ class Exchange
     #[ORM\ManyToOne(inversedBy: 'exchangesAttended')]
     private ?User $attendee = null;
 
+    #[ORM\OneToOne(mappedBy: 'exchange', cascade: ['persist', 'remove'])]
+    private ?Session $session = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +64,28 @@ class Exchange
     public function setAttendee(?User $attendee): static
     {
         $this->attendee = $attendee;
+
+        return $this;
+    }
+
+    public function getSession(): ?Session
+    {
+        return $this->session;
+    }
+
+    public function setSession(?Session $session): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($session === null && $this->session !== null) {
+            $this->session->setExchange(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($session !== null && $session->getExchange() !== $this) {
+            $session->setExchange($this);
+        }
+
+        $this->session = $session;
 
         return $this;
     }

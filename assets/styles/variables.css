@@ -1,0 +1,62 @@
+:root {
+  /* Light mode colors */
+  --main-white: #ffffff;
+  --main-black: #374f48;
+  --main-green: #4db49d;
+  --main-grey: #eaede5;
+  --main-dark-grey: #b2b2b2;
+
+  --tooltip-bg: var(--main-black);
+  --tooltip-text: #ffffff;
+  --overlay-bg: #80808080;
+  --text-muted: #666666;
+  --toggle-bg: #7676801f;
+  --slider-bg: #ffffff;
+  --slider-shadow: #0000001f;
+  --input-bg: #ffffff;
+  --input-shadow: #00000040;
+  --form-button-bg: var(--main-green);
+  --form-button-text: #ffffff;
+  --form-button-shadow: #00000040;
+  --session-card-bg: #ffffff;
+  --session-card-shadow: #00000040;
+  --input-label-color: #000000;
+  --error-bg: #f8d7da;
+  --error-text: #721c24;
+  --error-border: #f5c6cb;
+
+  /* Responsive text */
+  --txt-lg: clamp(1.4em, 4vw, 2em);
+
+  /* Responsive breakpoints ne pas utiliser dans les media
+   * car ne fonctionne pas, ici juste pour info */
+  --breakpoint-md: 991px;
+}
+
+body.dark-mode {
+  /* Dark mode overrides */
+  --main-white: #1e1e1e;
+  --main-black: #f0f0f0;
+  --main-green: #3a8f7a;
+  --main-grey: #2c2c2c;
+  --main-dark-grey: #555555;
+
+  --tooltip-bg: var(--main-black);
+  --tooltip-text: black;
+  --overlay-bg: #00000080;
+  --text-muted: #aaaaaa;
+  --toggle-bg: #3a3a3a;
+  --slider-bg: #444444;
+  --slider-shadow: #00000080;
+  --input-bg: #2c2c2c;
+  --input-shadow: #00000080;
+  --form-button-bg: var(--main-green);
+  --form-button-text: #ffffff;
+  --form-button-shadow: #00000080;
+  --session-card-bg: #2b3300;
+  --session-card-shadow: #00000080;
+  --input-label-color: #f0f0f0;
+  --error-bg: #5f1a1a;
+  --error-text: #f8d7da;
+  --error-border: #f5c6cb;
+}

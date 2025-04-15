@@ -59,18 +59,18 @@ class DashboardController extends AbstractDashboardController
         return[
 
         // permet de grouper les elements qui seront affiché sur le dashboard
-        MenuItem::section('Entities'),
-        MenuItem::linkToCrud('Blacklist', 'fa fa-ban', Blacklist::class),
-        MenuItem::linkToCrud('Category', 'fa fa-list', Category::class),
-        MenuItem::linkToCrud('Exchange', 'fa fa-exchange', Exchange::class),
-        MenuItem::linkToCrud('Lesson', 'fa fa-book', Lesson::class),
-        MenuItem::linkToCrud('Location', 'fa fa-map-marker', Location::class),
-        MenuItem::linkToCrud('Rate', 'fa fa-star', Rate::class),
-        MenuItem::linkToCrud('Report', 'fa fa-flag', Report::class),
-        MenuItem::linkToCrud('Review', 'fa fa-comment', Review::class),
-        MenuItem::linkToCrud('Role', 'fa fa-user-tag', Role::class),
-        MenuItem::linkToCrud('Session', 'fa fa-clock', Session::class),
-        MenuItem::linkToCrud('Skill', 'fa fa-cogs', Skill::class),
+        // MenuItem::section('Entities'),
+        // MenuItem::linkToCrud('Blacklist', 'fa fa-ban', Blacklist::class),
+        // MenuItem::linkToCrud('Category', 'fa fa-list', Category::class),
+        // MenuItem::linkToCrud('Exchange', 'fa fa-exchange', Exchange::class),
+        // MenuItem::linkToCrud('Lesson', 'fa fa-book', Lesson::class),
+        // MenuItem::linkToCrud('Location', 'fa fa-map-marker', Location::class),
+        // MenuItem::linkToCrud('Rate', 'fa fa-star', Rate::class),
+        // MenuItem::linkToCrud('Report', 'fa fa-flag', Report::class),
+        // MenuItem::linkToCrud('Review', 'fa fa-comment', Review::class),
+        // MenuItem::linkToCrud('Role', 'fa fa-user-tag', Role::class),
+        // MenuItem::linkToCrud('Session', 'fa fa-clock', Session::class),
+        // MenuItem::linkToCrud('Skill', 'fa fa-cogs', Skill::class),
         ];
     }
 }

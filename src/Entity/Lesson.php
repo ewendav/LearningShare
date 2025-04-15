@@ -31,6 +31,9 @@ class Lesson
     #[ORM\JoinColumn(nullable: false)]
     private ?User $host = null;
 
+    #[ORM\OneToOne(mappedBy: 'lesson', cascade: ['persist', 'remove'])]
+    private ?Session $session = null;
+
     public function __construct()
     {
         $this->attendees = new ArrayCollection();
@@ -100,6 +103,28 @@ class Lesson
     public function setHost(?User $host): static
     {
         $this->host = $host;
+
+        return $this;
+    }
+
+    public function getSession(): ?Session
+    {
+        return $this->session;
+    }
+
+    public function setSession(?Session $session): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($session === null && $this->session !== null) {
+            $this->session->setLesson(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($session !== null && $session->getLesson() !== $this) {
+            $session->setLesson($this);
+        }
+
+        $this->session = $session;
 
         return $this;
     }

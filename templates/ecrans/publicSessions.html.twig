@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  {{ title ?? 'LearningShare' }}
+{% endblock %}
+
+{% block body %}
+  <twig:DisplaySessions />
+{% endblock %}

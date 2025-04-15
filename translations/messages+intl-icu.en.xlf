@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="fr" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="mfqitQn" resname="Changer le thème">
+        <source>Changer le thème</source>
+        <target>Change theme</target>
+      </trans-unit>
+      <trans-unit id="giW1leI" resname="Vous enseignez">
+        <source>Vous enseignez</source>
+        <target>You teach</target>
+      </trans-unit>
+      <trans-unit id="WaOlkQt" resname="Vous apprenez">
+        <source>Vous apprenez</source>
+        <target>You learn</target>
+      </trans-unit>
+      <trans-unit id="AsE5ZC8" resname="Cours">
+        <source>Cours</source>
+        <target>Course</target>
+      </trans-unit>
+      <trans-unit id="aKU0H8a" resname="Catégorie">
+        <source>Catégorie</source>
+        <target>Category</target>
+      </trans-unit>
+      <trans-unit id="fxVVw0S" resname="Compétence">
+        <source>Compétence</source>
+        <target>Skill</target>
+      </trans-unit>
+      <trans-unit id="Sd0BHdh" resname="Lieu">
+        <source>Lieu</source>
+        <target>Location</target>
+      </trans-unit>
+      <trans-unit id="mcQKtAW" resname="Date">
+        <source>Date</source>
+        <target>Date</target>
+      </trans-unit>
+      <trans-unit id="fLvzObM" resname="Rejoindre le cours">
+        <source>Rejoindre le cours</source>
+        <target>Join the course</target>
+      </trans-unit>
+      <trans-unit id="72F5FfO" resname="Vous partagez">
+        <source>Vous partagez</source>
+        <target>You share</target>
+      </trans-unit>
+      <trans-unit id="o0fIV10" resname="Échange">
+        <source>Échange</source>
+        <target>Exchange</target>
+      </trans-unit>
+      <trans-unit id="fOvrztg" resname="Vous apprends">
+        <source>Vous apprends</source>
+        <target>You learn</target>
+      </trans-unit>
+      <trans-unit id="r1zzE2Z" resname="Veux apprendre">
+        <source>Veux apprendre</source>
+        <target>Want to learn</target>
+      </trans-unit>
+      <trans-unit id="JpEdon0" resname="Rejoindre le partage">
+        <source>Rejoindre le partage</source>
+        <target>Join the sharing</target>
+      </trans-unit>
+      <trans-unit id="4CESGlx" resname="Rechercher une compétence">
+        <source>Rechercher une compétence</source>
+        <target>Search a skill</target>
+      </trans-unit>
+      <trans-unit id="YdaVBBA" resname="Connexion">
+        <source>Connexion</source>
+        <target>Login</target>
+      </trans-unit>
+      <trans-unit id="PCX0_17" resname="S'inscrire">
+        <source>S'inscrire</source>
+        <target>Register</target>
+      </trans-unit>
+      <trans-unit id="8Ih.RQw" resname="-- Any --">
+        <source>-- Any --</source>
+        <target>-- Any --</target>
+      </trans-unit>
+      <trans-unit id="8aN_XyS" resname="Compétence demandée">
+        <source>Compétence demandée</source>
+        <target>Requested skill</target>
+      </trans-unit>
+      <trans-unit id="8mgEyWK" resname="Rechercher la compétence demandée">
+        <source>Rechercher la compétence demandée</source>
+        <target>Search the requested skill</target>
+      </trans-unit>
+      <trans-unit id="mARyQy_" resname="Date de début">
+        <source>Date de début</source>
+        <target>Start date</target>
+      </trans-unit>
+      <trans-unit id="sTSqvuA" resname="Date de fin">
+        <source>Date de fin</source>
+        <target>End date</target>
+      </trans-unit>
+      <trans-unit id="v8O7Mx0" resname="Heure de début">
+        <source>Heure de début</source>
+        <target>Start time</target>
+      </trans-unit>
+      <trans-unit id="WtYH0LV" resname="Heure de fin">
+        <source>Heure de fin</source>
+        <target>End time</target>
+      </trans-unit>
+      <trans-unit id="qJ362qe" resname="Aucun résultats disponibles">
+        <source>Aucun résultats disponibles</source>
+        <target>No results available</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

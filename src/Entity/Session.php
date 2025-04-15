@@ -42,6 +42,12 @@ class Session
     #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'about')]
     private Collection $reviews;
 
+    #[ORM\OneToOne(inversedBy: 'session', cascade: ['persist', 'remove'])]
+    private ?Exchange $exchange = null;
+
+    #[ORM\OneToOne(inversedBy: 'session', cascade: ['persist', 'remove'])]
+    private ?Lesson $lesson = null;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
@@ -150,6 +156,30 @@ class Session
                 $review->setAbout(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getExchange(): ?Exchange
+    {
+        return $this->exchange;
+    }
+
+    public function setExchange(?Exchange $exchange): static
+    {
+        $this->exchange = $exchange;
+
+        return $this;
+    }
+
+    public function getLesson(): ?Lesson
+    {
+        return $this->lesson;
+    }
+
+    public function setLesson(?Lesson $lesson): static
+    {
+        $this->lesson = $lesson;
 
         return $this;
     }

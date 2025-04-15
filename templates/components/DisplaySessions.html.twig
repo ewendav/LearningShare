@@ -1,0 +1,114 @@
+<section {{ attributes }} class="create-course-container">
+
+  <div class="horizontal-display">
+
+    <label class="toggle-switch-container">
+      <input data-model="lessonChecked"
+             data-action="live#action"
+             data-live-action-param="toggleLessonChecked"
+             class="toggle-switch-input" type="checkbox">
+      <span class="toggle-switch-slider">
+        <p>{{ 'Échange'|trans }}</p>
+        <p>{{ 'Cours'|trans }}</p>
+        <span class="slider-container">
+          <span class="slider"></span>
+        </span>
+      </span>
+    </label>
+
+    {# Search form: on change, the LiveAction "search" is called #}
+    <form method="get" data-action="live#action" data-live-action="search">
+      <input placeholder="{{ 'Rechercher une compétence'|trans }}" class="input-goofy" 
+             style="width:20rem;"
+             type="text" id="recherche" name="q" data-model="debounce(250)|q">
+    </form>
+
+    <div style="display:flex;gap:1rem;">
+      {% if not app.user %}
+        <a href="/login">
+          <button class="form-button" style="background-color:white; color:black;">{{ 'Connexion'|trans }}</button>
+        </a>
+        <a href="/register">
+          <button class="form-button" style="background-color:black;" type="submit">{{ "S'inscrire"|trans }}</button>
+        </a>
+      {% endif %}
+    </div>
+
+  </div>
+
+  {# Filter Section: Hidden by default and appears when the search input receives focus #}
+  <div id="search-filters" class="search-filters" style="margin-top:1rem;">
+      <label for="category">{{ 'Catégorie'|trans }}:</label>
+      <select id="category" data-model="category" name="category">
+          <option value="">{{ '-- Any --'|trans }}</option>
+          <option value="Category1">Category1</option>
+          <option value="Category2">Category2</option>
+          {# Add other category options as necessary #}
+      </select>
+
+      {# Only show the "skill asked" filter when displaying exchanges #}
+      {% if not lessonChecked %}
+        <label for="skillFilter">{{ 'Compétence demandée'|trans }}:</label>
+        <input type="text" id="skillFilter" data-model="skillFilter" name="skillFilter" placeholder="{{ 'Rechercher la compétence demandée'|trans }}">
+      {% endif %}
+
+      <label for="dateStart">{{ 'Date de début'|trans }}:</label>
+      <input type="date" id="dateStart" data-model="dateStart" name="dateStart">
+      <label for="dateEnd">{{ 'Date de fin'|trans }}:</label>
+      <input type="date" id="dateEnd" data-model="dateEnd" name="dateEnd">
+      <label for="timeStart">{{ 'Heure de début'|trans }}:</label>
+      <input type="time" id="timeStart" data-model="timeStart" name="timeStart">
+      <label for="timeEnd">{{ 'Heure de fin'|trans }}:</label>
+      <input type="time" id="timeEnd" data-model="timeEnd" name="timeEnd">
+  </div>
+
+
+  {% if lessonChecked %}
+    {# Display lessons #}
+    <div id="section-cours-display">
+      {% if lessons is empty %}
+        <p>{{ "Aucun résultats disponibles"|trans }}</p>
+      {% else %}
+        {% for session in lessons %}
+          {% include 'components/lessonCard.html.twig' with {
+            'avatar_path': session.lesson.host.avatarPath|default(''),
+            'userName': session.lesson.host.firstname ~ ' ' ~ session.lesson.host.lastname,
+            'userId': session.lesson.host.id,
+            'categoryLearned': session.skillTaught.category.name|default(''),
+            'skillLearned': session.skillTaught.name|default(''),
+            'adresse': session.lesson.location is not null ? (session.lesson.location.adress ~ ', ' ~ session.lesson.location.zipCode ~ ' ' ~ session.lesson.location.city) : '',
+            'date': session.date ? (session.date|date('Y-m-d')) ~ ', ' ~ session.startTime|date('H:i') : '',
+            'session_id': session.id,
+            'startTime': session.startTime,
+            'endTime': session.endTime,
+            'dateDebut': session.date|date('Y-m-d')
+          } %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  {% else %}
+    {# Display exchanges #}
+    <div id="section-echange-display">
+      {% if exchanges is empty %}
+        <p>{{ "Aucun résultats disponibles"|trans }}</p>
+      {% else %}
+        {% for session in exchanges %}
+          {% include 'components/exchangeCard.html.twig' with {
+            'avatar_path': session.exchange.requester.avatarPath|default(''),
+            'userName': session.exchange.requester.firstname ~ ' ' ~ session.exchange.requester.lastname,
+            'userId': session.exchange.requester.id,
+            'categoryLearned': session.skillTaught.category.name|default(''),
+            'skillLearned': session.skillTaught.name|default(''),
+            'categoryWanted': session.exchange.skillRequested.category.name|default(''),
+            'skillWanted': session.exchange.skillRequested.name|default(''),
+            'session_id': session.id,
+            'startTime': session.startTime,
+            'endTime': session.endTime,
+            'dateDebut': session.date|date('Y-m-d')
+          } %}
+        {% endfor %}
+      {% endif %}
+    </div>
+  {% endif %}
+
+</section>
