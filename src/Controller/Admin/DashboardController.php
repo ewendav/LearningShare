@@ -13,6 +13,7 @@ use App\Entity\Review;
 use App\Entity\Role;
 use App\Entity\Session;
 use App\Entity\Skill;
+use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -51,26 +52,27 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('LearningShare');
+            ->setTitle('LearningShare Administration');
     }
 
     public function configureMenuItems(): iterable
     {
         return[
 
-        // permet de grouper les elements qui seront affiché sur le dashboard
-        // MenuItem::section('Entities'),
-        // MenuItem::linkToCrud('Blacklist', 'fa fa-ban', Blacklist::class),
-        // MenuItem::linkToCrud('Category', 'fa fa-list', Category::class),
-        // MenuItem::linkToCrud('Exchange', 'fa fa-exchange', Exchange::class),
-        // MenuItem::linkToCrud('Lesson', 'fa fa-book', Lesson::class),
-        // MenuItem::linkToCrud('Location', 'fa fa-map-marker', Location::class),
-        // MenuItem::linkToCrud('Rate', 'fa fa-star', Rate::class),
-        // MenuItem::linkToCrud('Report', 'fa fa-flag', Report::class),
-        // MenuItem::linkToCrud('Review', 'fa fa-comment', Review::class),
-        // MenuItem::linkToCrud('Role', 'fa fa-user-tag', Role::class),
-        // MenuItem::linkToCrud('Session', 'fa fa-clock', Session::class),
-        // MenuItem::linkToCrud('Skill', 'fa fa-cogs', Skill::class),
+            // permet de grouper les elements qui seront affiché sur le dashboard
+        MenuItem::section('Entities'),
+        MenuItem::linkToCrud('Users','fa fa-list',User::class),
+        MenuItem::linkToCrud('Blacklist', 'fa fa-ban', Blacklist::class),
+        MenuItem::linkToCrud('Category', 'fa fa-list', Category::class),
+        MenuItem::linkToCrud('Exchange', 'fa fa-exchange', Exchange::class),
+        MenuItem::linkToCrud('Lesson', 'fa fa-book', Lesson::class),
+        MenuItem::linkToCrud('Location', 'fa fa-map-marker', Location::class),
+        MenuItem::linkToCrud('Rate', 'fa fa-star', Rate::class),
+        MenuItem::linkToCrud('Report', 'fa fa-flag', Report::class),
+        MenuItem::linkToCrud('Review', 'fa fa-comment', Review::class),
+        MenuItem::linkToCrud('Role', 'fa fa-user-tag', Role::class),
+        MenuItem::linkToCrud('Session', 'fa fa-clock', Session::class),
+        MenuItem::linkToCrud('Skill', 'fa fa-cogs', Skill::class),
         ];
     }
 }
