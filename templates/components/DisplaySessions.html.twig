@@ -31,7 +31,12 @@
         <a href="/register">
           <button class="form-button" style="background-color:black;" type="submit">{{ "S'inscrire"|trans }}</button>
         </a>
+      {% else %}
+          <a href="/logout">
+              <button class="form-button" style="background-color:white; color:black;">{{ 'Se déconnecter'|trans }}</button>
+          </a>
       {% endif %}
+
     </div>
 
   </div>
