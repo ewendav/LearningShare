@@ -61,7 +61,7 @@ class DashboardController extends AbstractDashboardController
 
             // permet de grouper les elements qui seront affiché sur le dashboard
         MenuItem::section('Entities'),
-        MenuItem::linkToCrud('Users','fa fa-list',User::class),
+        MenuItem::linkToCrud('Users','fa fa-user',User::class),
         MenuItem::linkToCrud('Blacklist', 'fa fa-ban', Blacklist::class),
         MenuItem::linkToCrud('Category', 'fa fa-list', Category::class),
         MenuItem::linkToCrud('Exchange', 'fa fa-exchange', Exchange::class),
