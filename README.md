@@ -85,6 +85,7 @@ Se connecter en tant qu'administrateur pour accéder au tableau de bord d'admini
 ```
 mail : admin@example.com
 mot de passe : admin123
+```
 
 pour faire fonctioner les stimulus live function on peut tweak les déclencheur comme ca :
 
