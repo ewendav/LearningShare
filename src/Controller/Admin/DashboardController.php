@@ -15,9 +15,11 @@ use App\Entity\Session;
 use App\Entity\Skill;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
+use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
+use Symfony\Component\Security\Core\User\UserInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use Symfony\Component\HttpFoundation\Response;
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
@@ -31,7 +33,7 @@ class DashboardController extends AbstractDashboardController
         // Option 1. You can make your dashboard redirect to some common page of your backend
         //
         // 1.1) If you have enabled the "pretty URLs" feature:
-        return $this->redirectToRoute('admin_category_index');
+        return $this->redirectToRoute('admin_user_index');
         //
         // 1.2) Same example but using the "ugly URLs" that were used in previous EasyAdmin versions:
         // $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
@@ -52,7 +54,24 @@ class DashboardController extends AbstractDashboardController
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('LearningShare Administration');
+
+            //->setTitle('LearningShare Administration')
+        ->setTitle('<img src="/assets/img/logo.png" class="img-fluid d-block mx-auto" style="max-width:100px; width:100%;"><h3 style="text-align: center">LearningShare Administration</h3>')
+
+        ->renderContentMaximized();
+
+    }
+
+    public function configureUserMenu(UserInterface $user): UserMenu
+    {
+        return parent::configureUserMenu($user)
+            ->setName($user->getFirstName() . ' ' . $user->getLastName())
+            ->setAvatarUrl('/uploads/avatars/' . $user->getAvatarPath())
+            ->displayUserName(true)
+
+            ->addMenuItems([
+                MenuItem::linkToRoute('Mon profil', 'fa fa-id-card', '...', ['...' => '...']),
+            ]);
     }
 
     public function configureMenuItems(): iterable
