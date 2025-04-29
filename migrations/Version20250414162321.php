@@ -33,11 +33,18 @@ final class Version20250414162321 extends AbstractMigration
             (1, '123 Main St', '44000', 'Nantes'),
             (2, '456 Side St', '75000', 'Paris')");
 
+        // Pour l'admin, on utilise un mot de passe déjà haché qui correspond à 'admin123'
+        // Ce hash a été généré avec l'algorithme auto pour Symfony 6.4/7.0
+        $hashedPassword = '$2y$13$IbmRelIH/WiNgzmgIVgkyeZ2C.D0mT2sjZq.fWnrewmiPjrtcph9m';
+
         // Users
         $this->addSql("INSERT INTO `user` (id, email, roles, password, firstname, lastname, biography, avatar_path, phone, balance) VALUES
-            (1, 'alice@example.com', '[]', 'pass1', 'Alice', 'Dupont', 'I love teaching music.', NULL, '0102030405', 100),
-            (2, 'bob@example.com', '[]', 'pass2', 'Bob', 'Martin', 'Cooking is my passion.', NULL, '0607080910', 150),
-            (3, 'charlie@example.com', '[]', 'pass3', 'Charlie', 'Durand', NULL, NULL, '0708091011', 50)");
+            (1, 'alice@example.com', '[]', 'pass1', 'Alice', 'Dupont', 'I love teaching music.', 'default.png', '0102030405', 100),
+            (2, 'bob@example.com', '[]', 'pass2', 'Bob', 'Martin', 'Cooking is my passion.', 'default.png', '0607080910', 150),
+            (3, 'charlie@example.com', '[]', 'pass3', 'Charlie', 'Durand', NULL, 'default.png', '0708091011', 50),
+            (4, 'admin@example.com', '[\"ROLE_ADMIN\"]', '" . $hashedPassword . "', 'Admin', 'Admin', 'Administrateur du site', 'default.png', '0666666666', 1000)");
+
+
 
         // Skills
         $this->addSql("INSERT INTO skill (id, category_id, name, search_counter) VALUES

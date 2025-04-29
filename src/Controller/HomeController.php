@@ -19,6 +19,8 @@ class HomeController extends AbstractController
             $session->set('isDarkMode', false);
         }
 
+
+
         return $this->render('ecrans/publicSessions.html.twig', [
           'title' => 'test',
         ]);

@@ -61,16 +61,13 @@ final class DisplaySessions
 
     public function mount(): void
     {
-        // Fetch the current user.
         $user = $this->security->getUser();
-        // Fetch sessions using the default filters (empty filters returns all attendable or all sessions)
         $this->fetchSessions($user);
     }
 
     #[LiveAction]
     public function toggleLessonChecked(): void
     {
-        // Re-fetch sessions after the toggle of lessonChecked state.
         $user = $this->security->getUser();
         $this->fetchSessions($user);
     }
@@ -78,7 +75,6 @@ final class DisplaySessions
     #[LiveAction]
     public function search(): void
     {
-        // Called when the search input or any filter value changes.
         $user = $this->security->getUser();
         $this->fetchSessions($user);
     }
@@ -95,7 +91,7 @@ final class DisplaySessions
                 $this->timeStart,
                 $this->timeEnd
             );
-            $this->exchanges = []; // Clear exchanges
+            $this->exchanges = [];
         } else {
             $this->exchanges = $this->sessionRepository->searchExchanges(
                 $user,
@@ -107,7 +103,7 @@ final class DisplaySessions
                 $this->timeStart,
                 $this->timeEnd
             );
-            $this->lessons = []; // Clear lessons
+            $this->lessons = [];
         }
     }
 }
