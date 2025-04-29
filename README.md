@@ -80,6 +80,11 @@ permet de créer une migration vide :
 ```
 php bin/console doctrine:migrations:generate
 ```
+Se connecter en tant qu'administrateur pour accéder au tableau de bord d'administration de l'application :
+
+```
+mail : admin@example.com
+mot de passe : admin123
 
 pour faire fonctioner les stimulus live function on peut tweak les déclencheur comme ca :
 
