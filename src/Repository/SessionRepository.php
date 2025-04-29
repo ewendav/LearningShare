@@ -69,7 +69,7 @@ class SessionRepository extends ServiceEntityRepository
     }
 
 /**
- * OBSOLETE
+ * OBSOLETE S
  * Returns all attendable Exchange sessions for the given user.
  *
  * @param User $user
@@ -107,18 +107,25 @@ class SessionRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function searchLessons(?User $user, string $q, string $category, ?\DateTimeInterface $dateStart, ?\DateTimeInterface $dateEnd, string $timeStart, string $timeEnd): array
-    {
+    public function searchLessons(
+        ?User $user,
+        string $q,
+        string $category,
+        ?\DateTimeInterface $dateStart,
+        ?\DateTimeInterface $dateEnd,
+        string $timeStart,
+        string $timeEnd
+    ): array {
         $qb = $this->createQueryBuilder('s')
-            ->join('s.lesson', 'l')
-            ->join('s.skillTaught', 'st');
+        ->join('s.lesson', 'l')
+        ->join('s.skillTaught', 'st')
+        ->addSelect('l', 'st')
+        ->leftJoin('l.attendees', 'a');
 
         if ($user) {
             $qb->andWhere('l.host != :user')
                ->andWhere(':user NOT MEMBER OF l.attendees')
-               ->setParameter('user', $user)
-               ->groupBy('l.id')
-               ->having('COUNT(l.attendees) < l.maxAttendees');
+               ->setParameter('user', $user);
         }
 
         if ('' !== $q) {
@@ -127,7 +134,6 @@ class SessionRepository extends ServiceEntityRepository
         }
 
         if ('' !== $category) {
-            // Adjust this comparison if category is an entity
             $qb->andWhere('st.category = :category')
                ->setParameter('category', $category);
         }
@@ -152,6 +158,9 @@ class SessionRepository extends ServiceEntityRepository
                ->setParameter('timeEnd', $timeEnd);
         }
 
+        $qb->groupBy('s.id')
+           ->having('COUNT(a.id) < l.maxAttendees');
+
         return $qb->getQuery()->getResult();
     }
 
@@ -162,8 +171,10 @@ class SessionRepository extends ServiceEntityRepository
             ->join('s.skillTaught', 'st')
             ->join('e.skillRequested', 'sr');
 
+        $qb->andWhere('e.attendee IS NULL');
+
         if ($user) {
-            $qb->andWhere('e.attendee IS NULL')
+            $qb
                ->andWhere('e.requester != :user')
                ->setParameter('user', $user);
         }

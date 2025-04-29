@@ -62,8 +62,8 @@ class ExchangeCrudController extends AbstractCrudController
         yield IdField::new('id')->onlyOnIndex();
 
         $requester = AssociationField::new('requester', 'Demandeur')
-            ->formatValue(fn($value, Exchange $e) => $e->getRequester()?->getFirstname().' '.$e->getRequester()?->getLastname())
-            ->setFormTypeOption('choice_label', fn($u) => $u->getFirstname().' '.$u->getLastname());
+            ->formatValue(fn($value, Exchange $e) => $e->getRequester()?->getFirstname() . ' ' . $e->getRequester()?->getLastname())
+            ->setFormTypeOption('choice_label', fn($u) => $u->getFirstname() . ' ' . $u->getLastname());
 
         if ($pageName !== Crud::PAGE_NEW) {
             $requester = $requester->setFormTypeOption('disabled', true);
@@ -72,7 +72,7 @@ class ExchangeCrudController extends AbstractCrudController
         yield $requester;
 
         yield AssociationField::new('attendee', 'Participant')
-            ->formatValue(fn($value, Exchange $e) => $e->getAttendee()?->getFirstname().' '.$e->getAttendee()?->getLastname())
+            ->formatValue(fn($value, Exchange $e) => $e->getAttendee()?->getFirstname() . ' ' . $e->getAttendee()?->getLastname())
             ->setCrudController(UserCrudController::class)
             ->setFormTypeOption('required', false)
             ->setFormTypeOption('choice_label', fn($u) => $u->getFirstname() . ' ' . $u->getLastname());
@@ -92,16 +92,14 @@ class ExchangeCrudController extends AbstractCrudController
         yield FormField::addPanel('Session liée');
         yield AssociationField::new('session.cost', 'Coût')
             ->onlyOnForms()
-            ->formatValue(fn($value, Exchange $e) => $e->getSession()?->getCost()?->getAmount().' jetons')
+            ->formatValue(fn($value, Exchange $e) => $e->getSession()?->getCost()?->getAmount() . ' jetons')
             ->setCrudController(RateCrudController::class)
             ->setFormTypeOption('choice_label', function ($rate) {
-                return $rate->getAmount().' jetons';
+                return $rate->getAmount() . ' jetons';
             });
         yield DateField::new('session.date', 'Date');
         yield TimeField::new('session.startTime', 'Heure début');
         yield TimeField::new('session.endTime', 'Heure fin');
         yield TextField::new('session.description', 'Description');
-
-
     }
 }
