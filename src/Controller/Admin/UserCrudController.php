@@ -36,7 +36,7 @@ class UserCrudController extends AbstractCrudController
             ->setFormType(PasswordType::class)
             ->setHelp('Laissez vide pour conserver le mot de passe actuel.');
         yield ImageField::new('avatarPath')
-            ->setBasePath('assets/avatars')
+            ->setBasePath('uploads/avatars')
             ->setUploadDir('public/uploads/avatars')
             ->setRequired(false);
         yield TextField::new('firstname');
