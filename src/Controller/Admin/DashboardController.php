@@ -21,45 +21,21 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\Security\Core\User\UserInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use Symfony\Component\HttpFoundation\Response;
+use function Symfony\Component\Translation\t;
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
     public function index(): Response
     {
-
-        // return parent::index();
-
-        // Option 1. You can make your dashboard redirect to some common page of your backend
-        //
-        // 1.1) If you have enabled the "pretty URLs" feature:
         return $this->redirectToRoute('admin_user_index');
-        //
-        // 1.2) Same example but using the "ugly URLs" that were used in previous EasyAdmin versions:
-        // $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-        // return $this->redirect($adminUrlGenerator->setController(OneOfYourCrudController::class)->generateUrl());
-
-        // Option 2. You can make your dashboard redirect to different pages depending on the user
-        //
-        // if ('jane' === $this->getUser()->getUsername()) {
-        //     return $this->redirectToRoute('...');
-        // }
-
-        // Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
-        // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
-        //
-        // return $this->render('some/path/my-dashboard.html.twig');
     }
 
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-
-            //->setTitle('LearningShare Administration')
-        ->setTitle('<img src="/assets/img/logo.png" class="img-fluid d-block mx-auto" style="max-width:100px; width:100%;"><h3 style="text-align: center">LearningShare Administration</h3>')
-
-        ->renderContentMaximized();
-
+            ->setTitle('<img src="/assets/img/logo.png" class="img-fluid d-block mx-auto" style="max-width:100px; width:100%;"><h3 style="text-align: center">LearningShare Administration</h3>')
+            ->renderContentMaximized();
     }
 
     public function configureUserMenu(UserInterface $user): UserMenu
@@ -68,29 +44,25 @@ class DashboardController extends AbstractDashboardController
             ->setName($user->getFirstName() . ' ' . $user->getLastName())
             ->setAvatarUrl('/uploads/avatars/' . $user->getAvatarPath())
             ->displayUserName(true)
-
             ->addMenuItems([
-                MenuItem::linkToRoute('Mon profil', 'fa fa-id-card', '...', ['...' => '...']),
+                MenuItem::linkToRoute(t('My profile'), 'fa fa-id-card', '...', ['...' => '...']),
             ]);
     }
 
     public function configureMenuItems(): iterable
     {
-        return[
-
-            // permet de grouper les elements qui seront affiché sur le dashboard
-        MenuItem::section('Gestion'),
-        MenuItem::linkToCrud('Utilisateurs','fa fa-user',User::class),
-        MenuItem::linkToCrud('Echanges', 'fa fa-exchange', Exchange::class),
-        MenuItem::linkToCrud('Cours', 'fa fa-book', Lesson::class),
-        MenuItem::linkToCrud('Catégories', 'fa fa-list', Category::class),
-        MenuItem::linkToCrud('Compétences', 'fa fa-cogs', Skill::class),
-        MenuItem::linkToCrud('Adresses', 'fa fa-map-marker', Location::class),
-        MenuItem::linkToCrud('Rate', 'fa fa-star', Rate::class),
-        MenuItem::linkToCrud('Report', 'fa fa-flag', Report::class),
-        MenuItem::linkToCrud('Review', 'fa fa-comment', Review::class),
-        MenuItem::linkToCrud('Mot Blacklist', 'fa fa-ban', Blacklist::class),
-        MenuItem::linkToCrud('Role', 'fa fa-user-tag', Role::class),
+        return [
+            MenuItem::section(t('Management')),
+            MenuItem::linkToCrud(t('Users'), 'fa fa-user', User::class),
+            MenuItem::linkToCrud(t('Exchanges'), 'fa fa-exchange', Exchange::class),
+            MenuItem::linkToCrud(t('Lessons'), 'fa fa-book', Lesson::class),
+            MenuItem::linkToCrud(t('Categories'), 'fa fa-list', Category::class),
+            MenuItem::linkToCrud(t('Skills'), 'fa fa-cogs', Skill::class),
+            MenuItem::linkToCrud(t('Addresses'), 'fa fa-map-marker', Location::class),
+            MenuItem::linkToCrud(t('Rates'), 'fa fa-star', Rate::class),
+            MenuItem::linkToCrud(t('Reports'), 'fa fa-flag', Report::class),
+            MenuItem::linkToCrud(t('Reviews'), 'fa fa-comment', Review::class),
+            MenuItem::linkToCrud(t('Blacklisted Words'), 'fa fa-ban', Blacklist::class),
         ];
     }
 }

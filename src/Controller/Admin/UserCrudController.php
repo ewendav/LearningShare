@@ -1,5 +1,4 @@
 <?php
-// src/Controller/Admin/UserCrudController.php
 
 namespace App\Controller\Admin;
 
@@ -13,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use function Symfony\Component\Translation\t;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -29,21 +29,28 @@ class UserCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->onlyOnIndex();
-        yield TextField::new('email');
-        // Champ plainPassword, non-persisted
-        yield TextField::new('plainPassword', 'Mot de passe')
+
+        yield TextField::new('email', t('Email'));
+
+        yield TextField::new('plainPassword', t('Password'))
             ->onlyOnForms()
             ->setFormType(PasswordType::class)
-            ->setHelp('Laissez vide pour conserver le mot de passe actuel.');
-        yield ImageField::new('avatarPath')
+            ->setHelp(t('Leave blank to keep the current password.'));
+
+        yield ImageField::new('avatarPath', t('Avatar'))
             ->setBasePath('uploads/avatars')
             ->setUploadDir('public/uploads/avatars')
             ->setRequired(false);
-        yield TextField::new('firstname');
-        yield TextField::new('lastname');
-        yield TextEditorField::new('biography')->onlyOnForms();
-        yield TextField::new('phone');
-        yield NumberField::new('balance');
+
+        yield TextField::new('firstname', t('First name'));
+
+        yield TextField::new('lastname', t('Last name'));
+
+        yield TextEditorField::new('biography', t('Biography'))->onlyOnForms();
+
+        yield TextField::new('phone', t('Phone'));
+
+        yield NumberField::new('balance', t('Balance'));
     }
 
     public function persistEntity(EntityManagerInterface $em, $user): void

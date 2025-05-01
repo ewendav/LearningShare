@@ -1,0 +1,57 @@
+Email: 'Email'
+Password: 'Mot de passe'
+Leave blank to keep the current password.: 'Laissez vide pour conserver le mot de passe actuel.'
+Avatar: 'Avatar'
+First name: 'Prénom'
+Last name: 'Nom'
+Biography: 'Biographie'
+Phone: 'Téléphone'
+Balance: 'Solde'
+My profile: "Mon profil"
+Management: "Gestion"
+Users: "Utilisateurs"
+Lessons: "Cours"
+Categories: "Catégories"
+Category: "Catégorie"
+Skills: "Compétences"
+Addresses: "Adresses"
+Rates: "Tarifs"
+Reports: "Signalements"
+Reviews: "Avis"
+Blacklisted Words: "Mots interdits"
+Roles: "Rôles"
+Exchange: "Échange"
+Exchanges: "Échanges"
+Requester: "Demandeur"
+Attendee: "Participant"
+Requested Skill: "Compétence demandée"
+Taught Skill: "Compétence enseignée"
+Linked Session: "Session liée"
+Cost: "Coût"
+Date: "Date"
+Start Time: "Heure de début"
+End Time: "Heure de fin"
+Description: "Description"
+Lesson: "Cours"
+Host: "Enseignant"
+Maximum number of participants: "Nombre maximal de participants"
+The maximum number of participants for this lesson.: "Le nombre maximum de participants pour cette leçon."
+Participants: "Participants"
+Location: "Adresse"
+Locations: "Adresses"
+Name: "Nom"
+Adress: "Rue"
+Zip Code: "Code Postal"
+The zip code must contain exactly 5 digits.: "Le code postal doit contenir exactement 5 chiffres."
+City: "Ville"
+Rate: "Tarif"
+Amount: "Prix"
+Content: "Contenu"
+By: "Par"
+Against: "Contre"
+Report: "Signalement"
+Review: "Avis"
+About: "Sur"
+Search counter: "Compteur de recherche"
+Skill: "Compétence"
+

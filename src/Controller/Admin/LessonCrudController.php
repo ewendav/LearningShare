@@ -16,16 +16,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField; // Import du champ IntegerField
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use function Symfony\Component\Translation\t;
 
 class LessonCrudController extends AbstractCrudController
 {
-    private EntityManagerInterface $em;
-
-    public function __construct(EntityManagerInterface $em)
-    {
-        $this->em = $em;
-    }
+    public function __construct(private EntityManagerInterface $em) {}
 
     public static function getEntityFqcn(): string
     {
@@ -35,8 +31,8 @@ class LessonCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular('Cours')
-            ->setEntityLabelInPlural('Cours')
+            ->setEntityLabelInSingular(t('Lesson'))
+            ->setEntityLabelInPlural(t('Lessons'))
             ->setDefaultSort(['id' => 'DESC']);
     }
 
@@ -44,14 +40,12 @@ class LessonCrudController extends AbstractCrudController
     {
         $lesson = new Lesson();
 
-        // Pré-remplissage de la session
         $session = new Session();
         $session->setDate(new \DateTime());
         $session->setStartTime(new \DateTime('09:00'));
         $session->setEndTime(new \DateTime('10:00'));
         $session->setDescription('Default Description');
 
-        // ⚡ Correction ici : charger l'objet Rate
         $rate = $this->em->getRepository(Rate::class)->find(2);
         $session->setCost($rate);
 
@@ -62,76 +56,73 @@ class LessonCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        // ID uniquement en liste
         yield IdField::new('id')->onlyOnIndex();
 
-        // Animateur (Host) : afficher Prénom et Nom de l'animateur
-        yield AssociationField::new('host', 'Animateur')
+        $host = AssociationField::new('host', t('Host'))
             ->setFormTypeOption('choice_label', fn($user) => $user->getFirstname().' '.$user->getLastname())
             ->setCrudController(UserCrudController::class)
             ->formatValue(fn($value, Lesson $lesson) => $lesson->getHost()->getFirstname().' '.$lesson->getHost()->getLastname());
 
-        // Nombre maximal de participants (maxAttendees)
-        yield IntegerField::new('maxAttendees', 'Nombre maximal de participants')
-            ->onlyOnForms()
-            ->setHelp('Le nombre maximum de participants pour cette leçon.'); // Optionnel : ajouter un texte d'aide
+        if ($pageName !== Crud::PAGE_NEW) {
+            $host = $host->setFormTypeOption('disabled', true);
+        }
 
-        // Participants inscrits (attendees) : afficher Prénom et Nom
-        yield AssociationField::new('attendees', 'Participants')
+        yield $host;
+
+        yield IntegerField::new('maxAttendees', t('Maximum number of participants'))
+            ->onlyOnForms()
+            ->setHelp(t('The maximum number of participants for this lesson.'));
+
+        yield AssociationField::new('attendees', t('Participants'))
             ->setFormTypeOption('multiple', true)
             ->setCrudController(UserCrudController::class)
             ->setFormTypeOption('choice_label', fn($user) => $user->getFirstname().' '.$user->getLastname())
-            ->formatValue(fn($value, Lesson $lesson) => implode(', ', array_map(fn($u) => $u->getFirstname().' '.$u->getLastname(), $lesson->getAttendees()->toArray())));
+            ->formatValue(fn($value, Lesson $lesson) =>
+            implode(', ', array_map(fn($u) =>
+                $u->getFirstname().' '.$u->getLastname(), $lesson->getAttendees()->toArray()))
+            );
 
-        // Lieu (Location) : Afficher l'adresse complète dans la liste
-        yield AssociationField::new('location', 'Lieu')
+        yield AssociationField::new('location', t('Location'))
             ->setCrudController(LocationCrudController::class)
             ->formatValue(function ($value, Lesson $lesson) {
                 if ($lesson->getLocation()) {
                     $location = $lesson->getLocation();
-                    $location->__load(); // Force le chargement de la location
-                    return $location->getAdress() . ', ' . $location->getZipCode() . ' ' . $location->getCity(); // Afficher l'adresse complète
+                    $location->__load();
+                    return $location->getAdress() . ', ' . $location->getZipCode() . ' ' . $location->getCity();
                 }
-                return 'N/A'; // Si pas de location
+                return 'N/A';
             })
-            ->onlyOnIndex();  // Afficher ce champ uniquement dans la liste (view)
+            ->onlyOnIndex();
 
-        // Lieu (Location) : Afficher l'adresse complète dans le formulaire
-        yield AssociationField::new('location', 'Lieu')
+        yield AssociationField::new('location', t('Location'))
             ->setCrudController(LocationCrudController::class)
-            ->onlyOnForms()  // Afficher ce champ uniquement dans le formulaire
-            ->setRequired(true)  // Le champ est obligatoire
+            ->onlyOnForms()
+            ->setRequired(true)
             ->setFormTypeOption('choice_label', function(Location $location) {
-                // Concaténer les champs pour afficher l'adresse complète
                 return $location->getAdress() . ', ' . $location->getZipCode() . ' ' . $location->getCity();
             })
-            ->setQueryBuilder(function ($queryBuilder) {
-                return $queryBuilder->orderBy('entity.city', 'ASC'); // Tri par ville
-            });
+            ->setQueryBuilder(fn($qb) => $qb->orderBy('entity.city', 'ASC'));
 
-        // Compétence enseignée
-        yield AssociationField::new('session.skillTaught', 'Compétence enseignée')
+        yield AssociationField::new('session.skillTaught', t('Taught Skill'))
             ->formatValue(fn($value, Lesson $lesson) => $lesson->getSession()?->getSkillTaught()?->getName() ?? '')
             ->setRequired(true)
             ->setCrudController(SkillCrudController::class)
             ->setFormTypeOption('choice_label', 'name')
             ->setFormTypeOption('group_by', 'category.name');
 
-        // Coût via la session liée
-        yield FormField::addPanel('Session liée');
-        yield AssociationField::new('session.cost', 'Coût')
+        yield FormField::addPanel(t('Linked Session'));
+
+        yield AssociationField::new('session.cost', t('Cost'))
             ->onlyOnForms()
             ->formatValue(fn($value, Lesson $lesson) => $lesson->getSession()?->getCost()?->getAmount().' jetons')
             ->setCrudController(RateCrudController::class)
-            ->setFormTypeOption('choice_label', function ($rate) {
-                return $rate->getAmount().' jetons';
-            });
+            ->setFormTypeOption('choice_label', fn($rate) => $rate->getAmount().' jetons');
 
-        // Informations de session : date, heure début, heure fin, description
-        yield DateField::new('session.date', 'Date')
+        yield DateField::new('session.date', t('Date'))
             ->formatValue(fn($value) => $value ? $value->format('Y-m-d') : '');
-        yield TimeField::new('session.startTime', 'Heure début');
-        yield TimeField::new('session.endTime', 'Heure fin');
-        yield TextField::new('session.description', 'Description');
+
+        yield TimeField::new('session.startTime', t('Start Time'));
+        yield TimeField::new('session.endTime', t('End Time'));
+        yield TextField::new('session.description', t('Description'));
     }
 }
