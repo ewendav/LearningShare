@@ -7,11 +7,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use function Symfony\Component\Translation\t;
 
 class UserCrudController extends AbstractCrudController
@@ -24,6 +26,13 @@ class UserCrudController extends AbstractCrudController
     public static function getEntityFqcn(): string
     {
         return User::class;
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud
+            ->setEntityLabelInSingular(t('User'))
+            ->setEntityLabelInPlural(t('Users'));
     }
 
     public function configureFields(string $pageName): iterable
@@ -51,6 +60,25 @@ class UserCrudController extends AbstractCrudController
         yield TextField::new('phone', t('Phone'));
 
         yield NumberField::new('balance', t('Balance'));
+
+        yield ChoiceField::new('roles', t('Access'))
+            ->allowMultipleChoices()
+            ->renderExpanded()
+            ->setChoices([
+                'Admin' => 'ROLE_ADMIN',
+            ])
+            ->formatValue(function ($roles, $entity) {
+                // Ne garde que les rôles autres que ROLE_USER
+                $displayRoles = array_filter($roles, fn($r) => $r !== 'ROLE_USER');
+
+                if (empty($displayRoles)) {
+                    return 'Par défaut';
+                }
+
+                // Si un ou plusieurs rôles restants
+                return implode(', ', $displayRoles);
+            });
+
     }
 
     public function persistEntity(EntityManagerInterface $em, $user): void
