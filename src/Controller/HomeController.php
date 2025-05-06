@@ -20,9 +20,8 @@ class HomeController extends AbstractController
         }
 
 
-
         return $this->render('ecrans/publicSessions.html.twig', [
-          'title' => 'test',
+          'title' => 'LearningShare',
         ]);
     }
 }
