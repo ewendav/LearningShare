@@ -609,6 +609,38 @@
         <source>There is already an account with this email</source>
         <target>__There is already an account with this email</target>
       </trans-unit>
+      <trans-unit id="P6EoXgP" resname="Veuillez entrer votre prénom">
+        <source>Veuillez entrer votre prénom</source>
+        <target>__Veuillez entrer votre prénom</target>
+      </trans-unit>
+      <trans-unit id="jy03pmX" resname="Veuillez entrer votre nom">
+        <source>Veuillez entrer votre nom</source>
+        <target>__Veuillez entrer votre nom</target>
+      </trans-unit>
+      <trans-unit id="QJw7Mj2" resname="Veuillez entrer votre email">
+        <source>Veuillez entrer votre email</source>
+        <target>__Veuillez entrer votre email</target>
+      </trans-unit>
+      <trans-unit id="VLtCBeg" resname="Veuillez entrer votre numéro de téléphone">
+        <source>Veuillez entrer votre numéro de téléphone</source>
+        <target>__Veuillez entrer votre numéro de téléphone</target>
+      </trans-unit>
+      <trans-unit id="CfOPRRG" resname="Veuillez télécharger une image valide">
+        <source>Veuillez télécharger une image valide</source>
+        <target>__Veuillez télécharger une image valide</target>
+      </trans-unit>
+      <trans-unit id="bej9qZw" resname="Veuillez entrer un mot de passe">
+        <source>Veuillez entrer un mot de passe</source>
+        <target>__Veuillez entrer un mot de passe</target>
+      </trans-unit>
+      <trans-unit id="V9lfDl7" resname="Votre mot de passe doit contenir au moins {{ limit }} caractères">
+        <source>Votre mot de passe doit contenir au moins {{ limit }} caractères</source>
+        <target>__Votre mot de passe doit contenir au moins {{ limit }} caractères</target>
+      </trans-unit>
+      <trans-unit id="iWeDqTI" resname="Vous devez accepter nos conditions.">
+        <source>Vous devez accepter nos conditions.</source>
+        <target>__Vous devez accepter nos conditions.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

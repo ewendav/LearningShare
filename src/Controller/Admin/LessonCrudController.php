@@ -31,8 +31,8 @@ class LessonCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular(t('Lesson'))
-            ->setEntityLabelInPlural(t('Lessons'))
+            ->setEntityLabelInSingular(t('Leçon'))
+            ->setEntityLabelInPlural(t('Leçons'))
             ->setDefaultSort(['id' => 'DESC']);
     }
 
@@ -44,7 +44,7 @@ class LessonCrudController extends AbstractCrudController
         $session->setDate(new \DateTime());
         $session->setStartTime(new \DateTime('09:00'));
         $session->setEndTime(new \DateTime('10:00'));
-        $session->setDescription('Default Description');
+        $session->setDescription('Description par défaut');
 
         $rate = $this->em->getRepository(Rate::class)->find(2);
         $session->setCost($rate);
@@ -58,7 +58,7 @@ class LessonCrudController extends AbstractCrudController
     {
         yield IdField::new('id')->onlyOnIndex();
 
-        $host = AssociationField::new('host', t('Host'))
+        $host = AssociationField::new('host', t('Hôte'))
             ->setFormTypeOption('choice_label', fn($user) => $user->getFirstname().' '.$user->getLastname())
             ->setCrudController(UserCrudController::class)
             ->formatValue(fn($value, Lesson $lesson) => $lesson->getHost()->getFirstname().' '.$lesson->getHost()->getLastname());
@@ -69,9 +69,9 @@ class LessonCrudController extends AbstractCrudController
 
         yield $host;
 
-        yield IntegerField::new('maxAttendees', t('Maximum number of participants'))
+        yield IntegerField::new('maxAttendees', t('Nombre maximal de participants'))
             ->onlyOnForms()
-            ->setHelp(t('The maximum number of participants for this lesson.'));
+            ->setHelp(t('Nombre maximum de participants pour cette leçon.'));
 
         yield AssociationField::new('attendees', t('Participants'))
             ->setFormTypeOption('multiple', true)
@@ -82,7 +82,7 @@ class LessonCrudController extends AbstractCrudController
                 $u->getFirstname().' '.$u->getLastname(), $lesson->getAttendees()->toArray()))
             );
 
-        yield AssociationField::new('location', t('Location'))
+        yield AssociationField::new('location', t('Lieu'))
             ->setCrudController(LocationCrudController::class)
             ->formatValue(function ($value, Lesson $lesson) {
                 if ($lesson->getLocation()) {
@@ -94,7 +94,7 @@ class LessonCrudController extends AbstractCrudController
             })
             ->onlyOnIndex();
 
-        yield AssociationField::new('location', t('Location'))
+        yield AssociationField::new('location', t('Lieu'))
             ->setCrudController(LocationCrudController::class)
             ->onlyOnForms()
             ->setRequired(true)
@@ -103,16 +103,16 @@ class LessonCrudController extends AbstractCrudController
             })
             ->setQueryBuilder(fn($qb) => $qb->orderBy('entity.city', 'ASC'));
 
-        yield AssociationField::new('session.skillTaught', t('Taught Skill'))
+        yield AssociationField::new('session.skillTaught', t('Compétence enseignée'))
             ->formatValue(fn($value, Lesson $lesson) => $lesson->getSession()?->getSkillTaught()?->getName() ?? '')
             ->setRequired(true)
             ->setCrudController(SkillCrudController::class)
             ->setFormTypeOption('choice_label', 'name')
             ->setFormTypeOption('group_by', 'category.name');
 
-        yield FormField::addPanel(t('Linked Session'));
+        yield FormField::addPanel(t('Session liée'));
 
-        yield AssociationField::new('session.cost', t('Cost'))
+        yield AssociationField::new('session.cost', t('Coût'))
             ->onlyOnForms()
             ->formatValue(fn($value, Lesson $lesson) => $lesson->getSession()?->getCost()?->getAmount().' jetons')
             ->setCrudController(RateCrudController::class)
@@ -121,8 +121,8 @@ class LessonCrudController extends AbstractCrudController
         yield DateField::new('session.date', t('Date'))
             ->formatValue(fn($value) => $value ? $value->format('Y-m-d') : '');
 
-        yield TimeField::new('session.startTime', t('Start Time'));
-        yield TimeField::new('session.endTime', t('End Time'));
+        yield TimeField::new('session.startTime', t('Heure de début'));
+        yield TimeField::new('session.endTime', t('Heure de fin'));
         yield TextField::new('session.description', t('Description'));
     }
 }

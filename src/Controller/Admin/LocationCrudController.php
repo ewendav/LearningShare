@@ -20,21 +20,21 @@ class LocationCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular(t('Location'))
-            ->setEntityLabelInPlural(t('Locations'));
+            ->setEntityLabelInSingular(t('Lieu'))
+            ->setEntityLabelInPlural(t('Lieux'));
     }
 
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->onlyOnIndex();
-        yield TextField::new('adress',t('Adress'));
-        yield TextField::new('zipcode', t('Zip Code'))
+        yield TextField::new('adress', t('Adresse'));
+        yield TextField::new('zipcode', t('Code postal'))
             ->setFormTypeOption('constraints', [
                 new Regex([
                     'pattern' => '/^\d{5}$/',
-                    'message' => t('The zip code must contain exactly 5 digits.')
+                    'message' => t('Le code postal doit contenir exactement 5 chiffres.')
                 ])
             ]);
-        yield TextField::new('city', t('City'));
+        yield TextField::new('city', t('Ville'));
     }
 }

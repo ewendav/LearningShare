@@ -19,13 +19,13 @@ class CategoryCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular(t('Category'))
-            ->setEntityLabelInPlural(t('Categories'));
+            ->setEntityLabelInSingular(t('Catégorie'))
+            ->setEntityLabelInPlural(t('Catégories'));
     }
 
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->onlyOnIndex();
-        yield TextField::new('name',t('Name'));
+        yield TextField::new('name', t('Nom'));
     }
 }
