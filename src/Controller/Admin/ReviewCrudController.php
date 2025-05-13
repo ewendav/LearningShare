@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use function Symfony\Component\Translation\t;
 
 class ReviewCrudController extends AbstractCrudController
@@ -50,19 +51,9 @@ class ReviewCrudController extends AbstractCrudController
         }
         yield $receiver;
 
-        /* QUAND AVIS SERA SUR USER
-        $receiver = AssociationField::new('about', t('À propos de'))
-            ->formatValue(fn($value, Review $e) => $e->getAbout()?->getFirstname() . ' ' . $e->getAbout()?->getLastname())
-            ->setCrudController(UserCrudController::class)
-            ->setFormTypeOption('required', false)
-            ->setFormTypeOption('choice_label', fn($u) => $u->getFirstname() . ' ' . $u->getLastname());
-
-        if ($pageName !== Crud::PAGE_NEW) {
-            $receiver = $receiver->setFormTypeOption('disabled', true);
-        }
-        yield $receiver;
-        */
-
         yield TextField::new('content', t('Contenu'));
+
+        yield IntegerField::new('rating', t('Note'))
+            ->setFormTypeOption('attr', ['min' => 1, 'max' => 5]);
     }
 }
