@@ -30,8 +30,8 @@ class ExchangeCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular(t('Exchange'))
-            ->setEntityLabelInPlural(t('Exchanges'));
+            ->setEntityLabelInSingular(t('Échange'))
+            ->setEntityLabelInPlural(t('Échanges'));
     }
 
     public function createEntity(string $entityFqcn)
@@ -42,7 +42,7 @@ class ExchangeCrudController extends AbstractCrudController
         $session->setDate(new \DateTime());
         $session->setStartTime(new \DateTime('09:00'));
         $session->setEndTime(new \DateTime('10:00'));
-        $session->setDescription('Default Description');
+        $session->setDescription('Description par défaut');
 
         $rate = $this->em->getRepository(Rate::class)->find(2);
         $session->setCost($rate);
@@ -56,7 +56,7 @@ class ExchangeCrudController extends AbstractCrudController
     {
         yield IdField::new('id')->onlyOnIndex();
 
-        $requester = AssociationField::new('requester', t('Requester'))
+        $requester = AssociationField::new('requester', t('Demandeur'))
             ->formatValue(fn($value, Exchange $e) => $e->getRequester()?->getFirstname() . ' ' . $e->getRequester()?->getLastname())
             ->setFormTypeOption('choice_label', fn($u) => $u->getFirstname() . ' ' . $u->getLastname());
 
@@ -66,35 +66,35 @@ class ExchangeCrudController extends AbstractCrudController
 
         yield $requester;
 
-        yield AssociationField::new('attendee', t('Attendee'))
+        yield AssociationField::new('attendee', t('Participant'))
             ->formatValue(fn($value, Exchange $e) => $e->getAttendee()?->getFirstname() . ' ' . $e->getAttendee()?->getLastname())
             ->setCrudController(UserCrudController::class)
             ->setFormTypeOption('required', false)
             ->setFormTypeOption('choice_label', fn($u) => $u->getFirstname() . ' ' . $u->getLastname());
 
-        yield AssociationField::new('skillRequested', t('Requested Skill'))
+        yield AssociationField::new('skillRequested', t('Compétence demandée'))
             ->formatValue(fn($value, Exchange $e) => $e->getSkillRequested()?->getName())
             ->setCrudController(SkillCrudController::class)
             ->setFormTypeOption('choice_label', 'name')
             ->setFormTypeOption('group_by', 'category.name');
 
-        yield AssociationField::new('session.skillTaught', t('Taught Skill'))
+        yield AssociationField::new('session.skillTaught', t('Compétence enseignée'))
             ->formatValue(fn($value, Exchange $e) => $e->getSession()?->getSkillTaught()?->getName() ?? '')
             ->setCrudController(SkillCrudController::class)
             ->setFormTypeOption('choice_label', 'name')
             ->setFormTypeOption('group_by', 'category.name');
 
-        yield FormField::addPanel(t('Linked Session'));
+        yield FormField::addPanel(t('Session liée'));
 
-        yield AssociationField::new('session.cost', t('Cost'))
+        yield AssociationField::new('session.cost', t('Coût'))
             ->onlyOnForms()
             ->formatValue(fn($value, Exchange $e) => $e->getSession()?->getCost()?->getAmount() . ' jetons')
             ->setCrudController(RateCrudController::class)
             ->setFormTypeOption('choice_label', fn($rate) => $rate->getAmount() . ' jetons');
 
         yield DateField::new('session.date', t('Date'));
-        yield TimeField::new('session.startTime', t('Start Time'));
-        yield TimeField::new('session.endTime', t('End Time'));
+        yield TimeField::new('session.startTime', t('Heure de début'));
+        yield TimeField::new('session.endTime', t('Heure de fin'));
         yield TextField::new('session.description', t('Description'));
     }
 }

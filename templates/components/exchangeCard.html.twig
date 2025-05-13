@@ -125,16 +125,19 @@
 {{ startTime|date('H:i') }} - {{ endTime|date('H:i') }}
       </span>
 
-        {% if app.user %}
-
-          <form action="/rejoindrePartage/{{ session_id }}" method="POST">
-              <button style="width:100%" class="form-button green-bg" type="submit">{{ "Rejoindre le partage"|trans }}</button>
-          </form>
-
-        {% else %}
-        <a href="/login">
+    {% if app.user %}
+        {% if app.user.id != userId %}
+            <form action="{{ path('app_join_exchange', {'id': session_id}) }}" method="POST">
+                {% if csrf_protection is defined and csrf_protection %}
+                    <input type="hidden" name="token" value="{{ csrf_token('join-exchange-' ~ session_id) }}">
+                {% endif %}
+                <button style="width:100%" class="form-button green-bg" type="submit">{{ "Rejoindre le partage"|trans }}</button>
+            </form>
+        {% endif %}
+    {% else %}
+        <a href="{{ path('app_login') }}">
             <button style="width:100%" class="form-button green-bg" type="button">{{ "Rejoindre le partage"|trans }}</button>
         </a>
-        {% endif %}
+    {% endif %}
 
 </div>

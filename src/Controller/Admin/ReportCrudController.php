@@ -20,15 +20,15 @@ class ReportCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular(t('Report'))
-            ->setEntityLabelInPlural(t('Reports'));
+            ->setEntityLabelInSingular(t('Signalement'))
+            ->setEntityLabelInPlural(t('Signalements'));
     }
 
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->onlyOnIndex();
 
-        $giver = AssociationField::new('ReportGiver', t('By'))
+        $giver = AssociationField::new('ReportGiver', t('Par'))
             ->formatValue(fn($value, Report $e) => $e->getReportGiver()?->getFirstname() . ' ' . $e->getReportGiver()?->getLastname())
             ->setCrudController(UserCrudController::class)
             ->setFormTypeOption('required', false)
@@ -39,7 +39,7 @@ class ReportCrudController extends AbstractCrudController
         }
         yield $giver;
 
-        $receiver = AssociationField::new('reportReceiver', t('Against'))
+        $receiver = AssociationField::new('reportReceiver', t('Contre'))
             ->formatValue(fn($value, Report $e) => $e->getReportReceiver()?->getFirstname() . ' ' . $e->getReportReceiver()?->getLastname())
             ->setCrudController(UserCrudController::class)
             ->setFormTypeOption('required', false)
@@ -50,6 +50,6 @@ class ReportCrudController extends AbstractCrudController
         }
         yield $receiver;
 
-        yield TextField::new('content',t('Content'));
+        yield TextField::new('content', t('Contenu'));
     }
 }

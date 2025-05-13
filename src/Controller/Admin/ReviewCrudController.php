@@ -20,16 +20,15 @@ class ReviewCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
-            ->setEntityLabelInSingular(t('Review'))
-            ->setEntityLabelInPlural(t('Reviews'));
+            ->setEntityLabelInSingular(t('Avis'))
+            ->setEntityLabelInPlural(t('Avis'));
     }
-
 
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->onlyOnIndex();
 
-        $giver = AssociationField::new('reviewGiver', t('By'))
+        $giver = AssociationField::new('reviewGiver', t('Par'))
             ->formatValue(fn($value, Review $e) => $e->getReviewGiver()?->getFirstname() . ' ' . $e->getReviewGiver()?->getLastname())
             ->setCrudController(UserCrudController::class)
             ->setFormTypeOption('required', false)
@@ -41,7 +40,7 @@ class ReviewCrudController extends AbstractCrudController
         yield $giver;
 
         /* QUAND AVIS SERA SUR USER
-        $receiver = AssociationField::new('about', t('About'))
+        $receiver = AssociationField::new('about', t('À propos de'))
             ->formatValue(fn($value, Review $e) => $e->getAbout()?->getFirstname() . ' ' . $e->getAbout()?->getLastname())
             ->setCrudController(UserCrudController::class)
             ->setFormTypeOption('required', false)
@@ -53,6 +52,6 @@ class ReviewCrudController extends AbstractCrudController
         yield $receiver;
         */
 
-        yield TextField::new('content',t('Content'));
+        yield TextField::new('content', t('Contenu'));
     }
 }

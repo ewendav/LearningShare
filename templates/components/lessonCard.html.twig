@@ -79,11 +79,16 @@
   {% endif %}
 
   {% if app.user %}
-    <form action="/rejoindreCours/{{ session_id }}" method="POST">
-      <button class="form-button green-bg" style="width:100%" type="submit">{{ "Rejoindre le cours"|trans }}</button>
-    </form>
+    {% if app.user.id != userId %}
+      <form action="{{ path('app_join_lesson', {'id': session_id}) }}" method="POST">
+        {% if csrf_protection is defined and csrf_protection %}
+          <input type="hidden" name="token" value="{{ csrf_token('join-lesson-' ~ session_id) }}">
+        {% endif %}
+        <button class="form-button green-bg" style="width:100%" type="submit">{{ "Rejoindre le cours"|trans }}</button>
+      </form>
+    {% endif %}
   {% else %}
-    <a href="/login">
+    <a href="{{ path('app_login') }}">
       <button style="width:100%" class="form-button green-bg" type="button">{{ "Rejoindre le cours"|trans }}</button>
     </a>
   {% endif %}

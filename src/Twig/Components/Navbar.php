@@ -7,6 +7,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Bundle\SecurityBundle\Security;
 
 #[AsLiveComponent]
 final class Navbar
@@ -16,13 +17,17 @@ final class Navbar
     #[LiveProp(writable: true)]
     public bool $darkMode = false;
 
+    public bool $isAdmin = false;
 
-    public function __construct(private RequestStack $requestStack,)
-    {
-    }
+    public function __construct(
+        private RequestStack $requestStack,
+        private Security $security
+    ) {}
 
     public function mount(): void
     {
+        $user = $this->security->getUser();
+        $this->isAdmin = $user && in_array('ROLE_ADMIN', $user->getRoles(), true);
     }
 
     #[LiveAction]
