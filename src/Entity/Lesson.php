@@ -80,7 +80,10 @@ class Lesson
     {
         if (!$this->attendees->contains($attendee)) {
             $this->attendees->add($attendee);
-            $attendee->addLessonsAttended($this);
+            // Éviter l'appel récursif si l'utilisateur a déjà cette leçon dans sa collection
+            if (!$attendee->getLessonsAttended()->contains($this)) {
+                $attendee->getLessonsAttended()->add($this);
+            }
         }
 
         return $this;
