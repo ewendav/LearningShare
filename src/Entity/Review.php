@@ -19,9 +19,9 @@ class Review
     #[ORM\Column]
     private ?int $rating = null;
 
-    #[ORM\ManyToOne(inversedBy: 'reviews')]
+    #[ORM\ManyToOne(inversedBy: 'receivedReviews')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Session $about = null;
+    private ?User $about = null;
 
     #[ORM\ManyToOne(inversedBy: 'reviewsGiven')]
     #[ORM\JoinColumn(nullable: false)]
@@ -77,6 +77,17 @@ class Review
     {
         $this->reviewGiver = $reviewGiver;
 
+        return $this;
+    }
+
+    public function getReviewReceiver(): ?User
+    {
+        return $this->reviewReceiver;
+    }
+
+    public function setReviewReceiver(?User $reviewReceiver): static
+    {
+        $this->reviewReceiver = $reviewReceiver;
         return $this;
     }
 }
