@@ -290,6 +290,7 @@ class   User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->lessonsAttended->contains($lessonsAttended)) {
             $this->lessonsAttended->add($lessonsAttended);
+            $lessonsAttended->addAttendee($this);
         }
 
         return $this;
@@ -297,7 +298,10 @@ class   User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeLessonsAttended(Lesson $lessonsAttended): static
     {
-        $this->lessonsAttended->removeElement($lessonsAttended);
+        if ($this->lessonsAttended->removeElement($lessonsAttended)) {
+            // Assurez-vous que la relation inverse est également mise à jour
+            $lessonsAttended->removeAttendee($this);
+        }
 
         return $this;
     }
