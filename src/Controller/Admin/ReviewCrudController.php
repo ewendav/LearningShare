@@ -39,6 +39,17 @@ class ReviewCrudController extends AbstractCrudController
         }
         yield $giver;
 
+        $receiver = AssociationField::new('reviewReceiver', t('A propos'))
+            ->formatValue(fn($value, Review $e) => $e->getReviewReceiver()?->getFirstname() . ' ' . $e->getReviewReceiver()?->getLastname())
+            ->setCrudController(UserCrudController::class)
+            ->setFormTypeOption('required', false)
+            ->setFormTypeOption('choice_label', fn($u) => $u->getFirstname() . ' ' . $u->getLastname());
+
+        if ($pageName !== Crud::PAGE_NEW) {
+            $receiver = $receiver->setFormTypeOption('disabled', true);
+        }
+        yield $receiver;
+
         /* QUAND AVIS SERA SUR USER
         $receiver = AssociationField::new('about', t('À propos de'))
             ->formatValue(fn($value, Review $e) => $e->getAbout()?->getFirstname() . ' ' . $e->getAbout()?->getLastname())

@@ -21,7 +21,7 @@ class Review
 
     #[ORM\ManyToOne(inversedBy: 'receivedReviews')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?User $about = null;
+    private ?User $reviewReceiver = null;
 
     #[ORM\ManyToOne(inversedBy: 'reviewsGiven')]
     #[ORM\JoinColumn(nullable: false)]
@@ -40,7 +40,6 @@ class Review
     public function setContent(string $content): static
     {
         $this->content = $content;
-
         return $this;
     }
 
@@ -52,7 +51,6 @@ class Review
     public function setRating(int $rating): static
     {
         $this->rating = $rating;
-
         return $this;
     }
 
@@ -64,7 +62,6 @@ class Review
     public function setReviewGiver(?User $reviewGiver): static
     {
         $this->reviewGiver = $reviewGiver;
-
         return $this;
     }
 
