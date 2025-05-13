@@ -56,18 +56,6 @@ class Review
         return $this;
     }
 
-    public function getAbout(): ?Session
-    {
-        return $this->about;
-    }
-
-    public function setAbout(?Session $about): static
-    {
-        $this->about = $about;
-
-        return $this;
-    }
-
     public function getReviewGiver(): ?User
     {
         return $this->reviewGiver;
