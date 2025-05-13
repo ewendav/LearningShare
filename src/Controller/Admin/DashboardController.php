@@ -21,6 +21,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\Security\Core\User\UserInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use Symfony\Component\HttpFoundation\Response;
+
 use function Symfony\Component\Translation\t;
 
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]

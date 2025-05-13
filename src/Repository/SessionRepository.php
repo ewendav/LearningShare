@@ -42,11 +42,11 @@ class SessionRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-/**
- * Returns all sessions having an Exchange attached.
- *
- * @return Session[]
- */
+    /**
+     * Returns all sessions having an Exchange attached.
+     *
+     * @return Session[]
+     */
     public function findAllExchanges(): array
     {
         return $this->createQueryBuilder('s')
@@ -55,56 +55,17 @@ class SessionRepository extends ServiceEntityRepository
         ->getResult();
     }
 
-/**
- * Returns all sessions having a Lesson attached.
- *
- * @return Session[]
- */
+    /**
+     * Returns all sessions having a Lesson attached.
+     *
+     * @return Session[]
+     */
     public function findAllLessons(): array
     {
         return $this->createQueryBuilder('s')
         ->join('s.lesson', 'l')
         ->getQuery()
         ->getResult();
-    }
-
-/**
- * OBSOLETE S
- * Returns all attendable Exchange sessions for the given user.
- *
- * @param User $user
- * @return Session[]
- */
-    public function findAttendableExchanges(User $user): array
-    {
-        return $this->createQueryBuilder('s')
-        ->join('s.exchange', 'e')
-        ->andWhere('e.attendee IS NULL')
-        ->andWhere('e.requester != :user')
-        ->setParameter('user', $user)
-        ->getQuery()
-        ->getResult();
-    }
-
-/**
- * Returns all attendable Lesson sessions for the given user.
- * OBSOLETE
- *
- * @param User $user
- * @return Session[]
- */
-    public function findAttendableLessons(User $user): array
-    {
-        $qb = $this->createQueryBuilder('s')
-        ->join('s.lesson', 'l')
-        ->leftJoin('l.attendees', 'a')
-        ->andWhere('l.host != :user')
-        ->andWhere(':user NOT MEMBER OF l.attendees')
-        ->setParameter('user', $user)
-        ->groupBy('l.id')
-        ->having('COUNT(a) < l.maxAttendees');
-
-        return $qb->getQuery()->getResult();
     }
 
     public function searchLessons(
@@ -178,6 +139,8 @@ class SessionRepository extends ServiceEntityRepository
                ->andWhere('e.requester != :user')
                ->setParameter('user', $user);
         }
+
+        dump($dateStart, $dateEnd, $timeStart, $timeEnd, $skillFilter);
 
         if ('' !== $q) {
             $qb->andWhere('st.name LIKE :q')

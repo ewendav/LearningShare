@@ -70,8 +70,8 @@ final class Version20250414162321 extends AbstractMigration
 
         // Sessions
         $this->addSql("INSERT INTO session (id, cost_id, skill_taught_id, exchange_id, lesson_id, start_time, end_time, date, description) VALUES
-            (1, 1, 1, 1, 1, '10:00:00', '12:00:00', '2025-04-20', 'Guitar session for beginners'),
-            (2, 2, 2, NULL, 2, '14:00:00', '16:00:00', '2025-04-22', 'Advanced PHP workshop')");
+            (1, 1, 1, 1, 1, '10:00:00', '12:00:00', '2025-12-20', 'Guitar session for beginners'),
+            (2, 2, 2, NULL, 2, '14:00:00', '16:00:00', '2025-12-22', 'Advanced PHP workshop')");
 
         // Reviews
         $this->addSql("INSERT INTO review (id, about_id, review_giver_id, content, rating) VALUES
@@ -105,3 +105,4 @@ final class Version20250414162321 extends AbstractMigration
         $this->addSql("DELETE FROM blacklist");
     }
 }
+
