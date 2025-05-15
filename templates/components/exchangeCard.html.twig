@@ -11,7 +11,11 @@
         style="display:none;"
       {% endif %}
           src="{{ avatar_path }}" class="avatar" >
-      <p class="user-name" ><a href="/profile?profileId={{ userId }}">{{userName}}</a></p>
+        {% if app.user %}
+            <p><a href="/profile?profileId={{ userId }}">{{userName}}</a></p>
+        {% else %}
+            <p>{{userName}}</p>
+        {% endif %}
     </div>
 
       <h3 class="lesson-title"> {{ "Vous partagez"|trans }}
@@ -22,7 +26,7 @@
     {% else %}
 
   <div class="horizontal-display header-session-card">
-    
+
 
     <div class="flex" style="gap:.5rem;" >
           <img
@@ -31,7 +35,11 @@
         style="opacity:0;"
       {% endif %}
           src="{{ avatar_path }}" class="avatar" >
-      <p><a href="/profile?user_id={{ userId }}">{{userName}}</a></p>
+      {% if app.user %}
+        <p><a href="/profile?profileId={{ userId }}">{{userName}}</a></p>
+      {% else %}
+        <p>{{userName}}</p>
+      {% endif %}
 
     </div>
 
@@ -39,7 +47,11 @@
 
     <div class="flex" style="gap:.5rem; opacity : 0;" >
       <img src="{{ avatar_path }}" class="avatar" >
-      <p><a href="/profile?user_id={{ userId }}">{{userName}}</a></p>
+      {% if app.user %}
+        <p><a href="/profile?profileId={{ userId }}">{{userName}}</a></p>
+      {% else %}
+        <p>{{userName}}</p>
+      {% endif %}
 
     </div>
 
@@ -49,11 +61,11 @@
 
 
   <div class=" exchange-container horizontal-display">
-    
+
     <div class="vertical-display">
 
       {%  if sidebar is defined and not sidebar%}
-      
+
         <p style="text-decoration:underline;">{{ "Vous apprends"|trans }}</p>
 
       {% if skill_taught_category_id is defined and skill_taught_category_id is not empty %}
@@ -93,7 +105,7 @@
     <div class="vertical-display">
 
       {%  if sidebar is defined and not sidebar%}
-      
+
         <p style="text-decoration:underline;" >{{ "Veux apprendre"|trans }}</p>
 
       <p>{{ "Catégorie"|trans }} : {{ categoryWanted }}</p>
@@ -133,7 +145,7 @@
                     {% set userAttending = true %}
                 {% endif %}
             {% endfor %}
-            
+
             {% if not userAttending %}
                 <form action="{{ path('app_join_exchange', {'id': session_id}) }}" method="POST">
                     {% if csrf_protection is defined and csrf_protection %}

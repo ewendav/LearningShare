@@ -11,7 +11,11 @@
         style="display:none;"
       {% endif %}
           src="{{ avatar_path }}" class="avatar" >
-      <p><a href="/profile?profileId={{ userId }}">{{userName}}</a></p>
+      {% if app.user %}
+        <p><a href="/profile?profileId={{ userId }}">{{userName}}</a></p>
+      {% else %}
+        <p>{{userName}}</p>
+      {% endif %}
     </div>
 
       {% if ownLesson %}
@@ -30,13 +34,21 @@
         style="opacity:0;"
       {% endif %}
           src="{{ avatar_path }}" class="avatar" >
-      <p><a href="/profile?user_id={{ userId }}">{{userName}}</a></p>
+      {% if app.user %}
+        <p><a href="/profile?profileId={{ userId }}">{{userName}}</a></p>
+      {% else %}
+        <p>{{userName}}</p>
+      {% endif %}
     </div>
 
     <h3 class="lesson-title">{{ "Cours"|trans }}</h3>
     <div class="flex" style="gap:.5rem; opacity : 0;" >
       <img src="{{ avatar_path }}" class="avatar" >
-      <p><a href="/profile?user_id={{ userId }}">{{userName}}</a></p>
+      {% if app.user %}
+        <p><a href="/profile?profileId={{ userId }}">{{userName}}</a></p>
+      {% else %}
+        <p>{{userName}}</p>
+      {% endif %}
     </div>
   </div>
 
