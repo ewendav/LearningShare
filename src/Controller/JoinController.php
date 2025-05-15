@@ -204,4 +204,156 @@ class JoinController extends AbstractController
 
         return $this->redirectToRoute('home');
     }
+    
+    #[Route('/quitterCours/{id}', name: 'app_leave_lesson', methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function leaveLesson(int $id, EntityManagerInterface $em, Request $request): Response
+    {
+        $this->logger->info("Tentative de quitter le cours", ['session_id' => $id, 'user_id' => $this->getUser()->getId()]);
+
+        // Récupérer la session
+        $session = $em->getRepository(Session::class)->find($id);
+
+        if (!$session || !$session->getLesson()) {
+            $this->logger->error("Cours non trouvé", ['session_id' => $id]);
+            $this->addFlash('error', 'Cours non trouvé');
+            return $this->redirectToRoute('app_user_profile');
+        }
+
+        // Récupérer le cours associé à cette session
+        $lesson = $session->getLesson();
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur est bien inscrit
+        if (!$user->getLessonsAttended()->contains($lesson)) {
+            $this->addFlash('error', 'Vous n\'êtes pas inscrit à ce cours');
+            return $this->redirectToRoute('app_user_profile');
+        }
+
+        try {
+            // Débuter une transaction
+            $em->beginTransaction();
+
+            // Retirer l'utilisateur des participants du cours
+            $lesson->removeAttendee($user);
+            
+            // Récupérer l'hôte du cours
+            $host = $lesson->getHost();
+
+            // Rendre 15 jetons à l'utilisateur
+            $user->setBalance($user->getBalance() + 15);
+
+            // Retirer 10 jetons à l'hôte
+            $host->setBalance($host->getBalance() - 10);
+
+            $em->persist($user);
+            $em->persist($host);
+            $em->persist($lesson);
+            $em->flush();
+            $em->commit();
+
+            $this->logger->info("Utilisateur a quitté le cours avec succès", [
+                'session_id' => $id,
+                'user_id' => $user->getId(),
+                'tokens_refunded' => 15,
+                'host_id' => $host->getId(),
+                'tokens_removed_from_host' => 10
+            ]);
+
+            $this->addFlash('success', 'Vous avez quitté le cours avec succès');
+        } catch (\Exception $e) {
+            if ($em->getConnection()->isTransactionActive()) {
+                $em->rollback();
+            }
+
+            $this->logger->error("Échec pour quitter le cours: " . $e->getMessage(), [
+                'session_id' => $id,
+                'user_id' => $user->getId(),
+                'exception' => $e->getMessage()
+            ]);
+
+            $this->addFlash('error', 'Une erreur est survenue lors de la désinscription au cours');
+        }
+
+        // Rediriger vers le profil de l'utilisateur
+        return $this->redirectToRoute('app_user_profile');
+    }
+    
+    #[Route('/quitterPartage/{id}', name: 'app_leave_exchange', methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function leaveExchange(int $id, EntityManagerInterface $em, Request $request): Response
+    {
+        $this->logger->info("Tentative de quitter le partage", ['session_id' => $id, 'user_id' => $this->getUser()->getId()]);
+
+        // Récupérer la session
+        $session = $em->getRepository(Session::class)->find($id);
+
+        if (!$session || !$session->getExchange()) {
+            $this->logger->error("Partage non trouvé", ['session_id' => $id]);
+            $this->addFlash('error', 'Partage non trouvé');
+            return $this->redirectToRoute('app_user_profile');
+        }
+
+        // Récupérer l'échange associé à cette session
+        $exchange = $session->getExchange();
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur est bien le participant
+        if ($exchange->getAttendee() !== $user) {
+            $this->addFlash('error', 'Vous n\'êtes pas participant à ce partage');
+            return $this->redirectToRoute('app_user_profile');
+        }
+
+        try {
+            // Débuter une transaction
+            $em->beginTransaction();
+
+            // Récupérer le créateur du partage
+            $requester = $exchange->getRequester();
+
+            // Retirer l'utilisateur du partage
+            $exchange->setAttendee(null);
+            
+            // Retirer 30 jetons à l'utilisateur qui quitte le partage
+            $user->setBalance($user->getBalance() - 30);
+
+            // Retirer 30 jetons au créateur du partage
+            $requester->setBalance($requester->getBalance() - 30);
+
+            $em->persist($exchange);
+            $em->persist($user);
+            $em->persist($requester);
+            $em->flush();
+            $em->commit();
+
+            $this->logger->info("Utilisateur a quitté le partage avec succès", [
+                'session_id' => $id,
+                'user_id' => $user->getId(),
+                'tokens_removed_from_user' => 30,
+                'requester_id' => $requester->getId(),
+                'tokens_removed_from_requester' => 30
+            ]);
+
+            $this->addFlash('success', 'Vous avez quitté le partage avec succès');
+        } catch (\Exception $e) {
+            if ($em->getConnection()->isTransactionActive()) {
+                $em->rollback();
+            }
+
+            $this->logger->error("Échec pour quitter le partage: " . $e->getMessage(), [
+                'session_id' => $id,
+                'user_id' => $user->getId(),
+                'exception' => $e->getMessage()
+            ]);
+
+            $this->addFlash('error', 'Une erreur est survenue lors de la désinscription au partage');
+        }
+
+        // Rediriger vers le profil de l'utilisateur
+        return $this->redirectToRoute('app_user_profile');
+    }
 }

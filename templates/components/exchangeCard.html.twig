@@ -142,7 +142,12 @@
                     <button style="width:100%" class="form-button green-bg" type="submit">{{ "Rejoindre le partage"|trans }}</button>
                 </form>
             {% else %}
-                <button class="form-button" style="width:100%; background-color:grey; cursor:default;" disabled>{{ "Inscrit"|trans }}</button>
+                    <form action="{{ path('app_leave_exchange', {'id': session_id}) }}" method="POST">
+                        {% if csrf_protection is defined and csrf_protection %}
+                            <input type="hidden" name="token" value="{{ csrf_token('leave-exchange-' ~ session_id) }}">
+                        {% endif %}
+                        <button class="form-button" style="width:100%; background-color:#d9534f;" type="submit">{{ "Se désinscrire"|trans }}</button>
+                    </form>
             {% endif %}
         {% endif %}
     {% else %}
