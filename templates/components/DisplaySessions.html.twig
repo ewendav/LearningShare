@@ -53,64 +53,100 @@
 
 
 <div id="search-filters" class="search-filters" style="margin-top:1rem;">
-    <label for="category">{{ 'Catégorie'|trans }}:</label>
-    <select id="category" 
-            data-model="category" 
-            name="category" 
-            data-action="change->live#action" 
-            data-live-action-param="search"
-    >
-        <option value="">{{ '-- Any --'|trans }}</option>
-        <option value="Category1">Category1</option>
-        <option value="Category2">Category2</option>
-    </select>
 
-    {% if not lessonChecked %}
-        <label for="skillFilter">{{ 'Compétence demandée'|trans }}:</label>
+
+
+
+        <label for="categoryRequested">{{ 'Catégorie enseignée'|trans }}:</label>
+        <select id="categoryRequested" 
+                data-model="categoryRequested" 
+                name="categoryRequested" 
+                data-action="change->live#action" 
+                data-live-action-param="search">
+            <option value="">{{ 'Any'|trans }}</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+
+    {% if lessonChecked %}
+
+
+        <label for="skillTaught">{{ 'Compétence enseignée'|trans }}:</label>
         <input type="text" 
-               id="skillFilter" 
-               data-model="debounce(250)|skillFilter" 
-            data-action="change->live#action" 
-            data-live-action-param="search"
-               name="skillFilter" 
+               id="skillTaught" 
+               data-model="debounce(250)|skillTaught" 
+               name="skillTaught" 
+               placeholder="{{ 'Rechercher la compétence enseignée'|trans }}" 
+               data-action="input->live#action" 
+               data-live-action-param="search">
+    {% else %}
+
+
+        <label for="categoryGiven">{{ 'Catégorie enseignée'|trans }}:</label>
+        <select id="categoryGiven" 
+                data-model="categoryGiven" 
+                name="categoryGiven" 
+                data-action="change->live#action" 
+                data-live-action-param="search">
+            <option value="">{{ 'Any'|trans }}</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="skillRequested">{{ 'Compétence demandée'|trans }}:</label>
+        <input type="text" 
+               id="skillRequested" 
+               data-model="debounce(250)|skillRequested" 
+               name="skillRequested" 
                placeholder="{{ 'Rechercher la compétence demandée'|trans }}" 
+               data-action="input->live#action" 
+               data-live-action-param="search">
+
+        <label for="skillGiven">{{ 'Compétence donnée'|trans }}:</label>
+        <input type="text" 
+               id="skillGiven" 
+               data-model="debounce(250)|skillGiven" 
+               name="skillGiven" 
+               placeholder="{{ 'Rechercher la compétence donnée'|trans }}" 
+               data-action="input->live#action" 
+               data-live-action-param="search">
     {% endif %}
 
     <label for="dateStart">{{ 'Date de début'|trans }}:</label>
     <input type="date" 
            id="dateStart" 
            data-model="dateStart" 
-            data-action="change->live#action" 
-            data-live-action-param="search"
-           name="dateStart" >
+           name="dateStart" 
+           data-action="change->live#action" 
+           data-live-action-param="search">
+
+
 
     <label for="dateEnd">{{ 'Date de fin'|trans }}:</label>
     <input type="date" 
            id="dateEnd" 
            data-model="dateEnd" 
            name="dateEnd" 
-            data-action="change->live#action" 
-            data-live-action-param="search"
-           >
+           data-action="change->live#action" 
+           data-live-action-param="search">
 
     <label for="timeStart">{{ 'Heure de début'|trans }}:</label>
     <input type="time" 
            id="timeStart" 
            data-model="timeStart" 
            name="timeStart" 
-            data-action="change->live#action" 
-            data-live-action-param="search"
-           >
-
+           data-action="change->live#action" 
+           data-live-action-param="search">
 
     <label for="timeEnd">{{ 'Heure de fin'|trans }}:</label>
     <input type="time" 
            id="timeEnd" 
            data-model="timeEnd" 
            name="timeEnd" 
-            data-action="change->live#action" 
-            data-live-action-param="search"
-           >
+           data-action="change->live#action" 
+           data-live-action-param="search">
 </div>
 
 

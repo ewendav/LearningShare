@@ -22,7 +22,8 @@ final class Navbar
     public function __construct(
         private RequestStack $requestStack,
         private Security $security
-    ) {}
+    ) {
+    }
 
     public function mount(): void
     {

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Session;
+use App\Entity\Category;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -71,7 +72,8 @@ class SessionRepository extends ServiceEntityRepository
     public function searchLessons(
         ?User $user,
         string $q,
-        string $category,
+        ?Category $categoryGiven,
+        ?string $skillGiven,
         ?\DateTimeInterface $dateStart,
         ?\DateTimeInterface $dateEnd,
         string $timeStart,
@@ -94,9 +96,9 @@ class SessionRepository extends ServiceEntityRepository
                ->setParameter('q', '%' . $q . '%');
         }
 
-        if ('' !== $category) {
+        if (null !== $categoryGiven) {
             $qb->andWhere('st.category = :category')
-               ->setParameter('category', $category);
+               ->setParameter('category', $categoryGiven);
         }
 
         if ($dateStart) {
@@ -125,8 +127,18 @@ class SessionRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
-    public function searchExchanges(?User $user, string $q, string $category, string $skillFilter, ?\DateTimeInterface $dateStart, ?\DateTimeInterface $dateEnd, string $timeStart, string $timeEnd): array
-    {
+    public function searchExchanges(
+        ?User $user,
+        string $q,
+        ?Category $categoryGiven,
+        ?Category $categoryRequested,
+        string $skillGiven,
+        string $skillRequested,
+        ?\DateTimeInterface $dateStart,
+        ?\DateTimeInterface $dateEnd,
+        string $timeStart,
+        string $timeEnd
+    ): array {
         $qb = $this->createQueryBuilder('s')
             ->join('s.exchange', 'e')
             ->join('s.skillTaught', 'st')
@@ -140,21 +152,24 @@ class SessionRepository extends ServiceEntityRepository
                ->setParameter('user', $user);
         }
 
-        dump($dateStart, $dateEnd, $timeStart, $timeEnd, $skillFilter);
-
         if ('' !== $q) {
             $qb->andWhere('st.name LIKE :q')
                ->setParameter('q', '%' . $q . '%');
         }
 
-        if ('' !== $category) {
+        if (null !== $categoryGiven) {
             $qb->andWhere('st.category = :category')
-               ->setParameter('category', $category);
+               ->setParameter('category', $categoryGiven);
         }
 
-        if ('' !== $skillFilter) {
+        if (null !== $categoryRequested) {
+            $qb->andWhere('st.category = :category')
+               ->setParameter('category', $categoryGiven);
+        }
+
+        if (null !== $skillGiven) {
             $qb->andWhere('sr.name LIKE :skillFilter')
-               ->setParameter('skillFilter', '%' . $skillFilter . '%');
+               ->setParameter('skillFilter', '%' . $skillGiven . '%');
         }
 
         if ($dateStart) {
