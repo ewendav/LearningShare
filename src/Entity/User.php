@@ -102,6 +102,12 @@ class   User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $reviewsGiven;
 
     /**
+     * @var Collection<int, Review>
+     */
+    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'reviewReceiver')]
+    private Collection $receivedReviews;
+
+    /**
      * @var Collection<int, Report>
      */
     #[ORM\OneToMany(targetEntity: Report::class, mappedBy: 'ReportGiver')]
@@ -120,6 +126,7 @@ class   User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->exchangesCreated = new ArrayCollection();
         $this->exchangesAttended = new ArrayCollection();
         $this->reviewsGiven = new ArrayCollection();
+        $this->receivedReviews = new ArrayCollection();
         $this->reportsGiven = new ArrayCollection();
         $this->reportsReceived = new ArrayCollection();
     }
@@ -283,6 +290,7 @@ class   User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->lessonsAttended->contains($lessonsAttended)) {
             $this->lessonsAttended->add($lessonsAttended);
+            $lessonsAttended->addAttendee($this);
         }
 
         return $this;
@@ -290,7 +298,10 @@ class   User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function removeLessonsAttended(Lesson $lessonsAttended): static
     {
-        $this->lessonsAttended->removeElement($lessonsAttended);
+        if ($this->lessonsAttended->removeElement($lessonsAttended)) {
+            // Assurez-vous que la relation inverse est également mise à jour
+            $lessonsAttended->removeAttendee($this);
+        }
 
         return $this;
     }
@@ -414,6 +425,36 @@ class   User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Review>
+     */
+    public function getReceivedReviews(): Collection
+    {
+        return $this->receivedReviews;
+    }
+
+    public function addReceivedReview(Review $review): static
+    {
+        if (!$this->receivedReviews->contains($review)) {
+            $this->receivedReviews->add($review);
+            $review->setReviewReceiver($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReceivedReview(Review $review): static
+    {
+        if ($this->receivedReviews->removeElement($review)) {
+            if ($review->getReviewReceiver() === $this) {
+                $review->setReviewReceiver(null);
+            }
+        }
+
+        return $this;
+    }
+
 
     /**
      * @return Collection<int, Report>

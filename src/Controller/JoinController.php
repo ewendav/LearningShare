@@ -77,7 +77,9 @@ class JoinController extends AbstractController
             $em->beginTransaction();
 
             // Ajouter l'utilisateur aux participants du cours
-            $user->addLessonsAttended($lesson);
+            // Utiliser uniquement la méthode lesson->addAttendee pour établir la relation bidirectionnelle
+            // car cette méthode appelle déjà user->addLessonsAttended en interne
+            $lesson->addAttendee($user);
 
             // Récupérer l'hôte du cours
             $host = $lesson->getHost();
@@ -162,6 +164,8 @@ class JoinController extends AbstractController
 
             // Définir l'utilisateur comme accepteur du partage
             $exchange->setAttendee($user);
+            // S'assurer que la relation inverse est également mise à jour
+            $user->addExchangesAttended($exchange);
 
             // Ajouter 40 jetons à l'utilisateur qui rejoint le partage
             $user->setBalance($user->getBalance() + 40);

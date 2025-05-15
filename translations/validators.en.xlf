@@ -641,6 +641,42 @@
         <source>Vous devez accepter nos conditions.</source>
         <target>__Vous devez accepter nos conditions.</target>
       </trans-unit>
+      <trans-unit id="Hdzc_B6" resname="Veuillez sélectionner une catégorie">
+        <source>Veuillez sélectionner une catégorie</source>
+        <target>__Veuillez sélectionner une catégorie</target>
+      </trans-unit>
+      <trans-unit id="qWVAF5v" resname="Veuillez saisir une compétence">
+        <source>Veuillez saisir une compétence</source>
+        <target>__Veuillez saisir une compétence</target>
+      </trans-unit>
+      <trans-unit id="kh_RhEP" resname="Veuillez sélectionner une date">
+        <source>Veuillez sélectionner une date</source>
+        <target>__Veuillez sélectionner une date</target>
+      </trans-unit>
+      <trans-unit id="fwUm0qJ" resname="Veuillez sélectionner une heure de début">
+        <source>Veuillez sélectionner une heure de début</source>
+        <target>__Veuillez sélectionner une heure de début</target>
+      </trans-unit>
+      <trans-unit id="6of5nBA" resname="Veuillez sélectionner une heure de fin">
+        <source>Veuillez sélectionner une heure de fin</source>
+        <target>__Veuillez sélectionner une heure de fin</target>
+      </trans-unit>
+      <trans-unit id="rfwxaXb" resname="Veuillez saisir une adresse">
+        <source>Veuillez saisir une adresse</source>
+        <target>__Veuillez saisir une adresse</target>
+      </trans-unit>
+      <trans-unit id="3WLzmdT" resname="Veuillez saisir une ville">
+        <source>Veuillez saisir une ville</source>
+        <target>__Veuillez saisir une ville</target>
+      </trans-unit>
+      <trans-unit id="VcLBJGI" resname="Veuillez saisir un code postal">
+        <source>Veuillez saisir un code postal</source>
+        <target>__Veuillez saisir un code postal</target>
+      </trans-unit>
+      <trans-unit id="mzqLsSW" resname="Veuillez saisir un nombre de participants">
+        <source>Veuillez saisir un nombre de participants</source>
+        <target>__Veuillez saisir un nombre de participants</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

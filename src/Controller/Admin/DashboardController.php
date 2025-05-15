@@ -63,7 +63,6 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud(t('Tarifs'), 'fa fa-star', Rate::class),
             MenuItem::linkToCrud(t('Signalements'), 'fa fa-flag', Report::class),
             MenuItem::linkToCrud(t('Avis'), 'fa fa-comment', Review::class),
-            MenuItem::linkToCrud(t('Mots interdits'), 'fa fa-ban', Blacklist::class),
         ];
     }
 }

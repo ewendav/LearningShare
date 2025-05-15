@@ -11,7 +11,7 @@
         style="display:none;"
       {% endif %}
           src="{{ avatar_path }}" class="avatar" >
-      <p><a href="/profile?user_id={{ userId }}">{{userName}}</a></p>
+      <p><a href="/profile?profileId={{ userId }}">{{userName}}</a></p>
     </div>
 
       {% if ownLesson %}
@@ -80,12 +80,23 @@
 
   {% if app.user %}
     {% if app.user.id != userId %}
-      <form action="{{ path('app_join_lesson', {'id': session_id}) }}" method="POST">
-        {% if csrf_protection is defined and csrf_protection %}
-          <input type="hidden" name="token" value="{{ csrf_token('join-lesson-' ~ session_id) }}">
+      {% set userAttending = false %}
+      {% for attendee in app.user.lessonsAttended %}
+        {% if attendee.session.id == session_id %}
+          {% set userAttending = true %}
         {% endif %}
-        <button class="form-button green-bg" style="width:100%" type="submit">{{ "Rejoindre le cours"|trans }}</button>
-      </form>
+      {% endfor %}
+      
+      {% if not userAttending %}
+        <form action="{{ path('app_join_lesson', {'id': session_id}) }}" method="POST">
+          {% if csrf_protection is defined and csrf_protection %}
+            <input type="hidden" name="token" value="{{ csrf_token('join-lesson-' ~ session_id) }}">
+          {% endif %}
+          <button class="form-button green-bg" style="width:100%" type="submit">{{ "Rejoindre le cours"|trans }}</button>
+        </form>
+      {% else %}
+        <button class="form-button" style="width:100%; background-color:grey; cursor:default;" disabled>{{ "Inscrit"|trans }}</button>
+      {% endif %}
     {% endif %}
   {% else %}
     <a href="{{ path('app_login') }}">
