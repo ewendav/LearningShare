@@ -138,7 +138,20 @@
       </span>
 
     {% if app.user %}
-        {% if app.user.id != userId %}
+        {% set viewed_profile_id = app.request.query.get('profileId') %}
+        {% set is_viewing_own_profile = viewed_profile_id is null or viewed_profile_id|number_format == app.user.id %}
+        
+        {% if app.user.id == userId %}
+            {# User is the creator of the exchange - show cancel button only if viewing own profile #}
+            {% if is_viewing_own_profile %}
+                <form action="{{ path('app_cancel_exchange', {'id': session_id}) }}" method="POST">
+                    {% if csrf_protection is defined and csrf_protection %}
+                        <input type="hidden" name="token" value="{{ csrf_token('cancel-exchange-' ~ session_id) }}">
+                    {% endif %}
+                    <button class="form-button" style="width:100%; background-color:#007bff;" type="submit">{{ "Annuler"|trans }}</button>
+                </form>
+            {% endif %}
+        {% else %}
             {% set userAttending = false %}
             {% for exchange in app.user.exchangesAttended %}
                 {% if exchange.session.id == session_id %}
@@ -154,12 +167,15 @@
                     <button style="width:100%" class="form-button green-bg" type="submit">{{ "Rejoindre le partage"|trans }}</button>
                 </form>
             {% else %}
+                {# Show leave button only if viewing own profile #}
+                {% if is_viewing_own_profile %}
                     <form action="{{ path('app_leave_exchange', {'id': session_id}) }}" method="POST">
                         {% if csrf_protection is defined and csrf_protection %}
                             <input type="hidden" name="token" value="{{ csrf_token('leave-exchange-' ~ session_id) }}">
                         {% endif %}
                         <button class="form-button" style="width:100%; background-color:#d9534f;" type="submit">{{ "Se désinscrire"|trans }}</button>
                     </form>
+                {% endif %}
             {% endif %}
         {% endif %}
     {% else %}

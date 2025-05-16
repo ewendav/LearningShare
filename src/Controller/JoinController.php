@@ -6,6 +6,7 @@ use App\Entity\Lesson;
 use App\Entity\Exchange;
 use App\Entity\User;
 use App\Entity\Session;
+use App\Entity\Location;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -351,6 +352,181 @@ class JoinController extends AbstractController
             ]);
 
             $this->addFlash('error', 'Une erreur est survenue lors de la désinscription au partage');
+        }
+
+        // Rediriger vers le profil de l'utilisateur
+        return $this->redirectToRoute('app_user_profile');
+    }
+    
+    #[Route('/annulerCours/{id}', name: 'app_cancel_lesson', methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function cancelLesson(int $id, EntityManagerInterface $em, Request $request): Response
+    {
+        $this->logger->info("Tentative d'annuler le cours", ['session_id' => $id, 'user_id' => $this->getUser()->getId()]);
+
+        // Récupérer la session
+        $session = $em->getRepository(Session::class)->find($id);
+
+        if (!$session || !$session->getLesson()) {
+            $this->logger->error("Cours non trouvé", ['session_id' => $id]);
+            $this->addFlash('error', 'Cours non trouvé');
+            return $this->redirectToRoute('app_user_profile');
+        }
+
+        // Récupérer le cours associé à cette session
+        $lesson = $session->getLesson();
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur est bien l'hôte du cours
+        if ($lesson->getHost() !== $user) {
+            $this->addFlash('error', 'Vous n\'êtes pas l\'hôte de ce cours');
+            return $this->redirectToRoute('app_user_profile');
+        }
+
+        try {
+            // Débuter une transaction
+            $em->beginTransaction();
+
+            // Si le cours a des participants, les rembourser
+            foreach ($lesson->getAttendees() as $attendee) {
+                // Rembourser 25 jetons à chaque participant
+                $attendee->setBalance($attendee->getBalance() + 25);
+                
+                // Retirer 20 jetons à l'hôte pour chaque participant
+                $user->setBalance($user->getBalance() - 20);
+                
+                $em->persist($attendee);
+            }
+
+            // Sauvegarder les modifications de l'hôte
+            $em->persist($user);
+
+            // Récupérer l'emplacement pour le supprimer également
+            $location = $lesson->getLocation();
+
+            // Détacher les relations
+            $session->setLesson(null);
+            $em->persist($session);
+            $em->flush(); // Flush intermediaire pour éviter les erreurs de contraintes
+
+            // Supprimer le cours
+            $em->remove($lesson);
+            
+            // Supprimer la session
+            $em->remove($session);
+            
+            // Supprimer l'emplacement s'il existe
+            if ($location) {
+                $em->remove($location);
+            }
+
+            $em->flush();
+            $em->commit();
+
+            $this->logger->info("Cours annulé avec succès", [
+                'session_id' => $id,
+                'host_id' => $user->getId()
+            ]);
+
+            $this->addFlash('success', 'Votre cours a été annulé avec succès');
+        } catch (\Exception $e) {
+            if ($em->getConnection()->isTransactionActive()) {
+                $em->rollback();
+            }
+
+            $this->logger->error("Échec pour annuler le cours: " . $e->getMessage(), [
+                'session_id' => $id,
+                'user_id' => $user->getId(),
+                'exception' => $e->getMessage()
+            ]);
+
+            $this->addFlash('error', 'Une erreur est survenue lors de l\'annulation du cours');
+        }
+
+        // Rediriger vers le profil de l'utilisateur
+        return $this->redirectToRoute('app_user_profile');
+    }
+    
+    #[Route('/annulerPartage/{id}', name: 'app_cancel_exchange', methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function cancelExchange(int $id, EntityManagerInterface $em, Request $request): Response
+    {
+        $this->logger->info("Tentative d'annuler le partage", ['session_id' => $id, 'user_id' => $this->getUser()->getId()]);
+
+        // Récupérer la session
+        $session = $em->getRepository(Session::class)->find($id);
+
+        if (!$session || !$session->getExchange()) {
+            $this->logger->error("Partage non trouvé", ['session_id' => $id]);
+            $this->addFlash('error', 'Partage non trouvé');
+            return $this->redirectToRoute('app_user_profile');
+        }
+
+        // Récupérer l'échange associé à cette session
+        $exchange = $session->getExchange();
+
+        /** @var User $user */
+        $user = $this->getUser();
+
+        // Vérifier si l'utilisateur est bien le créateur du partage
+        if ($exchange->getRequester() !== $user) {
+            $this->addFlash('error', 'Vous n\'êtes pas le créateur de ce partage');
+            return $this->redirectToRoute('app_user_profile');
+        }
+
+        try {
+            // Débuter une transaction
+            $em->beginTransaction();
+
+            // Si le partage a un participant, le rembourser
+            $attendee = $exchange->getAttendee();
+            if ($attendee) {
+                // Retirer 40 jetons au participant
+                $attendee->setBalance($attendee->getBalance() - 40);
+                
+                // Retirer 40 jetons au créateur du partage
+                $user->setBalance($user->getBalance() - 40);
+                
+                $em->persist($attendee);
+            }
+
+            // Sauvegarder les modifications du créateur
+            $em->persist($user);
+
+            // Détacher les relations
+            $session->setExchange(null);
+            $em->persist($session);
+            $em->flush(); // Flush intermédiaire pour éviter les erreurs de contraintes
+
+            // Supprimer l'échange
+            $em->remove($exchange);
+            
+            // Supprimer la session
+            $em->remove($session);
+
+            $em->flush();
+            $em->commit();
+
+            $this->logger->info("Partage annulé avec succès", [
+                'session_id' => $id,
+                'requester_id' => $user->getId()
+            ]);
+
+            $this->addFlash('success', 'Votre partage a été annulé avec succès');
+        } catch (\Exception $e) {
+            if ($em->getConnection()->isTransactionActive()) {
+                $em->rollback();
+            }
+
+            $this->logger->error("Échec pour annuler le partage: " . $e->getMessage(), [
+                'session_id' => $id,
+                'user_id' => $user->getId(),
+                'exception' => $e->getMessage()
+            ]);
+
+            $this->addFlash('error', 'Une erreur est survenue lors de l\'annulation du partage');
         }
 
         // Rediriger vers le profil de l'utilisateur
