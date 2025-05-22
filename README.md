@@ -91,7 +91,7 @@ pour faire fonctioner les stimulus live function on peut tweak les déclencheur 
 
 data-action="click->live#action"
 
-## DEPLOYER EN PROD (https://learningshare.alwaysdata.net/)
+### DEPLOYER EN PROD (https://learningshare.alwaysdata.net/)
 
 Créer la commande en local
 ```
