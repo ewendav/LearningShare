@@ -11,7 +11,11 @@
         style="display:none;"
       {% endif %}
           src="{{ avatar_path }}" class="avatar" >
-      <p><a href="/profile?profileId={{ userId }}">{{userName}}</a></p>
+      {% if app.user %}
+        <p><a href="/profile?profileId={{ userId }}">{{userName}}</a></p>
+      {% else %}
+        <p>{{userName}}</p>
+      {% endif %}
     </div>
 
       {% if ownLesson %}
@@ -30,13 +34,21 @@
         style="opacity:0;"
       {% endif %}
           src="{{ avatar_path }}" class="avatar" >
-      <p><a href="/profile?user_id={{ userId }}">{{userName}}</a></p>
+      {% if app.user %}
+        <p><a href="/profile?profileId={{ userId }}">{{userName}}</a></p>
+      {% else %}
+        <p>{{userName}}</p>
+      {% endif %}
     </div>
 
     <h3 class="lesson-title">{{ "Cours"|trans }}</h3>
     <div class="flex" style="gap:.5rem; opacity : 0;" >
       <img src="{{ avatar_path }}" class="avatar" >
-      <p><a href="/profile?user_id={{ userId }}">{{userName}}</a></p>
+      {% if app.user %}
+        <p><a href="/profile?profileId={{ userId }}">{{userName}}</a></p>
+      {% else %}
+        <p>{{userName}}</p>
+      {% endif %}
     </div>
   </div>
 
@@ -71,6 +83,7 @@
 
   </div>
 
+
   {%  if sidebar is defined and sidebar %}
     <span class="date-info">
       {{dateDebut}}<br>
@@ -79,7 +92,21 @@
   {% endif %}
 
   {% if app.user %}
-    {% if app.user.id != userId %}
+    {% set viewed_profile_id = app.request.query.get('profileId') %}
+    {% set is_viewing_own_profile = viewed_profile_id is null or viewed_profile_id|number_format == app.user.id %}
+    
+    {% if app.user.id == userId %}
+      {# User is the host of the course - show cancel button only if viewing own profile #}
+      {% if is_viewing_own_profile %}
+        <form action="{{ path('app_cancel_lesson', {'id': session_id}) }}" method="POST">
+          {% if csrf_protection is defined and csrf_protection %}
+            <input type="hidden" name="token" value="{{ csrf_token('cancel-lesson-' ~ session_id) }}">
+          {% endif %}
+          <button class="form-button" style="width:100%; background-color:#007bff;" type="submit">{{ "Annuler"|trans }}</button>
+        </form>
+      {% endif %}
+    {% else %}
+      {# User is not the host - show join/leave buttons #}
       {% set userAttending = false %}
       {% for attendee in app.user.lessonsAttended %}
         {% if attendee.session.id == session_id %}
@@ -95,7 +122,15 @@
           <button class="form-button green-bg" style="width:100%" type="submit">{{ "Rejoindre le cours"|trans }}</button>
         </form>
       {% else %}
-        <button class="form-button" style="width:100%; background-color:grey; cursor:default;" disabled>{{ "Inscrit"|trans }}</button>
+        {# Show leave button only if viewing own profile #}
+        {% if is_viewing_own_profile %}
+          <form action="{{ path('app_leave_lesson', {'id': session_id}) }}" method="POST">
+            {% if csrf_protection is defined and csrf_protection %}
+              <input type="hidden" name="token" value="{{ csrf_token('leave-lesson-' ~ session_id) }}">
+            {% endif %}
+            <button class="form-button" style="width:100%; background-color:#d9534f;" type="submit">{{ "Se désinscrire"|trans }}</button>
+          </form>
+        {% endif %}
       {% endif %}
     {% endif %}
   {% else %}

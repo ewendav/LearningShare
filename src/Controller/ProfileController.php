@@ -17,11 +17,17 @@ class ProfileController extends AbstractController
     public function profile(
         Request                $request,
         EntityManagerInterface $em,
-        CategoryRepository     $categoryRepository,
-        int                    $profileId = null
+        CategoryRepository     $categoryRepository
     ): Response
     {
         $userId = $request->query->get('user_id');
+        $profileId = $request->query->get('profileId');
+        
+        // Utiliser profileId si disponible, sinon utiliser user_id
+        if ($profileId) {
+            $userId = $profileId;
+        }
+        
         if (!$userId) {
             $userId = $this->getUser() ? $this->getUser()->getId() : null;
         }
