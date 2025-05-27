@@ -13,9 +13,9 @@
         document.getElementById('section-echange').style.display = this.checked ? 'none' : 'block';
       "
             >
-            <span class="toggle-switch-slider">
-      <p>Échange</p>
-      <p>Cours</p>
+     <span class="toggle-switch-slider">
+      <p>{{ 'Échange'|trans }}</p>
+      <p>{{ 'Cours'|trans }}</p>
       <span class="slider-container">
         <span class="slider">
         </span>
@@ -41,14 +41,14 @@
         </script>
 
         <div id="section-echange">
-            <h1 class="page-title">Échange</h1>
+            <h1 class="page-title">{{ 'Échange'|trans }}</h1>
             <form class="form-creation-session" action="{{ path('app_exchange_create') }}" method="POST">
 
                 <div class="horizontal-display">
                     <div class="input-label-display">
-                        <label for="skill_taught_id">Catégorie</label>
+                        <label for="skill_taught_id">{{ 'Catégorie'|trans }}</label>
                         <select required class="input-goofy" id="skill_taught_id" name="skill_taught_id">
-                            <option value="" disabled selected>Sélectionnez une catégorie</option>
+                            <option value="" disabled selected>{{ 'Sélectionnez une catégorie'|trans }}</option>
                             {% for category in categories %}
                                 <option value="{{ category.id }}">{{ category.name }}</option>
                             {% endfor %}
@@ -56,16 +56,16 @@
                     </div>
 
                     <div class="input-label-display">
-                        <label for="description">Compétence</label>
-                        <input required class="input-goofy" id="description" name="description" placeholder="Sélectionnez une compétence">
+                        <label for="description">{{ 'Compétence'|trans }}</label>
+                        <input required class="input-goofy" id="description" name="description" placeholder="{{ 'Sélectionnez une compétence'|trans }}">
                     </div>
                 </div>
 
                 <div class="horizontal-display">
                     <div class="input-label-display">
-                        <label for="skill_requested_id">Catégorie</label>
+                        <label for="skill_requested_id">{{ 'Catégorie'|trans }}</label>
                         <select required class="input-goofy" id="skill_requested_id" name="skill_requested_id">
-                            <option value="" disabled selected>Sélectionnez une catégorie</option>
+                            <option value="" disabled selected>{{ 'Sélectionnez une catégorie'|trans }}</option>
                             {% for category in categories %}
                                 <option value="{{ category.id }}">{{ category.name }}</option>
                             {% endfor %}
@@ -73,35 +73,34 @@
                     </div>
 
                     <div class="input-label-display">
-                        <label for="competence-echange-2">Compétence</label>
-                        <input class="input-goofy" id="competence-echange-2" name="competence_requested" placeholder="Sélectionnez une compétence">
+                        <label for="competence-echange-2">{{ 'Compétence'|trans }}</label>
+                        <input class="input-goofy" id="competence-echange-2" name="competence_requested" placeholder="{{ 'Sélectionnez une compétence'|trans }}">
                     </div>
                 </div>
 
                 <div class="horizontal-display">
                     <div class="input-label-display">
-                        <label for="date_session">Date</label>
+                        <label for="date_session">{{ 'Date'|trans }}</label>
                         <input required class="input-goofy" type="date" id="date_session" name="date_session">
                     </div>
 
                     <div class="input-label-display">
-                        <label for="start_time">Heure de début</label>
+                        <label for="start_time">{{ 'Heure de début'|trans }}</label>
                         <input required class="input-goofy" type="time" id="start_time" name="start_time">
                     </div>
 
                     <div class="input-label-display">
-                        <label for="end_time">Heure de fin</label>
+                        <label for="end_time">{{ 'Heure de fin'|trans }}</label>
                         <input required class="input-goofy" type="time" id="end_time" name="end_time">
                     </div>
                 </div>
 
-                <!-- Champs cachés nécessaires -->
                 <input type="hidden" name="exchange_requester_id" value="{{ app.user.id }}">
                 <input type="hidden" name="rate_id" value="1">
 
                 <div style="margin-top: 1rem;" class="horizontal-display">
-                    <a href="{{ path('home') }}" class="form-button dark-grey-bg">Annuler</a>
-                    <button class="form-button green-bg" type="submit">Créer l'échange</button>
+                    <a href="{{ path('home') }}" class="form-button dark-grey-bg">{{ 'Annuler'|trans }}</a>
+                    <button class="form-button green-bg" type="submit">{{ 'Créer l\'échange'|trans }}</button>
                 </div>
 
             </form>
@@ -109,16 +108,15 @@
 
         <div id="section-cours">
 
-            <h1 class="page-title">Création d'un cours</h1>
+            <h1 class="page-title">{{ 'Création d\'un cours'|trans }}</h1>
 
             <form class="form-creation-session" action="{{ path('app_course_create') }}" method="POST">
 
                 <div class="horizontal-display">
-
                     <div class="input-label-display">
-                        <label for="skill_taught_id_cours">Catégorie</label>
+                        <label for="skill_taught_id_cours">{{ 'Catégorie'|trans }}</label>
                         <select required class="input-goofy" id="skill_taught_id_cours" name="skill_taught_id">
-                            <option value="" disabled selected>Sélectionnez une catégorie</option>
+                            <option value="" disabled selected>{{ 'Sélectionnez une catégorie'|trans }}</option>
                             {% for category in categories %}
                                 <option value="{{ category.id }}">{{ category.name }}</option>
                             {% endfor %}
@@ -126,76 +124,73 @@
                     </div>
 
                     <div class="input-label-display">
-                        <label for="description_cours">Compétence</label>
-                        <input required class="input-goofy" id="description_cours" name="description" placeholder="Sélectionnez une compétence">
+                        <label for="description_cours">{{ 'Compétence'|trans }}</label>
+                        <input required class="input-goofy" id="description_cours" name="description" placeholder="{{ 'Sélectionnez une compétence'|trans }}">
                     </div>
-
                 </div>
 
                 <div class="horizontal-display">
-
                     <div class="input-label-display">
-                        <label for="date_session_cours">Date</label>
+                        <label for="date_session_cours">{{ 'Date'|trans }}</label>
                         <input required class="input-goofy" type="date" id="date_session_cours" name="date_session">
                     </div>
 
                     <div class="input-label-display">
-                        <label for="start_time_cours">Heure de début</label>
+                        <label for="start_time_cours">{{ 'Heure de début'|trans }}</label>
                         <input required class="input-goofy" type="time" id="start_time_cours" name="start_time" onchange="validateTimes()">
                     </div>
 
                     <div class="input-label-display">
-                        <label for="end_time_cours">Heure de fin</label>
+                        <label for="end_time_cours">{{ 'Heure de fin'|trans }}</label>
                         <input required class="input-goofy" type="time" id="end_time_cours" name="end_time" onchange="validateTimes()">
                     </div>
-                    <script>
-                        function validateTimes() {
-                            const heureDebut = document.getElementById('start_time_cours').value;
-                            const heureFin = document.getElementById('end_time_cours').value;
-                            if (heureDebut && heureFin) {
-                                if (heureDebut >= heureFin) {
-                                    alert("L'heure de début ne peut pas être après l'heure de fin.");
-                                    document.getElementById('end_time_cours').value = '';
-                                }
-                            }
-                        }
-                    </script>
                 </div>
 
+                <script>
+                  function validateTimes() {
+                    const heureDebut = document.getElementById('start_time_cours').value;
+                    const heureFin = document.getElementById('end_time_cours').value;
+                    if (heureDebut && heureFin) {
+                      if (heureDebut >= heureFin) {
+                        alert("{{ "L'heure de début ne peut pas être après l'heure de fin."|trans }}");
+                        document.getElementById('end_time_cours').value = '';
+                      }
+                    }
+                  }
+                </script>
 
                 <div class="horizontal-display">
                     <div class="input-label-display">
-                        <label for="address">Adresse</label>
-                        <input required class="input-goofy" type="text" id="address" name="address" placeholder="Entrez l'adresse">
-                    </div>
-                </div>
-
-                <div class="horizontal-display">
-                    <div class="input-label-display">
-                        <label for="city">Ville</label>
-                        <input required class="input-goofy" type="text" id="city" name="city" placeholder="Entrez la ville">
-                    </div>
-
-                    <div class="input-label-display">
-                        <label for="zip_code">Code postal</label>
-                        <input required class="input-goofy" type="text" id="zip_code" name="zip_code" placeholder="Entrez le code postal">
+                        <label for="address">{{ 'Adresse'|trans }}</label>
+                        <input required class="input-goofy" type="text" id="address" name="address" placeholder="{{ 'Entrez l\'adresse'|trans }}">
                     </div>
                 </div>
 
                 <div class="horizontal-display">
                     <div class="input-label-display">
-                        <label for="max_attendees">Nombre maximum de participants</label>
-                        <input required class="input-goofy" type="number" id="max_attendees" name="max_attendees" placeholder="Sélectionnez le nombre maximum de participants">
+                        <label for="city">{{ 'Ville'|trans }}</label>
+                        <input required class="input-goofy" type="text" id="city" name="city" placeholder="{{ 'Entrez la ville'|trans }}">
+                    </div>
+
+                    <div class="input-label-display">
+                        <label for="zip_code">{{ 'Code postal'|trans }}</label>
+                        <input required class="input-goofy" type="text" id="zip_code" name="zip_code" placeholder="{{ 'Entrez le code postal'|trans }}">
                     </div>
                 </div>
 
-                <!-- Champs cachés nécessaires -->
+                <div class="horizontal-display">
+                    <div class="input-label-display">
+                        <label for="max_attendees">{{ 'Nombre maximum de participants'|trans }}</label>
+                        <input required class="input-goofy" type="number" id="max_attendees" name="max_attendees" placeholder="{{ 'Sélectionnez le nombre maximum de participants'|trans }}">
+                    </div>
+                </div>
+
                 <input type="hidden" name="lesson_host_id" value="{{ app.user.id }}">
                 <input type="hidden" name="rate_id" value="1">
 
                 <div style="margin-top: 1rem;" class="horizontal-display">
-                    <a href="{{ path('home') }}" class="form-button dark-grey-bg">Annuler</a>
-                    <button class="form-button green-bg" type="submit">Créer le cours</button>
+                    <a href="{{ path('home') }}" class="form-button dark-grey-bg">{{ 'Annuler'|trans }}</a>
+                    <button class="form-button green-bg" type="submit">{{ 'Créer le cours'|trans }}</button>
                 </div>
 
             </form>

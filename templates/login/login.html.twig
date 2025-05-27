@@ -6,7 +6,7 @@
 
     <section class="login-container">
         <div id="section-login">
-            <h1 class="page-title">Connexion</h1>
+            <h1 class="page-title">{{ 'Connexion'|trans }}</h1>
 
             {% if error %}
                 <div class="error-message">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -15,23 +15,23 @@
             <form class="form-login" method="post">
                 <div style="margin-top:3rem;" class="vertical-display">
                     <div class="input-label-display">
-                        <label for="username">Email</label>
-                        <input class="input-goofy" type="email" value="{{ last_username }}" name="_username" id="username" placeholder="Entrez votre email" required autofocus>
+                        <label for="username">{{ 'Email'|trans }}</label>
+                        <input class="input-goofy" type="email" value="{{ last_username }}" name="_username" id="username" placeholder="{{ 'Entrez votre email'|trans }}" required autofocus>
                     </div>
 
                     <div class="input-label-display">
-                        <label for="password">Mot de passe</label>
-                        <input class="input-goofy" type="password" name="_password" id="password" placeholder="Entrez votre mot de passe" required>
+                        <label for="password">{{ 'Mot de passe'|trans }}</label>
+                        <input class="input-goofy" type="password" name="_password" id="password" placeholder="{{ 'Entrez votre mot de passe'|trans }}" required>
                     </div>
 
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
                     <div class="horizontal-display">
-                        <button class="form-button green-bg" type="submit">Connexion</button>
+                        <button class="form-button green-bg" type="submit">{{ 'Se Connecter'|trans }}</button>
                     </div>
 
                     <div class="create-account-prompt">
-                        <p><a href="/register">Créer un compte</a></p>
+                        <p><a href="/register">{{ 'Créer un compte'|trans }}</a></p>
                     </div>
                 </div>
             </form>
