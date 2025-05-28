@@ -429,6 +429,42 @@
         <source>Créer le cours</source>
         <target>Créer le cours</target>
       </trans-unit>
+      <trans-unit id="3iFR_fy" resname="Statistiques">
+        <source>Statistiques</source>
+        <target>Statistiques</target>
+      </trans-unit>
+      <trans-unit id="_8Y9csL" resname="Compétences les plus recherchées">
+        <source>Compétences les plus recherchées</source>
+        <target>Compétences les plus recherchées</target>
+      </trans-unit>
+      <trans-unit id="9ur_JAt" resname="recherches">
+        <source>recherches</source>
+        <target>recherches</target>
+      </trans-unit>
+      <trans-unit id="F_WKtvQ" resname="Aucune donnée disponible.">
+        <source>Aucune donnée disponible.</source>
+        <target>Aucune donnée disponible.</target>
+      </trans-unit>
+      <trans-unit id="ZD8DSux" resname="Compétences les plus enseignées">
+        <source>Compétences les plus enseignées</source>
+        <target>Compétences les plus enseignées</target>
+      </trans-unit>
+      <trans-unit id="EiWubBr" resname="sessions">
+        <source>sessions</source>
+        <target>sessions</target>
+      </trans-unit>
+      <trans-unit id="uLKYO3h" resname="Top enseignants (6 derniers mois)">
+        <source>Top enseignants (6 derniers mois)</source>
+        <target>Top enseignants (6 derniers mois)</target>
+      </trans-unit>
+      <trans-unit id="ZteXtHa" resname="Score d'activité">
+        <source>Score d'activité</source>
+        <target>Score d'activité</target>
+      </trans-unit>
+      <trans-unit id="17vFVFt" resname="Aucun enseignant actif récemment.">
+        <source>Aucun enseignant actif récemment.</source>
+        <target>Aucun enseignant actif récemment.</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
