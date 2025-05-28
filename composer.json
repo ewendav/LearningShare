@@ -39,6 +39,7 @@
         "symfony/string": "6.4.*",
         "symfony/translation": "6.4.*",
         "symfony/twig-bundle": "6.4.*",
+        "symfony/ux-chartjs": "^2.25",
         "symfony/ux-live-component": "^2.24",
         "symfony/ux-turbo": "^2.24",
         "symfony/ux-twig-component": "^2.24",

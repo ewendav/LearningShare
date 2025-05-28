@@ -7,7 +7,33 @@
 
         <h1>{{ 'Statistiques'|trans }}</h1>
 
-        <section class="mt-4">
+        <div class="container mt-5">
+            <div class="charts-grid">
+                <div class="chart-box">
+                    <h2 class="h5">{{ 'Compétences les plus recherchées'|trans }}</h2>
+                    {{ render_chart(searchChart) }}
+                </div>
+                <div class="chart-box">
+                    <h2 class="h5">{{ 'Compétences les plus enseignées'|trans }}</h2>
+                    {{ render_chart(taughtChart) }}
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-box">
+                    <h2 class="h5">{{ 'Top enseignants (6 derniers mois)'|trans }}</h2>
+                    {{ render_chart(teacherChart) }}
+                </div>
+
+                <div class="chart-box">
+                    <!-- Espace vide ou autre graphique -->
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- <section class="mt-4">
             <h2>{{ 'Compétences les plus recherchées'|trans }}</h2>
             <ul>
                 {% for skill in topSkills %}
@@ -38,7 +64,7 @@
                     <li>{{ 'Aucun enseignant actif récemment.'|trans }}</li>
                 {% endfor %}
             </ul>
-        </section>
+        </section> -->
 
     </div>
 {% endblock %}

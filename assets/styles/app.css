@@ -493,3 +493,24 @@ input.toggle-switch-input:checked + .toggle-switch-slider .slider {
 .dark-mode .sun {
   display: block;
 }
+
+.charts-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.chart-box {
+  flex: 1 1 45%; /* Prend 45% de largeur, s’adapte selon la taille de l’écran */
+  min-width: 300px;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.chart-box canvas {
+  width: 100% !important;
+  height: auto !important;
+}
