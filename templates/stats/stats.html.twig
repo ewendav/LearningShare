@@ -10,11 +10,11 @@
         <div class="container mt-5">
             <div class="charts-grid">
                 <div class="chart-box">
-                    <h2 class="h5">{{ 'Compétences les plus recherchées'|trans }}</h2>
+                    <h2>{{ 'Compétences les plus recherchées'|trans }}</h2>
                     {{ render_chart(searchChart) }}
                 </div>
                 <div class="chart-box">
-                    <h2 class="h5">{{ 'Compétences les plus enseignées'|trans }}</h2>
+                    <h2>{{ 'Compétences les plus enseignées'|trans }}</h2>
                     {{ render_chart(taughtChart) }}
                 </div>
             </div>
@@ -26,45 +26,10 @@
                 </div>
 
                 <div class="chart-box">
-                    <!-- Espace vide ou autre graphique -->
+                    <h2>{{ 'Évolution du nombre de sessions (12 derniers mois)'|trans }}</h2>
+                    {{ render_chart(monthlyChart) }}
                 </div>
             </div>
         </div>
-
-
-
-        <!-- <section class="mt-4">
-            <h2>{{ 'Compétences les plus recherchées'|trans }}</h2>
-            <ul>
-                {% for skill in topSkills %}
-                    <li>{{ skill.name }} — {{ skill.counter }} {{ 'recherches'|trans }}</li>
-                {% else %}
-                    <li>{{ 'Aucune donnée disponible.'|trans }}</li>
-                {% endfor %}
-            </ul>
-        </section>
-
-        <section class="mt-4">
-            <h2>{{ 'Compétences les plus enseignées'|trans }}</h2>
-            <ul>
-                {% for skill in mostTaughtSkills %}
-                    <li>{{ skill.skillName }} — {{ skill.usageCount }} {{ 'sessions'|trans }}</li>
-                {% else %}
-                    <li>{{ 'Aucune donnée disponible.'|trans }}</li>
-                {% endfor %}
-            </ul>
-        </section>
-
-        <section class="mt-4">
-            <h2>{{ 'Top enseignants (6 derniers mois)'|trans }}</h2>
-            <ul>
-                {% for entry in topTeachers %}
-                    <li>{{ entry.user.firstname }} — {{ 'Score d\'activité'|trans }} : {{ entry.activityScore }}</li>
-                {% else %}
-                    <li>{{ 'Aucun enseignant actif récemment.'|trans }}</li>
-                {% endfor %}
-            </ul>
-        </section> -->
-
     </div>
 {% endblock %}

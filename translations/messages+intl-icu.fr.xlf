@@ -465,6 +465,10 @@
         <source>Aucun enseignant actif récemment.</source>
         <target>Aucun enseignant actif récemment.</target>
       </trans-unit>
+      <trans-unit id="Ch1noJC" resname="Évolution du nombre de sessions (12 derniers mois)">
+        <source>Évolution du nombre de sessions (12 derniers mois)</source>
+        <target>Évolution du nombre de sessions (12 derniers mois)</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

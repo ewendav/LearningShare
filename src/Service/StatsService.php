@@ -118,5 +118,59 @@ class StatsService
             ->setMaxResults(5)
             ->getResult();
     }
+
+    public function getMonthlySessionsData(int $months = 12): array
+    {
+        $now   = new \DateTimeImmutable('first day of this month');
+        $start = $now->modify('-'.($months - 1).' months');
+
+        // Initialisation des labels (YYYY-MM)
+        $data = [];
+        for ($i = 0; $i < $months; $i++) {
+            $d        = $start->modify("+{$i} months");
+            $label    = $d->format('Y-m');
+            $data[$label] = ['lessons' => 0, 'exchanges' => 0];
+        }
+
+        // 1) Leçons par mois
+        $lessonDql = <<<'DQL'
+        SELECT SUBSTRING(s.date, 1, 7) AS month, COUNT(l.id) AS cnt
+        FROM App\Entity\Lesson l
+        JOIN l.session s
+        WHERE s.date >= :start
+        GROUP BY month
+        ORDER BY month
+    DQL;
+        $lessonRows = $this->em->createQuery($lessonDql)
+            ->setParameter('start', $start)
+            ->getArrayResult();
+        foreach ($lessonRows as $row) {
+            if (isset($data[$row['month']])) {
+                $data[$row['month']]['lessons'] = (int) $row['cnt'];
+            }
+        }
+
+        // 2) Échanges par mois
+        $exchangeDql = <<<'DQL'
+        SELECT SUBSTRING(s.date, 1, 7) AS month, COUNT(e.id) AS cnt
+        FROM App\Entity\Exchange e
+        JOIN e.session s
+        WHERE s.date >= :start
+        GROUP BY month
+        ORDER BY month
+    DQL;
+        $exchangeRows = $this->em->createQuery($exchangeDql)
+            ->setParameter('start', $start)
+            ->getArrayResult();
+        foreach ($exchangeRows as $row) {
+            if (isset($data[$row['month']])) {
+                $data[$row['month']]['exchanges'] = (int) $row['cnt'];
+            }
+        }
+
+        return $data;
+    }
+
+
 }
 
