@@ -44,10 +44,7 @@ class DashboardController extends AbstractDashboardController
         return parent::configureUserMenu($user)
             ->setName($user->getFirstName() . ' ' . $user->getLastName())
             ->setAvatarUrl('/uploads/avatars/' . $user->getAvatarPath())
-            ->displayUserName(true)
-            ->addMenuItems([
-                MenuItem::linkToRoute(t('Mon profil'), 'fa fa-id-card', '...', ['...' => '...']),
-            ]);
+            ->displayUserName(true);
     }
 
     public function configureMenuItems(): iterable
