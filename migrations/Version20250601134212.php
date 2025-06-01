@@ -224,37 +224,37 @@ final class Version20250601134212 extends AbstractMigration
             (9, 4, 3, 10),
             (10, 5, 9, 6)");
 
-        // 7. Exchanges (8 échanges : 4 libres + 4 avec participants)
+        // 7. Exchanges (8 échanges diversifiés : 4 libres + 4 avec participants)
         $this->addSql("INSERT INTO exchange (id, skill_requested_id, requester_id, attendee_id) VALUES
-            (1, 1, 9, NULL),
-            (2, 4, 3, NULL),
-            (3, 7, 6, NULL),
-            (4, 9, 8, NULL),
-            (5, 11, 10, 3),
-            (6, 2, 11, 6),
-            (7, 8, 4, 5),
-            (8, 13, 7, 11)");
+            (1, 3, 9, NULL),
+            (2, 7, 3, NULL),
+            (3, 9, 6, NULL),
+            (4, 11, 8, NULL),
+            (5, 2, 10, 3),
+            (6, 8, 11, 6),
+            (7, 4, 4, 5),
+            (8, 14, 7, 11)");
 
-        // 8. Sessions (mélange de lessons et exchanges avec dates variées)
+        // 8. Sessions (mélange de lessons et exchanges avec dates futures)
         $this->addSql("INSERT INTO session (id, cost_id, skill_taught_id, exchange_id, lesson_id, start_time, end_time, date, description) VALUES
-            (1, 2, 1, NULL, 1, '14:00:00', '16:00:00', '2025-01-15', 'Cours de PHP pour débutants'),
-            (2, 3, 4, NULL, 2, '10:00:00', '12:00:00', '2025-01-22', 'Anglais conversationnel avancé'),
-            (3, 2, 7, NULL, 3, '16:00:00', '18:00:00', '2025-02-05', 'Initiation au piano'),
-            (4, 3, 2, NULL, 4, '09:00:00', '11:00:00', '2025-02-12', 'JavaScript moderne ES6+'),
-            (5, 2, 9, NULL, 5, '15:00:00', '17:00:00', '2025-02-20', 'Tennis pour débutants'),
-            (6, 1, 1, 1, NULL, '18:00:00', '20:00:00', '2025-03-03', 'Échange PHP contre Python - OUVERT'),
-            (7, 1, 4, 2, NULL, '14:00:00', '15:30', '2025-03-10', 'Échange cuisine contre anglais - OUVERT'),
-            (8, 1, 7, 3, NULL, '19:00:00', '21:00:00', '2025-03-18', 'Échange JavaScript contre piano - OUVERT'),
-            (9, 1, 9, 4, NULL, '17:00:00', '18:30', '2025-03-25', 'Échange dessin contre tennis - OUVERT'),
-            (10, 2, 14, NULL, 6, '11:00:00', '13:00:00', '2025-04-02', 'Atelier de dessin artistique'),
-            (11, 3, 5, NULL, 7, '16:00:00', '18:00:00', '2025-04-09', 'Espagnol niveau intermédiaire'),
-            (12, 2, 13, NULL, 8, '14:00:00', '16:00:00', '2025-04-16', 'Mathématiques appliquées'),
-            (13, 2, 11, NULL, 9, '10:00:00', '12:00:00', '2025-04-23', 'Pâtisserie française'),
-            (14, 1, 11, 5, NULL, '15:00:00', '16:30', '2025-05-07', 'Échange espagnol contre pâtisserie'),
-            (15, 1, 2, 6, NULL, '20:00:00', '21:30', '2025-05-14', 'Échange maths contre JavaScript'),
-            (16, 3, 3, NULL, 10, '13:00:00', '15:00:00', '2025-05-21', 'Python avancé et frameworks'),
-            (17, 1, 8, 7, NULL, '18:30:00', '20:00:00', '2025-05-28', 'Échange anglais contre guitare'),
-            (18, 1, 13, 8, NULL, '16:00:00', '17:30', '2025-06-04', 'Échange tennis contre mathématiques')");
+            (1, 2, 1, NULL, 1, '14:00:00', '16:00:00', '2025-07-15', 'Cours de PHP pour débutants'),
+            (2, 3, 4, NULL, 2, '10:00:00', '12:00:00', '2025-07-22', 'Anglais conversationnel avancé'),
+            (3, 2, 7, NULL, 3, '16:00:00', '18:00:00', '2025-08-05', 'Initiation au piano'),
+            (4, 3, 2, NULL, 4, '09:00:00', '11:00:00', '2025-08-12', 'JavaScript moderne ES6+'),
+            (5, 2, 9, NULL, 5, '15:00:00', '17:00:00', '2025-08-20', 'Tennis pour débutants'),
+            (6, 1, 1, 1, NULL, '18:00:00', '20:00:00', '2025-09-03', 'Échange PHP contre Python - OUVERT'),
+            (7, 1, 11, 2, NULL, '14:00:00', '15:30', '2025-09-10', 'Échange pâtisserie contre piano - OUVERT'),
+            (8, 1, 2, 3, NULL, '19:00:00', '21:00:00', '2025-09-18', 'Échange JavaScript contre tennis - OUVERT'),
+            (9, 1, 14, 4, NULL, '17:00:00', '18:30', '2025-09-25', 'Échange dessin contre pâtisserie - OUVERT'),
+            (10, 2, 14, NULL, 6, '11:00:00', '13:00:00', '2025-10-02', 'Atelier de dessin artistique'),
+            (11, 3, 5, NULL, 7, '16:00:00', '18:00:00', '2025-10-09', 'Espagnol niveau intermédiaire'),
+            (12, 2, 13, NULL, 8, '14:00:00', '16:00:00', '2025-10-16', 'Mathématiques appliquées'),
+            (13, 2, 11, NULL, 9, '10:00:00', '12:00:00', '2025-10-23', 'Pâtisserie française'),
+            (14, 1, 5, 5, NULL, '15:00:00', '16:30', '2025-11-07', 'Échange espagnol contre JavaScript'),
+            (15, 1, 13, 6, NULL, '20:00:00', '21:30', '2025-11-14', 'Échange maths contre guitare'),
+            (16, 3, 3, NULL, 10, '13:00:00', '15:00:00', '2025-11-21', 'Python avancé et frameworks'),
+            (17, 1, 4, 7, NULL, '18:30:00', '20:00:00', '2025-11-28', 'Échange anglais contre tennis'),
+            (18, 1, 9, 8, NULL, '16:00:00', '17:30', '2025-12-04', 'Échange tennis contre dessin')");
 
         // 9. User_lesson (participants aux cours)
         $this->addSql("INSERT INTO user_lesson (user_id, lesson_id) VALUES 
