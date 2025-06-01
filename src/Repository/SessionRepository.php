@@ -92,9 +92,9 @@ class SessionRepository extends ServiceEntityRepository
                ->setParameter('user', $user);
         }
 
-        if ('' !== $q) {
-            $qb->andWhere('st.name LIKE :q')
-               ->setParameter('q', '%' . $q . '%');
+        if (null !== $skillGiven) {
+            $qb->andWhere('st.name LIKE :skillFilter')
+               ->setParameter('skillFilter', '%' . $skillGiven . '%');
         }
 
         if (null !== $categoryGiven) {
@@ -154,14 +154,9 @@ class SessionRepository extends ServiceEntityRepository
                ->setParameter('user', $user);
         }
 
-        if ('' !== $q) {
-            $qb->andWhere('st.name LIKE :q')
-               ->setParameter('q', '%' . $q . '%');
-        }
-
-        if (null !== $categoryGiven) {
-            $qb->andWhere('st.category = :category')
-               ->setParameter('category', $categoryGiven);
+        if ("" !== $skillGiven) {
+            $qb->andWhere('sr.name LIKE :skillFilter')
+               ->setParameter('skillFilter', '%' . $skillGiven . '%');
         }
 
         if (null !== $categoryRequested) {
@@ -169,6 +164,10 @@ class SessionRepository extends ServiceEntityRepository
                ->setParameter('category', $categoryRequested);
         }
 
+        if (null !== $categoryGiven) {
+            $qb->andWhere('st.category = :category')
+               ->setParameter('category', $categoryGiven);
+        }
         if (null !== $skillRequested) {
             $qb->andWhere('sr.name LIKE :skillFilter')
                ->setParameter('skillFilter', '%' . $skillRequested . '%');
@@ -354,7 +353,7 @@ class SessionRepository extends ServiceEntityRepository
                 'skill_taught_id'       => $tskill->getId(),
                 'skill_taught_category_id' => $tskill->getCategory()->getId(),
                 'skill_taught_name'     => $tskill->getName(),
-        'full_address'          => $loc,
+'full_address' => (string) $loc->getAdress(),
             ];
         }
 
@@ -393,7 +392,7 @@ class SessionRepository extends ServiceEntityRepository
                 'skill_taught_id'       => $tskill->getId(),
                 'skill_taught_category_id' => $tskill->getCategory()->getId(),
                 'skill_taught_name'     => $tskill->getName(),
-'full_address' => (string) $loc,
+'full_address' => (string) $loc->getAdress(),
             ];
         }
 

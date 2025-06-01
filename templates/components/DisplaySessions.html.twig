@@ -96,7 +96,7 @@
     </div>
     {% endif %}
 
-    <div class="flex-vertical">
+    <div id="" style="position:relative" class="flex-vertical warning-input">
     <label for="dateStart">{{ 'Date'|trans }}:</label>
     <input type="date" 
            id="dateStart" 
@@ -104,6 +104,7 @@
            name="dateStart" 
            data-action="change->live#action" 
            data-live-action-param="search">
+        <p class="warning-info">Le bouton clear de l'input date ne fonctionne pas <br> nous n'avons pas trouvé comment le prendre en charge dans la documentation Symfony Live <br> donc il faut recharger la page pour vider cet input</p>
     </div>
 
     <div style="visibility: hidden;" class="flex-vertical">

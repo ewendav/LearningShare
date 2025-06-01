@@ -523,5 +523,21 @@ input.toggle-switch-input:checked + .toggle-switch-slider .slider {
 
 .filter-box .flex-vertical{
   justify-content: start!important;
+}
 
+.warning-info{
+position: absolute;
+  background-color: white;
+  visibility: hidden;
+  width: 24vw;
+  right: 7vw;
+  top: 3vw;
+  border: red 6px solid;
+  padding: 1rem;
+  border-radius: 12px;
+  transition: 300ms all;
+  font-weight: bold;
+}
+.warning-input:hover .warning-info{
+  visibility: visible;
 }
