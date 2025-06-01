@@ -42,7 +42,7 @@
                 <input class="toggle-switch-input" type="checkbox"
                         {% if getParams.type == 'cours' %} checked {% endif %}
                        onClick="
-                               window.location.href = '{{ path('app_user_profile') }}?profileId={{ userData.user_id }}&type=' + (this.checked ? 'cours' : 'echange');
+                               window.location.href = '{{ path('app_user_profile', {'id': userData.user_id}) }}?type=' + (this.checked ? 'cours' : 'echange');
                                ">
                 <span class="toggle-switch-slider">
                     <p>{{ "Mes échanges"|trans }}</p>

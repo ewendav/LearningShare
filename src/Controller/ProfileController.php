@@ -16,24 +16,21 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ProfileController extends AbstractController
 {
-    #[Route('/profile', name: 'app_user_profile')]
+    #[Route('/profile', name: 'app_my_profile')]
+    #[Route('/profile/{id}', name: 'app_user_profile', requirements: ['id' => '\d+'])]
     public function profile(
+        int                    $id = null,
         Request                $request,
         EntityManagerInterface $em,
         CategoryRepository     $categoryRepository,
         RatingService          $ratingService
     ): Response
     {
-        $userId = $request->query->get('user_id');
-        $profileId = $request->query->get('profileId');
-        
-        // Utiliser profileId si disponible, sinon utiliser user_id
-        if ($profileId) {
-            $userId = $profileId;
-        }
-        
-        if (!$userId) {
+        // Si aucun ID n'est fourni, utiliser l'utilisateur connecté
+        if (!$id) {
             $userId = $this->getUser() ? $this->getUser()->getId() : null;
+        } else {
+            $userId = $id;
         }
         $type = $request->query->get('type', 'cours'); // Par défaut, afficher les cours
 

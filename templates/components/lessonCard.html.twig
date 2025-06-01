@@ -12,7 +12,7 @@
       {% endif %}
           src="{{ avatar_path }}" class="avatar" >
       {% if app.user %}
-        <p><a href="/profile?profileId={{ userId }}">{{userName}}</a></p>
+        <p><a href="{{ path('app_user_profile', {'id': userId}) }}">{{userName}}</a></p>
       {% else %}
         <p>{{userName}}</p>
       {% endif %}
@@ -35,7 +35,7 @@
       {% endif %}
           src="{{ avatar_path }}" class="avatar" >
       {% if app.user %}
-        <p><a href="/profile?profileId={{ userId }}">{{userName}}</a></p>
+        <p><a href="{{ path('app_user_profile', {'id': userId}) }}">{{userName}}</a></p>
       {% else %}
         <p>{{userName}}</p>
       {% endif %}
@@ -45,7 +45,7 @@
     <div class="flex" style="gap:.5rem; opacity : 0;" >
       <img src="{{ avatar_path }}" class="avatar" >
       {% if app.user %}
-        <p><a href="/profile?profileId={{ userId }}">{{userName}}</a></p>
+        <p><a href="{{ path('app_user_profile', {'id': userId}) }}">{{userName}}</a></p>
       {% else %}
         <p>{{userName}}</p>
       {% endif %}
@@ -92,7 +92,7 @@
   {% endif %}
 
   {% if app.user %}
-    {% set viewed_profile_id = app.request.query.get('profileId') %}
+    {% set viewed_profile_id = app.request.attributes.get('id') %}
     {% set is_viewing_own_profile = viewed_profile_id is null or viewed_profile_id|number_format == app.user.id %}
     
     {% if app.user.id == userId %}
