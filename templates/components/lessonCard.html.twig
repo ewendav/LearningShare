@@ -98,6 +98,13 @@
     {% if app.user.id == userId %}
       {# User is the host of the course - show cancel button only if viewing own profile #}
       {% if is_viewing_own_profile %}
+        <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+          <a href="{{ path('app_session_edit', {'id': session_id, 'type': 'lesson'}) }}" style="flex: 1;">
+            <button class="form-button" style="width:100%; background-color:#28a745;" type="button">
+              <i class="fas fa-edit"></i> {{ "Modifier"|trans }}
+            </button>
+          </a>
+        </div>
         <form action="{{ path('app_cancel_lesson', {'id': session_id}) }}" method="POST">
           {% if csrf_protection is defined and csrf_protection %}
             <input type="hidden" name="token" value="{{ csrf_token('cancel-lesson-' ~ session_id) }}">

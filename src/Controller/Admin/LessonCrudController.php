@@ -103,12 +103,17 @@ class LessonCrudController extends AbstractCrudController
             })
             ->setQueryBuilder(fn($qb) => $qb->orderBy('entity.city', 'ASC'));
 
+        // Display-only field for skillTaught since we can't search on inverse relationship
         yield AssociationField::new('session.skillTaught', t('Compétence enseignée'))
             ->formatValue(fn($value, Lesson $lesson) => $lesson->getSession()?->getSkillTaught()?->getName() ?? '')
             ->setRequired(true)
             ->setCrudController(SkillCrudController::class)
             ->setFormTypeOption('choice_label', 'name')
-            ->setFormTypeOption('group_by', 'category.name');
+            ->setFormTypeOption('group_by', 'category.name')
+            ->setQueryBuilder(function($queryBuilder) {
+                // We're not using this field for search, so we don't need to modify the query
+                return $queryBuilder;
+            });
 
         yield FormField::addPanel(t('Session liée'));
 
@@ -116,13 +121,20 @@ class LessonCrudController extends AbstractCrudController
             ->onlyOnForms()
             ->formatValue(fn($value, Lesson $lesson) => $lesson->getSession()?->getCost()?->getAmount().' jetons')
             ->setCrudController(RateCrudController::class)
-            ->setFormTypeOption('choice_label', fn($rate) => $rate->getAmount().' jetons');
+            ->setFormTypeOption('choice_label', fn($rate) => $rate->getAmount().' jetons')
+            ->setQueryBuilder(function($queryBuilder) {
+                return $queryBuilder;
+            });
 
         yield DateField::new('session.date', t('Date'))
-            ->formatValue(fn($value) => $value ? $value->format('Y-m-d') : '');
+            ->formatValue(fn($value) => $value ? $value->format('Y-m-d') : '')
+            ->setFormTypeOption('attr', ['data-ea-widget' => 'ea-autocomplete']);
 
-        yield TimeField::new('session.startTime', t('Heure de début'));
-        yield TimeField::new('session.endTime', t('Heure de fin'));
-        yield TextField::new('session.description', t('Description'));
+        yield TimeField::new('session.startTime', t('Heure de début'))
+            ->setFormTypeOption('attr', ['data-ea-widget' => 'ea-autocomplete']);
+        yield TimeField::new('session.endTime', t('Heure de fin'))
+            ->setFormTypeOption('attr', ['data-ea-widget' => 'ea-autocomplete']);
+        yield TextField::new('session.description', t('Description'))
+            ->setFormTypeOption('attr', ['data-ea-widget' => 'ea-autocomplete']);
     }
 }
