@@ -1,12 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
+{% block title %}{{ 'Inscription'|trans }}{% endblock %}
 
 {% block body %}
 
     <section class="registration-container">
         <div id="section-registration">
-            <h1 class="page-title">Inscription</h1>
+            <h1 class="page-title">{{ 'Inscription'|trans }}</h1>
 
             {% if form_errors(registrationForm) %}
                 <div class="error-message">{{ form_errors(registrationForm) }}</div>
@@ -17,11 +17,11 @@
 
                 <div class="horizontal-display">
                     <div class="input-label-display">
-                        <label for="firstName">Prénom</label>
+                        <label for="firstName">{{ 'Prénom'|trans }}</label>
                         {{ form_widget(registrationForm.firstname, {
                             'attr': {
                                 'class': 'input-goofy',
-                                'placeholder': 'Entrez votre prénom'
+                                'placeholder': 'Entrez votre prénom'|trans
                             }
                         }) }}
                         {% if form_errors(registrationForm.firstname) %}
@@ -30,11 +30,11 @@
                     </div>
 
                     <div class="input-label-display">
-                        <label for="lastName">Nom</label>
+                        <label for="lastName">{{ 'Nom'|trans }}</label>
                         {{ form_widget(registrationForm.lastname, {
                             'attr': {
                                 'class': 'input-goofy',
-                                'placeholder': 'Entrez votre nom'
+                                'placeholder': 'Entrez votre nom'|trans
                             }
                         }) }}
                         {% if form_errors(registrationForm.lastname) %}
@@ -45,11 +45,11 @@
 
                 <div class="horizontal-display">
                     <div class="input-label-display">
-                        <label for="email">Email</label>
+                        <label for="email">{{ 'Email'|trans }}</label>
                         {{ form_widget(registrationForm.email, {
                             'attr': {
                                 'class': 'input-goofy',
-                                'placeholder': 'Entrez votre email'
+                                'placeholder': 'Entrez votre email'|trans
                             }
                         }) }}
                         {% if form_errors(registrationForm.email) %}
@@ -58,11 +58,11 @@
                     </div>
 
                     <div class="input-label-display">
-                        <label for="phone">Téléphone</label>
+                        <label for="phone">{{ 'Téléphone'|trans }}</label>
                         {{ form_widget(registrationForm.phone, {
                             'attr': {
                                 'class': 'input-goofy',
-                                'placeholder': 'Entrez votre numéro de téléphone'
+                                'placeholder': 'Entrez votre numéro de téléphone'|trans
                             }
                         }) }}
                         {% if form_errors(registrationForm.phone) %}
@@ -72,11 +72,11 @@
                 </div>
 
                 <div class="input-label-display">
-                    <label for="biography">Biographie</label>
+                    <label for="biography">{{ 'Biographie'|trans }}</label>
                     {{ form_widget(registrationForm.biography, {
                         'attr': {
                             'class': 'input-goofy',
-                            'placeholder': 'Entrez votre biographie',
+                            'placeholder': 'Entrez votre biographie'|trans,
                             'rows': '3'
                         }
                     }) }}
@@ -86,7 +86,7 @@
                 </div>
 
                 <div class="input-label-display">
-                    <label for="avatar">Avatar</label>
+                    <label for="avatar">{{ 'Avatar'|trans }}</label>
                     {{ form_widget(registrationForm.avatar, {
                         'attr': {
                             'class': 'input-goofy',
@@ -99,11 +99,11 @@
                 </div>
 
                 <div class="input-label-display">
-                    <label for="password">Mot de passe</label>
+                    <label for="password">{{ 'Mot de passe'|trans }}</label>
                     {{ form_widget(registrationForm.plainPassword, {
                         'attr': {
                             'class': 'input-goofy',
-                            'placeholder': 'Entrez votre mot de passe'
+                            'placeholder': 'Entrez votre mot de passe'|trans
                         }
                     }) }}
                 </div>
@@ -120,11 +120,11 @@
                 </div>
 
                 <div class="horizontal-display">
-                    <button class="form-button green-bg" type="submit">Inscription</button>
+                    <button class="form-button green-bg" type="submit">{{ 'Inscription'|trans }}</button>
                 </div>
 
                 <div class="create-account-prompt">
-                    <p><a href="/login">Déjà un compte ?</a></p>
+                    <p><a href="/login">{{ 'Déjà un compte ?'|trans }}</a></p>
                 </div>
             </div>
             {{ form_end(registrationForm) }}

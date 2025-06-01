@@ -91,3 +91,14 @@ pour faire fonctioner les stimulus live function on peut tweak les déclencheur 
 
 data-action="click->live#action"
 
+### DEPLOYER EN PROD (https://learningshare.alwaysdata.net/)
+
+Créer la commande en local
+```
+git remote add deploy learningshare@ssh-learningshare.alwaysdata.net:~/learningshare.git
+```
+Pousser la main
+```
+git push deploy main
+mot de passe : 1VXaQ33kF5
+```

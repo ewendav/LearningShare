@@ -9,10 +9,28 @@
         <div class="user-profile-header" style="display: flex; align-items: center; gap: 1.5rem; padding: 2rem; background: #F8F8F8; border-radius: 12px; margin-bottom: 2rem;">
             <img src="{{ userData.avatar_path is not empty ? userData.avatar_path : '/default-avatar.png' }}" alt="Avatar" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">
 
-            <div>
+            <div style="flex: 1;">
                 <h2 style="margin: 0;">{{ userData.user_first_name }} {{ userData.user_last_name }}</h2>
                 <p style="margin: 0.5rem 0; font-weight: bold;">{{ "Ma biographie"|trans }}</p>
                 <p style="max-width: 500px;">{{ userData.biography is not empty ? userData.biography : "Pas de biographie"|trans }}</p>
+            </div>
+
+            <div class="rating-section" style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                {# Affichage des étoiles de notation #}
+                <div class="rating-container" style="text-align: center;">
+                    <p style="margin: 0 0 0.5rem 0; font-size: 0.9rem; color: #666;">{{ "Moyenne des notes de l'utilisateur"|trans }}</p>
+                    <div class="stars-display">
+                        {% for i in 1..5 %}
+                            <span class="star {% if i <= averageRating %}filled{% endif %}">★</span>
+                        {% endfor %}
+                        <span class="rating-text">({{ averageRating|number_format(1) }}/5)</span>
+                    </div>
+                </div>
+
+                {# Bouton de notation si l'utilisateur peut noter #}
+                {% if canRate %}
+                    <button id="rate-user-btn" class="rate-button" onclick="showRatingModal()">{{ "Noter cet utilisateur"|trans }}</button>
+                {% endif %}
             </div>
         </div>
 
@@ -24,7 +42,7 @@
                 <input class="toggle-switch-input" type="checkbox"
                         {% if getParams.type == 'cours' %} checked {% endif %}
                        onClick="
-                               window.location.href = '{{ path('app_user_profile') }}?user_id={{ userData.user_id }}&type=' + (this.checked ? 'cours' : 'echange');
+                               window.location.href = '{{ path('app_user_profile') }}?profileId={{ userData.user_id }}&type=' + (this.checked ? 'cours' : 'echange');
                                ">
                 <span class="toggle-switch-slider">
                     <p>{{ "Mes échanges"|trans }}</p>
@@ -85,4 +103,207 @@
             {% endif %}
         </div>
     </section>
+
+    {# Modal de notation #}
+    {% if canRate %}
+        <div id="rating-modal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close" onclick="closeRatingModal()">&times;</span>
+                <h3>{{ "Noter"|trans }} {{ userData.user_first_name }}</h3>
+                <div class="rating-stars">
+                    {% for i in 1..5 %}
+                        <span class="rating-star" data-rating="{{ i }}" onclick="selectRating({{ i }})">★</span>
+                    {% endfor %}
+                </div>
+                <div class="rating-actions">
+                    <button onclick="closeRatingModal()" class="cancel-btn">{{ "Annuler"|trans }}</button>
+                    <button onclick="submitRating()" class="submit-btn" disabled>{{ "Valider"|trans }}</button>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+
+    <style>
+        .stars-display .star {
+            color: #ddd;
+            font-size: 1.5rem;
+            margin-right: 0.2rem;
+        }
+        
+        .stars-display .star.filled {
+            color: #ffc107;
+        }
+        
+        .rating-text {
+            margin-left: 0.5rem;
+            font-weight: bold;
+            color: #666;
+        }
+        
+        .rate-button {
+            padding: 0.5rem 1rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        
+        .rate-button:hover {
+            background-color: #0056b3;
+        }
+        
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 2rem;
+            border-radius: 12px;
+            width: 400px;
+            text-align: center;
+        }
+        
+        .close {
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #000;
+        }
+        
+        .rating-stars {
+            margin: 2rem 0;
+        }
+        
+        .rating-star {
+            font-size: 2rem;
+            color: #ddd;
+            cursor: pointer;
+            margin: 0 0.2rem;
+            transition: color 0.2s;
+        }
+        
+        .rating-star:hover,
+        .rating-star.selected {
+            color: #ffc107;
+        }
+        
+        .rating-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .cancel-btn,
+        .submit-btn {
+            padding: 0.7rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        
+        .cancel-btn {
+            background-color: #6c757d;
+            color: white;
+        }
+        
+        .submit-btn {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .submit-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+
+    <script>
+        let selectedRating = 0;
+
+        function showRatingModal() {
+            document.getElementById('rating-modal').style.display = 'block';
+        }
+
+        function closeRatingModal() {
+            document.getElementById('rating-modal').style.display = 'none';
+            selectedRating = 0;
+            updateStars();
+            document.querySelector('.submit-btn').disabled = true;
+        }
+
+        function selectRating(rating) {
+            selectedRating = rating;
+            updateStars();
+            document.querySelector('.submit-btn').disabled = false;
+        }
+
+        function updateStars() {
+            const stars = document.querySelectorAll('.rating-star');
+            stars.forEach((star, index) => {
+                if (index < selectedRating) {
+                    star.classList.add('selected');
+                } else {
+                    star.classList.remove('selected');
+                }
+            });
+        }
+
+        function submitRating() {
+            if (selectedRating === 0) return;
+
+            fetch('{{ path('app_rate_user', {'userId': userData.user_id}) }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'rating=' + selectedRating
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    closeRatingModal();
+                    
+                    // Mettre à jour l'affichage des étoiles
+                    const starsDisplay = document.querySelector('.stars-display');
+                    const stars = starsDisplay.querySelectorAll('.star');
+                    const ratingText = starsDisplay.querySelector('.rating-text');
+                    
+                    stars.forEach((star, index) => {
+                        if (index < Math.round(data.newAverageRating)) {
+                            star.classList.add('filled');
+                        } else {
+                            star.classList.remove('filled');
+                        }
+                    });
+                    
+                    ratingText.textContent = '(' + data.newAverageRating + '/5)';
+                    
+                    // Cacher le bouton de notation
+                    document.getElementById('rate-user-btn').style.display = 'none';
+                } else {
+                    alert(data.error);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Une erreur est survenue');
+            });
+        }
+    </script>
 {% endblock %}

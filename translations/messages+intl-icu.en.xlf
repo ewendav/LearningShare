@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="fr" target-language="en" datatype="plaintext" original="file.ext">
+    <header>
+      <tool tool-id="symfony" tool-name="Symfony"/>
+    </header>
+    <body>
+      <trans-unit id="Pn7xwmS" resname="Avis">
+        <source>Avis</source>
+        <target>Review</target>
+      </trans-unit>
+      <trans-unit id="3pk2Avb" resname="Par">
+        <source>Par</source>
+        <target>By</target>
+      </trans-unit>
+      <trans-unit id="em3lZw6" resname="Contenu">
+        <source>Contenu</source>
+        <target>Content</target>
+      </trans-unit>
+      <trans-unit id="H2hQFT1" resname="Leçon">
+        <source>Leçon</source>
+        <target>Lesson</target>
+      </trans-unit>
+      <trans-unit id="3hL9BJ3" resname="Leçons">
+        <source>Leçons</source>
+        <target>Lessons</target>
+      </trans-unit>
+      <trans-unit id="q7ezonx" resname="Hôte">
+        <source>Hôte</source>
+        <target>Host</target>
+      </trans-unit>
+      <trans-unit id="kkuMuFS" resname="Nombre maximal de participants">
+        <source>Nombre maximal de participants</source>
+        <target>Maximum number of participants</target>
+      </trans-unit>
+      <trans-unit id="2V7drIj" resname="Nombre maximum de participants pour cette leçon.">
+        <source>Nombre maximum de participants pour cette leçon.</source>
+        <target>Maximum number of participants for this lesson.</target>
+      </trans-unit>
+      <trans-unit id="DicnmzM" resname="Participants">
+        <source>Participants</source>
+        <target>Participants</target>
+      </trans-unit>
+      <trans-unit id="Sd0BHdh" resname="Lieu">
+        <source>Lieu</source>
+        <target>Location</target>
+      </trans-unit>
+      <trans-unit id="gjvd24p" resname="Compétence enseignée">
+        <source>Compétence enseignée</source>
+        <target>Taught skill</target>
+      </trans-unit>
+      <trans-unit id="MSRsQC4" resname="Session liée">
+        <source>Session liée</source>
+        <target>Linked session</target>
+      </trans-unit>
+      <trans-unit id="OF2hJqj" resname="Coût">
+        <source>Coût</source>
+        <target>Cost</target>
+      </trans-unit>
+      <trans-unit id="mcQKtAW" resname="Date">
+        <source>Date</source>
+        <target>Date</target>
+      </trans-unit>
+      <trans-unit id="v8O7Mx0" resname="Heure de début">
+        <source>Heure de début</source>
+        <target>Start time</target>
+      </trans-unit>
+      <trans-unit id="WtYH0LV" resname="Heure de fin">
+        <source>Heure de fin</source>
+        <target>End time</target>
+      </trans-unit>
+      <trans-unit id="Um4Ah8w" resname="Description">
+        <source>Description</source>
+        <target>Description</target>
+      </trans-unit>
+      <trans-unit id="q0Uca0i" resname="Mon profil">
+        <source>Mon profil</source>
+        <target>My profile</target>
+      </trans-unit>
+      <trans-unit id="GvFC7pY" resname="Gestion">
+        <source>Gestion</source>
+        <target>Management</target>
+      </trans-unit>
+      <trans-unit id="I9OTi17" resname="Utilisateurs">
+        <source>Utilisateurs</source>
+        <target>Users</target>
+      </trans-unit>
+      <trans-unit id="LBAXk1i" resname="Échanges">
+        <source>Échanges</source>
+        <target>Exchanges</target>
+      </trans-unit>
+      <trans-unit id="AsE5ZC8" resname="Cours">
+        <source>Cours</source>
+        <target>Lesson</target>
+      </trans-unit>
+      <trans-unit id="SxUSCLz" resname="Catégories">
+        <source>Catégories</source>
+        <target>Categories</target>
+      </trans-unit>
+      <trans-unit id="QTkjKFo" resname="Compétences">
+        <source>Compétences</source>
+        <target>Skills</target>
+      </trans-unit>
+      <trans-unit id="5CM4msZ" resname="Adresses">
+        <source>Adresses</source>
+        <target>Addresses</target>
+      </trans-unit>
+      <trans-unit id="_zCujCh" resname="Tarifs">
+        <source>Tarifs</source>
+        <target>Prices</target>
+      </trans-unit>
+      <trans-unit id="qbWj8ud" resname="Signalements">
+        <source>Signalements</source>
+        <target>Reports</target>
+      </trans-unit>
+      <trans-unit id="rbkpM0S" resname="Mots interdits">
+        <source>Mots interdits</source>
+        <target>Banned words</target>
+      </trans-unit>
+      <trans-unit id="CdI6LwI" resname="Tarif">
+        <source>Tarif</source>
+        <target>Rate</target>
+      </trans-unit>
+      <trans-unit id="ssEkU20" resname="Nom">
+        <source>Nom</source>
+        <target>Name</target>
+      </trans-unit>
+      <trans-unit id="VMMk9sE" resname="Prix">
+        <source>Prix</source>
+        <target>Price</target>
+      </trans-unit>
+      <trans-unit id="o0fIV10" resname="Échange">
+        <source>Échange</source>
+        <target>Exchange</target>
+      </trans-unit>
+      <trans-unit id="Eaq2WE7" resname="Demandeur">
+        <source>Demandeur</source>
+        <target>Requester</target>
+      </trans-unit>
+      <trans-unit id="VU9CNRE" resname="Participant">
+        <source>Participant</source>
+        <target>Participant</target>
+      </trans-unit>
+      <trans-unit id="8aN_XyS" resname="Compétence demandée">
+        <source>Compétence demandée</source>
+        <target>Requested skill</target>
+      </trans-unit>
+      <trans-unit id="ch5bKau" resname="Utilisateur">
+        <source>Utilisateur</source>
+        <target>User</target>
+      </trans-unit>
+      <trans-unit id="lpzL089" resname="Email">
+        <source>Email</source>
+        <target>Email</target>
+      </trans-unit>
+      <trans-unit id=".5yLjAZ" resname="Mot de passe">
+        <source>Mot de passe</source>
+        <target>Password</target>
+      </trans-unit>
+      <trans-unit id="pHom.U." resname="Laissez vide pour conserver le mot de passe actuel.">
+        <source>Laissez vide pour conserver le mot de passe actuel.</source>
+        <target>Leave empty to keep the current password.</target>
+      </trans-unit>
+      <trans-unit id="yo6CbZw" resname="Avatar">
+        <source>Avatar</source>
+        <target>Avatar</target>
+      </trans-unit>
+      <trans-unit id="4yW.j5A" resname="Prénom">
+        <source>Prénom</source>
+        <target>First name</target>
+      </trans-unit>
+      <trans-unit id="dVzt1ji" resname="Biographie">
+        <source>Biographie</source>
+        <target>Biography</target>
+      </trans-unit>
+      <trans-unit id="zExCS1c" resname="Téléphone">
+        <source>Téléphone</source>
+        <target>Phone</target>
+      </trans-unit>
+      <trans-unit id="yqNZZCS" resname="Solde">
+        <source>Solde</source>
+        <target>Balance</target>
+      </trans-unit>
+      <trans-unit id="rWS3P1U" resname="Accès">
+        <source>Accès</source>
+        <target>Access</target>
+      </trans-unit>
+      <trans-unit id="CQuFNa6" resname="Signalement">
+        <source>Signalement</source>
+        <target>Report</target>
+      </trans-unit>
+      <trans-unit id="cMA8G93" resname="Contre">
+        <source>Contre</source>
+        <target>Against</target>
+      </trans-unit>
+      <trans-unit id="fxVVw0S" resname="Compétence">
+        <source>Compétence</source>
+        <target>Skill</target>
+      </trans-unit>
+      <trans-unit id="aKU0H8a" resname="Catégorie">
+        <source>Catégorie</source>
+        <target>Category</target>
+      </trans-unit>
+      <trans-unit id="BYvm6tl" resname="Compteur de recherches">
+        <source>Compteur de recherches</source>
+        <target>Search counter</target>
+      </trans-unit>
+      <trans-unit id="RDNLYtN" resname="Lieux">
+        <source>Lieux</source>
+        <target>Locations</target>
+      </trans-unit>
+      <trans-unit id="eeXPIN4" resname="Adresse">
+        <source>Adresse</source>
+        <target>Address</target>
+      </trans-unit>
+      <trans-unit id="vnBxYSs" resname="Code postal">
+        <source>Code postal</source>
+        <target>Postal code</target>
+      </trans-unit>
+      <trans-unit id="r7TBVfm" resname="Le code postal doit contenir exactement 5 chiffres.">
+        <source>Le code postal doit contenir exactement 5 chiffres.</source>
+        <target>The postal code must contain exactly 5 digits.</target>
+      </trans-unit>
+      <trans-unit id="Dr0lo0H" resname="Ville">
+        <source>Ville</source>
+        <target>City</target>
+      </trans-unit>
+      <trans-unit id="mfqitQn" resname="Changer le thème">
+        <source>Changer le thème</source>
+        <target>Change theme</target>
+      </trans-unit>
+      <trans-unit id="72F5FfO" resname="Vous partagez">
+        <source>Vous partagez</source>
+        <target>You share</target>
+      </trans-unit>
+      <trans-unit id="fOvrztg" resname="Vous apprends">
+        <source>Vous apprends</source>
+        <target>You teach</target>
+      </trans-unit>
+      <trans-unit id="r1zzE2Z" resname="Veux apprendre">
+        <source>Veux apprendre</source>
+        <target>Wants to learn</target>
+      </trans-unit>
+      <trans-unit id="JpEdon0" resname="Rejoindre le partage">
+        <source>Rejoindre le partage</source>
+        <target>Join the share</target>
+      </trans-unit>
+      <trans-unit id="4CESGlx" resname="Rechercher une compétence">
+        <source>Rechercher une compétence</source>
+        <target>Search for a skill</target>
+      </trans-unit>
+      <trans-unit id="YdaVBBA" resname="Connexion">
+        <source>Connexion</source>
+        <target>Login</target>
+      </trans-unit>
+      <trans-unit id="PCX0_17" resname="S'inscrire">
+        <source>S'inscrire</source>
+        <target>Sign up</target>
+      </trans-unit>
+      <trans-unit id="sYru0ag" resname="Se déconnecter">
+        <source>Se déconnecter</source>
+        <target>Log out</target>
+      </trans-unit>
+      <trans-unit id="8Ih.RQw" resname="-- Any --">
+        <source>-- Any --</source>
+        <target>-- Any --</target>
+      </trans-unit>
+      <trans-unit id="8mgEyWK" resname="Rechercher la compétence demandée">
+        <source>Rechercher la compétence demandée</source>
+        <target>Search for requested skill</target>
+      </trans-unit>
+      <trans-unit id="mARyQy_" resname="Date de début">
+        <source>Date de début</source>
+        <target>Start date</target>
+      </trans-unit>
+      <trans-unit id="sTSqvuA" resname="Date de fin">
+        <source>Date de fin</source>
+        <target>End date</target>
+      </trans-unit>
+      <trans-unit id="qJ362qe" resname="Aucun résultats disponibles">
+        <source>Aucun résultats disponibles</source>
+        <target>No results available</target>
+      </trans-unit>
+      <trans-unit id="giW1leI" resname="Vous enseignez">
+        <source>Vous enseignez</source>
+        <target>You teach</target>
+      </trans-unit>
+      <trans-unit id="WaOlkQt" resname="Vous apprenez">
+        <source>Vous apprenez</source>
+        <target>You learn</target>
+      </trans-unit>
+      <trans-unit id="fLvzObM" resname="Rejoindre le cours">
+        <source>Rejoindre le cours</source>
+        <target>Join the lesson</target>
+      </trans-unit>
+      <trans-unit id="ZyFT62v" resname="A propos">
+        <source>A propos</source>
+        <target>About</target>
+      </trans-unit>
+      <trans-unit id="2NosSd8" resname="Note">
+        <source>Note</source>
+        <target>Rating</target>
+      </trans-unit>
+      <trans-unit id="Rq05Fva" resname="Annuler">
+        <source>Annuler</source>
+        <target>Cancel</target>
+      </trans-unit>
+      <trans-unit id="cVhQzzr" resname="Se désinscrire">
+        <source>Se désinscrire</source>
+        <target>__Se désinscrire</target>
+      </trans-unit>
+      <trans-unit id="438XHbK" resname="Ma biographie">
+        <source>Ma biographie</source>
+        <target>My biography</target>
+      </trans-unit>
+      <trans-unit id="W14EtXb" resname="Pas de biographie">
+        <source>Pas de biographie</source>
+        <target>No biography</target>
+      </trans-unit>
+      <trans-unit id="ujBCZT0" resname="Mes échanges">
+        <source>Mes échanges</source>
+        <target>My exchanges</target>
+      </trans-unit>
+      <trans-unit id="2TRzwyA" resname="Je vous apprends">
+        <source>Je vous apprends</source>
+        <target>I teach you</target>
+      </trans-unit>
+      <trans-unit id="n1yIHbX" resname="Mes cours">
+        <source>Mes cours</source>
+        <target>My lessons</target>
+      </trans-unit>
+      <trans-unit id="oefFRO0" resname="Aucune donnée disponible">
+        <source>Aucune donnée disponible</source>
+        <target>No data available</target>
+      </trans-unit>
+      <trans-unit id="BhGbptn" resname="Entrez votre email">
+        <source>Entrez votre email</source>
+        <target>Enter your email</target>
+      </trans-unit>
+      <trans-unit id="NThw3fU" resname="Entrez votre mot de passe">
+        <source>Entrez votre mot de passe</source>
+        <target>Enter your password</target>
+      </trans-unit>
+      <trans-unit id="SNitTy8" resname="Se Connecter">
+        <source>Se Connecter</source>
+        <target>Login</target>
+      </trans-unit>
+      <trans-unit id="xrkcUZV" resname="Pannel administrateur">
+        <source>Pannel administrateur</source>
+        <target>Admin Panel</target>
+      </trans-unit>
+      <trans-unit id=".5ABWOL" resname="Consulter les sessions">
+        <source>Consulter les sessions</source>
+        <target>View sessions</target>
+      </trans-unit>
+      <trans-unit id="ZrEgPpz" resname="Créer une session">
+        <source>Créer une session</source>
+        <target>Create a session</target>
+      </trans-unit>
+      <trans-unit id="piivmAm" resname="Créer un compte">
+        <source>Créer un compte</source>
+        <target>Create an account</target>
+      </trans-unit>
+      <trans-unit id="z7GsDIB" resname="Inscription">
+        <source>Inscription</source>
+        <target>Registration</target>
+      </trans-unit>
+      <trans-unit id="l4.bh4g" resname="Entrez votre prénom">
+        <source>Entrez votre prénom</source>
+        <target>Enter your first name</target>
+      </trans-unit>
+      <trans-unit id="HZ_ypwp" resname="Entrez votre nom">
+        <source>Entrez votre nom</source>
+        <target>Enter your last name</target>
+      </trans-unit>
+      <trans-unit id="Q6vtY8Y" resname="Entrez votre numéro de téléphone">
+        <source>Entrez votre numéro de téléphone</source>
+        <target>Enter your telephone number</target>
+      </trans-unit>
+      <trans-unit id="UMnsleI" resname="Entrez votre biographie">
+        <source>Entrez votre biographie</source>
+        <target>Enter your biography</target>
+      </trans-unit>
+      <trans-unit id="hr0iEGC" resname="Déjà un compte ?">
+        <source>Déjà un compte ?</source>
+        <target>Already an account?</target>
+      </trans-unit>
+      <trans-unit id="dma9y65" resname="Sélectionnez une catégorie">
+        <source>Sélectionnez une catégorie</source>
+        <target>Select a category</target>
+      </trans-unit>
+      <trans-unit id="_pS4K2D" resname="Sélectionnez une compétence">
+        <source>Sélectionnez une compétence</source>
+        <target>Select a skill</target>
+      </trans-unit>
+      <trans-unit id="_1.Xfpu" resname="Créer l'échange">
+        <source>Créer l'échange</source>
+        <target>Create exchange</target>
+      </trans-unit>
+      <trans-unit id="8AyT_I6" resname="Création d'un cours">
+        <source>Création d'un cours</source>
+        <target>Create a course</target>
+      </trans-unit>
+      <trans-unit id="yomgVxn" resname="L'heure de début ne peut pas être après l'heure de fin.">
+        <source>L'heure de début ne peut pas être après l'heure de fin.</source>
+        <target>Start time cannot be after end time.</target>
+      </trans-unit>
+      <trans-unit id="VV00HH5" resname="Entrez l'adresse">
+        <source>Entrez l'adresse</source>
+        <target>Enter the address</target>
+      </trans-unit>
+      <trans-unit id="8Lqpegz" resname="Entrez la ville">
+        <source>Entrez la ville</source>
+        <target>Enter the city</target>
+      </trans-unit>
+      <trans-unit id="15LRtcy" resname="Entrez le code postal">
+        <source>Entrez le code postal</source>
+        <target>Enter the postal code</target>
+      </trans-unit>
+      <trans-unit id="VZXPsFW" resname="Nombre maximum de participants">
+        <source>Nombre maximum de participants</source>
+        <target>Maximum number of attendees</target>
+      </trans-unit>
+      <trans-unit id="e_uc9tP" resname="Sélectionnez le nombre maximum de participants">
+        <source>Sélectionnez le nombre maximum de participants</source>
+        <target>Select the maximum number of attendees</target>
+      </trans-unit>
+      <trans-unit id="PIWkGGt" resname="Créer le cours">
+        <source>Créer le cours</source>
+        <target>Create course</target>
+      </trans-unit>
+      <trans-unit id="3iFR_fy" resname="Statistiques">
+        <source>Statistiques</source>
+        <target>Statistics</target>
+      </trans-unit>
+      <trans-unit id="_8Y9csL" resname="Compétences les plus recherchées">
+        <source>Compétences les plus recherchées</source>
+        <target>Skills most in demand</target>
+      </trans-unit>
+      <trans-unit id="9ur_JAt" resname="recherches">
+        <source>recherches</source>
+        <target>research</target>
+      </trans-unit>
+      <trans-unit id="F_WKtvQ" resname="Aucune donnée disponible.">
+        <source>Aucune donnée disponible.</source>
+        <target>No data available</target>
+      </trans-unit>
+      <trans-unit id="ZD8DSux" resname="Compétences les plus enseignées">
+        <source>Compétences les plus enseignées</source>
+        <target>Most frequently taught skills</target>
+      </trans-unit>
+      <trans-unit id="EiWubBr" resname="sessions">
+        <source>sessions</source>
+        <target>sessions</target>
+      </trans-unit>
+      <trans-unit id="uLKYO3h" resname="Top enseignants (6 derniers mois)">
+        <source>Top enseignants (6 derniers mois)</source>
+        <target>Top teachers (last 6 months)</target>
+      </trans-unit>
+      <trans-unit id="ZteXtHa" resname="Score d'activité">
+        <source>Score d'activité</source>
+        <target>Activity score</target>
+      </trans-unit>
+      <trans-unit id="17vFVFt" resname="Aucun enseignant actif récemment.">
+        <source>Aucun enseignant actif récemment.</source>
+        <target>No active teachers recently.</target>
+      </trans-unit>
+      <trans-unit id="Ch1noJC" resname="Évolution du nombre de sessions (12 derniers mois)">
+        <source>Évolution du nombre de sessions (12 derniers mois)</source>
+        <target>Number of sessions (last 12 months)</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

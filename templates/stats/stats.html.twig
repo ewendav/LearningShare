@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'Statistiques'|trans }}{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+
+        <h1>{{ 'Statistiques'|trans }}</h1>
+
+        <div class="container mt-5">
+            <div class="charts-grid">
+                <div class="chart-box">
+                    <h2>{{ 'Compétences les plus recherchées'|trans }}</h2>
+                    {{ render_chart(searchChart) }}
+                </div>
+                <div class="chart-box">
+                    <h2>{{ 'Compétences les plus enseignées'|trans }}</h2>
+                    {{ render_chart(taughtChart) }}
+                </div>
+            </div>
+
+            <div class="charts-grid">
+                <div class="chart-box">
+                    <h2 class="h5">{{ 'Top enseignants (6 derniers mois)'|trans }}</h2>
+                    {{ render_chart(teacherChart) }}
+                </div>
+
+                <div class="chart-box">
+                    <h2>{{ 'Évolution du nombre de sessions (12 derniers mois)'|trans }}</h2>
+                    {{ render_chart(monthlyChart) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

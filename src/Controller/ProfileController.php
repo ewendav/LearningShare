@@ -5,11 +5,14 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use App\Service\RatingService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class ProfileController extends AbstractController
 {
@@ -18,10 +21,17 @@ class ProfileController extends AbstractController
         Request                $request,
         EntityManagerInterface $em,
         CategoryRepository     $categoryRepository,
-        int                    $profileId = null
+        RatingService          $ratingService
     ): Response
     {
         $userId = $request->query->get('user_id');
+        $profileId = $request->query->get('profileId');
+        
+        // Utiliser profileId si disponible, sinon utiliser user_id
+        if ($profileId) {
+            $userId = $profileId;
+        }
+        
         if (!$userId) {
             $userId = $this->getUser() ? $this->getUser()->getId() : null;
         }
@@ -61,6 +71,10 @@ class ProfileController extends AbstractController
             ];
         }
 
+        $currentUser = $this->getUser();
+        $averageRating = $ratingService->getAverageRating($user);
+        $canRate = $currentUser && $ratingService->canUserRate($currentUser, $user);
+
         return $this->render('profile/userProfil.html.twig', [
             'title' => 'Profil de ' . $user->getFirstname(),
             'userData' => [
@@ -72,7 +86,9 @@ class ProfileController extends AbstractController
             ],
             'sessions' => $sessions,
             'categoriesIndexed' => $categoriesIndexed,
-            'getParams' => ['type' => $type]
+            'getParams' => ['type' => $type],
+            'averageRating' => $averageRating,
+            'canRate' => $canRate
         ]);
     }
 
@@ -298,5 +314,43 @@ class ProfileController extends AbstractController
         });
 
         return $result;
+    }
+
+    #[Route('/profile/rate/{userId}', name: 'app_rate_user', methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function rateUser(
+        int $userId,
+        Request $request,
+        EntityManagerInterface $em,
+        RatingService $ratingService
+    ): JsonResponse {
+        $currentUser = $this->getUser();
+        $userToRate = $em->getRepository(User::class)->find($userId);
+
+        if (!$userToRate) {
+            return new JsonResponse(['error' => 'Utilisateur non trouvé'], 404);
+        }
+
+        if (!$ratingService->canUserRate($currentUser, $userToRate)) {
+            return new JsonResponse(['error' => 'Vous ne pouvez pas noter cet utilisateur'], 403);
+        }
+
+        $rating = (int) $request->request->get('rating');
+        if ($rating < 1 || $rating > 5) {
+            return new JsonResponse(['error' => 'La note doit être comprise entre 1 et 5'], 400);
+        }
+
+        try {
+            $ratingService->createReview($currentUser, $userToRate, $rating);
+            $newAverageRating = $ratingService->getAverageRating($userToRate);
+
+            return new JsonResponse([
+                'success' => true,
+                'message' => 'Note enregistrée avec succès',
+                'newAverageRating' => $newAverageRating
+            ]);
+        } catch (\Exception $e) {
+            return new JsonResponse(['error' => 'Erreur lors de l\'enregistrement de la note'], 500);
+        }
     }
 }
