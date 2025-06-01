@@ -192,7 +192,10 @@ final class Version20250601134212 extends AbstractMigration
             (2, '456 Avenue des Champs-Élysées', '75008', 'Paris'),
             (3, '789 Cours Mirabeau', '13100', 'Aix-en-Provence'),
             (4, '321 Place Bellecour', '69002', 'Lyon'),
-            (5, '654 Rue du Vieux-Port', '13001', 'Marseille')");
+            (5, '654 Rue du Vieux-Port', '13001', 'Marseille'),
+            (6, '789 Boulevard Saint-Germain', '75006', 'Paris'),
+            (7, '456 Rue de la Paix', '69001', 'Lyon'),
+            (8, '321 Avenue du Prado', '13008', 'Marseille')");
 
         // 5. Users (10 utilisateurs + 1 admin conservé)
         $adminPassword = '$2y$13$IbmRelIH/WiNgzmgIVgkyeZ2C.D0mT2sjZq.fWnrewmiPjrtcph9m'; // admin123
@@ -222,9 +225,12 @@ final class Version20250601134212 extends AbstractMigration
             (7, 2, 10, 20),
             (8, 3, 11, 12),
             (9, 4, 3, 10),
-            (10, 5, 9, 6)");
+            (10, 5, 9, 6),
+            (11, 6, 4, 8),
+            (12, 7, 6, 10),
+            (13, 8, 5, 12)");
 
-        // 7. Exchanges (8 échanges diversifiés : 4 libres + 4 avec participants)
+        // 7. Exchanges (11 échanges diversifiés : 7 libres + 4 avec participants)
         $this->addSql("INSERT INTO exchange (id, skill_requested_id, requester_id, attendee_id) VALUES
             (1, 3, 9, NULL),
             (2, 7, 3, NULL),
@@ -233,20 +239,23 @@ final class Version20250601134212 extends AbstractMigration
             (5, 2, 10, 3),
             (6, 8, 11, 6),
             (7, 4, 4, 5),
-            (8, 14, 7, 11)");
+            (8, 14, 7, 11),
+            (9, 6, 2, 10),
+            (10, 10, 8, NULL),
+            (11, 12, 9, NULL)");
 
-        // 8. Sessions (mélange de lessons et exchanges avec dates futures)
+        // 8. Sessions (mélange de lessons et exchanges avec dates futures et 3 sessions passées)
         $this->addSql("INSERT INTO session (id, cost_id, skill_taught_id, exchange_id, lesson_id, start_time, end_time, date, description) VALUES
-            (1, 2, 1, NULL, 1, '14:00:00', '16:00:00', '2025-07-15', 'Cours de PHP pour débutants'),
+            (1, 2, 1, NULL, 1, '14:00:00', '16:00:00', '2024-11-15', 'Cours de PHP pour débutants'),
             (2, 3, 4, NULL, 2, '10:00:00', '12:00:00', '2025-07-22', 'Anglais conversationnel avancé'),
             (3, 2, 7, NULL, 3, '16:00:00', '18:00:00', '2025-08-05', 'Initiation au piano'),
             (4, 3, 2, NULL, 4, '09:00:00', '11:00:00', '2025-08-12', 'JavaScript moderne ES6+'),
             (5, 2, 9, NULL, 5, '15:00:00', '17:00:00', '2025-08-20', 'Tennis pour débutants'),
-            (6, 1, 1, 1, NULL, '18:00:00', '20:00:00', '2025-09-03', 'Échange PHP contre Python - OUVERT'),
+            (6, 1, 1, 1, NULL, '18:00:00', '20:00:00', '2024-12-03', 'Échange PHP contre Python - TERMINÉ'),
             (7, 1, 11, 2, NULL, '14:00:00', '15:30', '2025-09-10', 'Échange pâtisserie contre piano - OUVERT'),
             (8, 1, 2, 3, NULL, '19:00:00', '21:00:00', '2025-09-18', 'Échange JavaScript contre tennis - OUVERT'),
             (9, 1, 14, 4, NULL, '17:00:00', '18:30', '2025-09-25', 'Échange dessin contre pâtisserie - OUVERT'),
-            (10, 2, 14, NULL, 6, '11:00:00', '13:00:00', '2025-10-02', 'Atelier de dessin artistique'),
+            (10, 2, 14, NULL, 6, '11:00:00', '13:00:00', '2024-10-02', 'Atelier de dessin artistique'),
             (11, 3, 5, NULL, 7, '16:00:00', '18:00:00', '2025-10-09', 'Espagnol niveau intermédiaire'),
             (12, 2, 13, NULL, 8, '14:00:00', '16:00:00', '2025-10-16', 'Mathématiques appliquées'),
             (13, 2, 11, NULL, 9, '10:00:00', '12:00:00', '2025-10-23', 'Pâtisserie française'),
@@ -254,7 +263,12 @@ final class Version20250601134212 extends AbstractMigration
             (15, 1, 13, 6, NULL, '20:00:00', '21:30', '2025-11-14', 'Échange maths contre guitare'),
             (16, 3, 3, NULL, 10, '13:00:00', '15:00:00', '2025-11-21', 'Python avancé et frameworks'),
             (17, 1, 4, 7, NULL, '18:30:00', '20:00:00', '2025-11-28', 'Échange anglais contre tennis'),
-            (18, 1, 9, 8, NULL, '16:00:00', '17:30', '2025-12-04', 'Échange tennis contre dessin')");
+            (18, 1, 9, 8, NULL, '16:00:00', '17:30', '2025-12-04', 'Échange tennis contre dessin'),
+            (19, 2, 4, NULL, 11, '10:00:00', '12:00:00', '2023-05-15', 'Cours d\\'anglais avancé - TERMINÉ'),
+            (20, 3, 2, NULL, 12, '14:00:00', '16:00:00', '2023-09-22', 'JavaScript et frameworks - TERMINÉ'),
+            (21, 1, 6, 9, NULL, '16:00:00', '17:30', '2023-12-10', 'Échange allemand contre piano - TERMINÉ'),
+            (22, 1, 10, 10, NULL, '11:00:00', '12:30', '2023-03-08', 'Échange football contre pâtisserie - OUVERT'),
+            (23, 1, 12, 11, NULL, '15:00:00', '16:30', '2023-07-18', 'Échange cuisine italienne contre Python - OUVERT')");
 
         // 9. User_lesson (participants aux cours)
         $this->addSql("INSERT INTO user_lesson (user_id, lesson_id) VALUES 
@@ -267,7 +281,10 @@ final class Version20250601134212 extends AbstractMigration
             (2, 7), (3, 7), (6, 7), (8, 7), (9, 7),
             (2, 8), (4, 8), (6, 8), (10, 8),
             (4, 9), (5, 9), (7, 9), (8, 9),
-            (2, 10), (3, 10), (4, 10)");
+            (2, 10), (3, 10), (4, 10),
+            (2, 11), (5, 11), (7, 11),
+            (3, 12), (4, 12), (8, 12), (11, 12),
+            (2, 13), (6, 13), (9, 13), (10, 13)");
 
         // 10. Reviews (chaque utilisateur a entre 1 et 3 reviews)
         $this->addSql("INSERT INTO review (id, review_receiver_id, review_giver_id, content, rating) VALUES
@@ -300,11 +317,11 @@ final class Version20250601134212 extends AbstractMigration
         $this->addSql('ALTER TABLE category AUTO_INCREMENT = 8');
         $this->addSql('ALTER TABLE skill AUTO_INCREMENT = 15');
         $this->addSql('ALTER TABLE rate AUTO_INCREMENT = 4');
-        $this->addSql('ALTER TABLE location AUTO_INCREMENT = 6');
+        $this->addSql('ALTER TABLE location AUTO_INCREMENT = 9');
         $this->addSql('ALTER TABLE `user` AUTO_INCREMENT = 12');
-        $this->addSql('ALTER TABLE lesson AUTO_INCREMENT = 11');
-        $this->addSql('ALTER TABLE exchange AUTO_INCREMENT = 9');
-        $this->addSql('ALTER TABLE session AUTO_INCREMENT = 19');
+        $this->addSql('ALTER TABLE lesson AUTO_INCREMENT = 14');
+        $this->addSql('ALTER TABLE exchange AUTO_INCREMENT = 12');
+        $this->addSql('ALTER TABLE session AUTO_INCREMENT = 24');
         $this->addSql('ALTER TABLE review AUTO_INCREMENT = 25');
     }
 

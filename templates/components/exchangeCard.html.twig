@@ -163,7 +163,7 @@
         {% else %}
             {% set userAttending = false %}
             {% for exchange in app.user.exchangesAttended %}
-                {% if exchange.session.id == session_id %}
+                {% if exchange.session is not null and exchange.session.id == session_id %}
                     {% set userAttending = true %}
                 {% endif %}
             {% endfor %}

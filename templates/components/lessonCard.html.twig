@@ -116,7 +116,7 @@
       {# User is not the host - show join/leave buttons #}
       {% set userAttending = false %}
       {% for attendee in app.user.lessonsAttended %}
-        {% if attendee.session.id == session_id %}
+        {% if attendee.session is not null and attendee.session.id == session_id %}
           {% set userAttending = true %}
         {% endif %}
       {% endfor %}
