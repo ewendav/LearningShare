@@ -53,8 +53,6 @@ class SessionRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
         ->join('s.exchange', 'e')
-        ->andWhere('s.date >= :today')
-        ->setParameter('today', (new \DateTime())->format('Y-m-d'))
         ->getQuery()
         ->getResult();
     }
@@ -68,53 +66,8 @@ class SessionRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
         ->join('s.lesson', 'l')
-        ->andWhere('s.date >= :today')
-        ->setParameter('today', (new \DateTime())->format('Y-m-d'))
         ->getQuery()
         ->getResult();
-    }
-
-/**
- * OBSOLETE S
- * Returns all attendable Exchange sessions for the given user.
- *
- * @param User $user
- * @return Session[]
- */
-    public function findAttendableExchanges(User $user): array
-    {
-        return $this->createQueryBuilder('s')
-        ->join('s.exchange', 'e')
-        ->andWhere('e.attendee IS NULL')
-        ->andWhere('e.requester != :user')
-        ->andWhere('s.date >= :today')
-        ->setParameter('user', $user)
-        ->setParameter('today', (new \DateTime())->format('Y-m-d'))
-        ->getQuery()
-        ->getResult();
-    }
-
-/**
- * Returns all attendable Lesson sessions for the given user.
- * OBSOLETE
- *
- * @param User $user
- * @return Session[]
- */
-    public function findAttendableLessons(User $user): array
-    {
-        $qb = $this->createQueryBuilder('s')
-        ->join('s.lesson', 'l')
-        ->leftJoin('l.attendees', 'a')
-        ->andWhere('l.host != :user')
-        ->andWhere(':user NOT MEMBER OF l.attendees')
-        ->andWhere('s.date >= :today')
-        ->setParameter('user', $user)
-        ->setParameter('today', (new \DateTime())->format('Y-m-d'))
-        ->groupBy('l.id')
-        ->having('COUNT(a) < l.maxAttendees');
-
-        return $qb->getQuery()->getResult();
     }
 
     public function searchLessons(
@@ -133,19 +86,15 @@ class SessionRepository extends ServiceEntityRepository
         ->addSelect('l', 'st')
         ->leftJoin('l.attendees', 'a');
 
-        // Filtrer les sessions passées
-        $qb->andWhere('s.date >= :today')
-           ->setParameter('today', (new \DateTime())->format('Y-m-d'));
-
         if ($user) {
             $qb->andWhere('l.host != :user')
                ->andWhere(':user NOT MEMBER OF l.attendees')
                ->setParameter('user', $user);
         }
 
-        if (null !== $skillGiven) {
-            $qb->andWhere('st.name LIKE :skillFilter')
-               ->setParameter('skillFilter', '%' . $skillGiven . '%');
+        if ('' !== $q) {
+            $qb->andWhere('st.name LIKE :q')
+               ->setParameter('q', '%' . $q . '%');
         }
 
         if (null !== $categoryGiven) {
@@ -199,33 +148,30 @@ class SessionRepository extends ServiceEntityRepository
 
         $qb->andWhere('e.attendee IS NULL');
 
-        // Filtrer les sessions passées
-        $qb->andWhere('s.date >= :today')
-           ->setParameter('today', (new \DateTime())->format('Y-m-d'));
-
         if ($user) {
             $qb
                ->andWhere('e.requester != :user')
                ->setParameter('user', $user);
         }
 
-        if ("" !== $skillGiven) {
-            $qb->andWhere('sr.name LIKE :skillFilter')
-               ->setParameter('skillFilter', '%' . $skillGiven . '%');
-        }
-
-        if (null !== $categoryRequested) {
-            $qb->andWhere('sr.category = :category')
-               ->setParameter('category', $categoryRequested);
+        if ('' !== $q) {
+            $qb->andWhere('st.name LIKE :q')
+               ->setParameter('q', '%' . $q . '%');
         }
 
         if (null !== $categoryGiven) {
             $qb->andWhere('st.category = :category')
                ->setParameter('category', $categoryGiven);
         }
-        if (null !== $skillRequested) {
+
+        if (null !== $categoryRequested) {
+            $qb->andWhere('st.category = :category')
+               ->setParameter('category', $categoryGiven);
+        }
+
+        if (null !== $skillGiven) {
             $qb->andWhere('sr.name LIKE :skillFilter')
-               ->setParameter('skillFilter', '%' . $skillRequested . '%');
+               ->setParameter('skillFilter', '%' . $skillGiven . '%');
         }
 
         if ($dateStart) {
@@ -408,7 +354,7 @@ class SessionRepository extends ServiceEntityRepository
                 'skill_taught_id'       => $tskill->getId(),
                 'skill_taught_category_id' => $tskill->getCategory()->getId(),
                 'skill_taught_name'     => $tskill->getName(),
-'full_address' => (string) $loc->getAdress(),
+        'full_address'          => $loc,
             ];
         }
 
@@ -447,7 +393,7 @@ class SessionRepository extends ServiceEntityRepository
                 'skill_taught_id'       => $tskill->getId(),
                 'skill_taught_category_id' => $tskill->getCategory()->getId(),
                 'skill_taught_name'     => $tskill->getName(),
-'full_address' => (string) $loc->getAdress(),
+'full_address' => (string) $loc,
             ];
         }
 
