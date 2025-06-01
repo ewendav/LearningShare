@@ -83,7 +83,7 @@ php bin/console doctrine:migrations:generate
 Se connecter en tant qu'administrateur pour accéder au tableau de bord d'administration de l'application :
 
 ```
-mail : admin@example.com
+mail : admin@learningshare.com
 mot de passe : admin123
 ```
 
