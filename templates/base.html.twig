@@ -37,7 +37,7 @@
     </main>
 
     <!-- show the sidebar onlyn when the user is loged -->
-    {% if true %}
+    {% if app.user %}
       <twig:Sidebar />
     {% endif %}
   </body>

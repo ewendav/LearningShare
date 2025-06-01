@@ -1,7 +1,90 @@
-<aside class="container" id="sidebar"></aside>
-<div
-  id="sidebar-overlay"
-  onclick="
-        let sidebarEl = document.getElementById('sidebar').classList.toggle('open');
-    "
-></div>
+<aside id="sidebar">
+  <div style="height:30%; gap:1rem;justify-content:start;" class="container flex-vertical">
+    {% if app.user %}
+      <div class="user-info">
+        <h3>{{ app.user.getFullName }}</h3>
+        <p>{{ app.user.email }}</p>
+        <div class="session-card" style="flex-direction:row; width:80%;justify-content:space-between;">
+          <p style="font-weight:bold;">{{ 'Jetons'|trans }} : </p>
+          {#
+          <p>{{ userModel.getBalance(user.id) }}</p>
+          #}
+        </div>
+        <div style="width:80%;border:2px solid red;border-radius:5px;padding:3px;margin-top:-25px;font-size:0.8em;color:#666;font-weight:bold;">
+          <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+            <span>Prix cours : </span>
+            <span>25</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;">
+            <span>Gain échange : </span>
+            <span>40</span>
+          </div>
+        </div>
+        <a href="/logout" class="form-button dark-grey-bg">{{ 'Logout'|trans }}</a>
+      </div>
+    {% else %}
+      <div class="login-buttons">
+        <a href="/login" class="form-button green-bg">{{ 'Login'|trans }}</a>
+        <a href="/register" class="form-button dark-grey-bg">{{ 'Register'|trans }}</a>
+      </div>
+    {% endif %}
+  </div>
+
+  <div style="height:65%;overflow-Y:auto;" class="container bottom-sidebar">
+    <h3 style="font-weight:bold;text-align:center;margin-bottom:1rem;">{{ 'Sessions à venir'|trans }}</h3>
+
+    {# Vérifie si userSessions.cours ET userSessions.partage sont vides #}
+    {% if userSessions.cours is empty and userSessions.partage is empty %}
+      <p>pas de sessions à venir</p>
+    {% else %}
+      {# --- ÉCHANGES (“partage”) --- #}
+      {% for session in userSessions.partage %}
+        {% include 'components/exchangeCard.html.twig' with {
+          'avatar_path': session.requester_avatar ?: '',
+          'userName': session.requester_first_name ~ ' ' ~ session.requester_last_name,
+          'userId' : session.requester_user_id,
+          'categoryLearned': categoriesIndexed[session.skill_taught_category_id] is defined
+                            ? categoriesIndexed[session.skill_taught_category_id]['name']
+                            : '',
+          'skillLearned': session.skill_taught_name ?: '',
+          'categoryWanted': categoriesIndexed[session.skill_requested_category_id] is defined
+                            ? categoriesIndexed[session.skill_requested_category_id]['name']
+                            : '',
+          'skillWanted': session.skill_requested_name ?: '',
+          'sidebar' : true,
+          'dateDebut': session.date_session,
+          'startTime': session.start_time,
+          'endTime': session.end_time,
+          'session_id': "j",
+        } %}
+      {% endfor %}
+
+      {# --- COURS (“cours”) --- #}
+      {% for session in userSessions.cours %}
+        {% include 'components/lessonCard.html.twig' with {
+          'avatar_path': session.host_avatar ?: '',
+          'userName': session.host_first_name ~ ' ' ~ session.host_last_name,
+          'userId' : session.host_user_id,
+          'categoryLearned': categoriesIndexed[session.skill_taught_category_id] is defined
+                            ? categoriesIndexed[session.skill_taught_category_id]['name']
+                            : '',
+          'skillLearned': session.skill_taught_name ?: '',
+          'adresse': session.full_address ?: '',
+          'date': session.date_session ~ ', ' ~ session.start_time,
+          'sidebar' : true,
+          'ownLesson' : (session.host_user_id == app.user.id),
+          'dateDebut': session.date_session,
+          'startTime': session.start_time,
+          'endTime': session.end_time,
+          'session_id': "j",
+        } %}
+      {% endfor %}
+    {% endif %}
+  </div>
+</aside>
+
+<div id="sidebar-overlay"
+     onclick="
+       let sidebarEl = document.getElementById('sidebar').classList.toggle('open');
+     ">
+</div>

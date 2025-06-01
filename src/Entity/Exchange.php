@@ -11,7 +11,7 @@ class Exchange
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $id = null;
+    public ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'exchangesRequested')]
     #[ORM\JoinColumn(nullable: false)]

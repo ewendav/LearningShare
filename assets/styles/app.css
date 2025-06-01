@@ -520,3 +520,8 @@ input.toggle-switch-input:checked + .toggle-switch-slider .slider {
   width: 100% !important;
   height: auto !important;
 }
+
+.filter-box .flex-vertical{
+  justify-content: start!important;
+
+}
