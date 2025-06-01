@@ -20,7 +20,7 @@ class Review
     private ?int $rating = null;
 
     #[ORM\ManyToOne(inversedBy: 'receivedReviews')]
-    #[ORM\JoinColumn(name: 'about_id', nullable: false)]
+    #[ORM\JoinColumn(name: 'review_receiver_id', nullable: false)]
     private ?User $reviewReceiver = null;
 
     #[ORM\ManyToOne(inversedBy: 'reviewsGiven')]
