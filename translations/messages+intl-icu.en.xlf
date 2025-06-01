@@ -307,7 +307,7 @@
       </trans-unit>
       <trans-unit id="cVhQzzr" resname="Se désinscrire">
         <source>Se désinscrire</source>
-        <target>__Se désinscrire</target>
+        <target>logout</target>
       </trans-unit>
       <trans-unit id="438XHbK" resname="Ma biographie">
         <source>Ma biographie</source>
@@ -468,6 +468,182 @@
       <trans-unit id="Ch1noJC" resname="Évolution du nombre de sessions (12 derniers mois)">
         <source>Évolution du nombre de sessions (12 derniers mois)</source>
         <target>Number of sessions (last 12 months)</target>
+      </trans-unit>
+      <trans-unit id="Br33cmu" resname="Taught Category">
+        <source>Taught Category</source>
+        <target>Taught Category</target>
+      </trans-unit>
+      <trans-unit id="2xnxp.U" resname="Select a taught category">
+        <source>Select a taught category</source>
+        <target>Select a taught category</target>
+      </trans-unit>
+      <trans-unit id="ppKTPgD" resname="Select a taught skill">
+        <source>Select a taught skill</source>
+        <target>Select a taught skill</target>
+      </trans-unit>
+      <trans-unit id="QgU8mG5" resname="Requested Category">
+        <source>Requested Category</source>
+        <target>Requested Category</target>
+      </trans-unit>
+      <trans-unit id="8Wg7MPT" resname="Select a requested category">
+        <source>Select a requested category</source>
+        <target>Select a requested category</target>
+      </trans-unit>
+      <trans-unit id="1teR1F7" resname="Select a requested skill">
+        <source>Select a requested skill</source>
+        <target>Select a requested skill</target>
+      </trans-unit>
+      <trans-unit id="l1sVQCz" resname="Edit Exchange">
+        <source>Edit Exchange</source>
+        <target>Edit Exchange</target>
+      </trans-unit>
+      <trans-unit id="0e53_Dn" resname="Edit Course">
+        <source>Edit Course</source>
+        <target>Edit Course</target>
+      </trans-unit>
+      <trans-unit id="x6e3ajd" resname="User's Average Grades">
+        <source>User's Average Grades</source>
+        <target>User's Average Grades</target>
+      </trans-unit>
+      <trans-unit id="iQvULn8" resname="Rate this user">
+        <source>Rate this user</source>
+        <target>Rate this user</target>
+      </trans-unit>
+      <trans-unit id="RbY..QG" resname="Rate">
+        <source>Rate</source>
+        <target>Rate</target>
+      </trans-unit>
+      <trans-unit id="QGEau92" resname="Validate">
+        <source>Validate</source>
+        <target>Validate</target>
+      </trans-unit>
+      <trans-unit id="RkxP.QG" resname="Edit">
+        <source>Edit</source>
+        <target>Edit</target>
+      </trans-unit>
+      <trans-unit id="oDnfuWK" resname="Tokens">
+        <source>Tokens</source>
+        <target>Tokens</target>
+      </trans-unit>
+      <trans-unit id="0FJ_Sz1" resname="Logout">
+        <source>Logout</source>
+        <target>Logout</target>
+      </trans-unit>
+      <trans-unit id="nWMiwfT" resname="Login">
+        <source>Login</source>
+        <target>Login</target>
+      </trans-unit>
+      <trans-unit id="u3I07BJ" resname="Register">
+        <source>Register</source>
+        <target>Register</target>
+      </trans-unit>
+      <trans-unit id="KMVE6bT" resname="Upcoming Sessions">
+        <source>Upcoming Sessions</source>
+        <target>Upcoming Sessions</target>
+      </trans-unit>
+      <trans-unit id="_1Eu7NK" resname="Search for taught skill">
+        <source>Search for taught skill</source>
+        <target>Search for taught skill</target>
+      </trans-unit>
+      <trans-unit id="K1BVl9q" resname="Any">
+        <source>Any</source>
+        <target>Any</target>
+      </trans-unit>
+      <trans-unit id="Lhz6grA" resname="empty">
+        <source>empty</source>
+        <target>empty</target>
+      </trans-unit>
+      <trans-unit id="7fiPreN" resname="Requested Skill">
+        <source>Requested Skill</source>
+        <target>Requested Skill</target>
+      </trans-unit>
+      <trans-unit id="PhXsjmf" resname="Search for requested skill">
+        <source>Search for requested skill</source>
+        <target>Search for requested skill</target>
+      </trans-unit>
+      <trans-unit id="t0Oxb7y" resname="Catégorie enseignée">
+        <source>Catégorie enseignée</source>
+        <target>Taught Category</target>
+      </trans-unit>
+      <trans-unit id="7Vm4UQ9" resname="Sélectionnez une catégorie enseignée">
+        <source>Sélectionnez une catégorie enseignée</source>
+        <target>Select a taught category</target>
+      </trans-unit>
+      <trans-unit id=".Yc0f6a" resname="Sélectionnez une compétence enseignée">
+        <source>Sélectionnez une compétence enseignée</source>
+        <target>Select a taught skill</target>
+      </trans-unit>
+      <trans-unit id="oBg7mHf" resname="Catégorie demandée">
+        <source>Catégorie demandée</source>
+        <target>Requested Category</target>
+      </trans-unit>
+      <trans-unit id="oRMuYt4" resname="Sélectionnez une catégorie demandée">
+        <source>Sélectionnez une catégorie demandée</source>
+        <target>Select a requested category</target>
+      </trans-unit>
+      <trans-unit id="fCUoILF" resname="Sélectionnez une compétence demandée">
+        <source>Sélectionnez une compétence demandée</source>
+        <target>Select a requested skill</target>
+      </trans-unit>
+      <trans-unit id="AfFb.Hr" resname="Modifier l'échange">
+        <source>Modifier l'échange</source>
+        <target>Edit Exchange</target>
+      </trans-unit>
+      <trans-unit id="A8PxebO" resname="Modifier le cours">
+        <source>Modifier le cours</source>
+        <target>Edit Course</target>
+      </trans-unit>
+      <trans-unit id="oZ42Dwf" resname="Moyenne des notes de l'utilisateur">
+        <source>Moyenne des notes de l'utilisateur</source>
+        <target>User's Average Grades</target>
+      </trans-unit>
+      <trans-unit id="7MFc9mo" resname="Noter cet utilisateur">
+        <source>Noter cet utilisateur</source>
+        <target>Rate this user</target>
+      </trans-unit>
+      <trans-unit id="o3BlVH8" resname="Noter">
+        <source>Noter</source>
+        <target>Rate</target>
+      </trans-unit>
+      <trans-unit id="YmunqJ." resname="Valider">
+        <source>Valider</source>
+        <target>Validate</target>
+      </trans-unit>
+      <trans-unit id="QuN2BLY" resname="Modifier">
+        <source>Modifier</source>
+        <target>Edit</target>
+      </trans-unit>
+      <trans-unit id="ipq4GjS" resname="Jetons">
+        <source>Jetons</source>
+        <target>Tokens</target>
+      </trans-unit>
+      <trans-unit id="HVqrAc9" resname="Sessions à venir">
+        <source>Sessions à venir</source>
+        <target>Upcoming Sessions</target>
+      </trans-unit>
+      <trans-unit id="U3iKTYh" resname="Rechercher la compétence enseignée">
+        <source>Rechercher la compétence enseignée</source>
+        <target>Search for taught skill</target>
+      </trans-unit>
+      <trans-unit id="dMTo_Tn" resname="Categorie enseignée">
+        <source>Categorie enseignée</source>
+        <target>Taught Category</target>
+      </trans-unit>
+      <trans-unit id="jNUb6WG" resname="vide">
+        <source>vide</source>
+        <target>empty</target>
+      </trans-unit>
+      <trans-unit id="CX82LBV" resname="Categorie demandee">
+        <source>Categorie demandee</source>
+        <target>Requested Category</target>
+      </trans-unit>
+      <trans-unit id="W22_L5a" resname="Competence demandee">
+        <source>Competence demandee</source>
+        <target>Requested Skill</target>
+      </trans-unit>
+      <trans-unit id="lZPMfCC" resname="Rechercher la competence demandee">
+        <source>Rechercher la competence demandee</source>
+        <target>Search for requested skill</target>
       </trans-unit>
     </body>
   </file>
