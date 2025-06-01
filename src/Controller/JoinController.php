@@ -218,7 +218,7 @@ class JoinController extends AbstractController
         if (!$session || !$session->getLesson()) {
             $this->logger->error("Cours non trouvé", ['session_id' => $id]);
             $this->addFlash('error', 'Cours non trouvé');
-            return $this->redirectToRoute('app_user_profile');
+            return $this->redirectToRoute('app_user_profile', ['id' => $this->getUser()->getId()]);
         }
 
         // Récupérer le cours associé à cette session
@@ -230,7 +230,7 @@ class JoinController extends AbstractController
         // Vérifier si l'utilisateur est bien inscrit
         if (!$user->getLessonsAttended()->contains($lesson)) {
             $this->addFlash('error', 'Vous n\'êtes pas inscrit à ce cours');
-            return $this->redirectToRoute('app_user_profile');
+            return $this->redirectToRoute('app_user_profile', ['id' => $this->getUser()->getId()]);
         }
 
         try {
@@ -279,7 +279,7 @@ class JoinController extends AbstractController
         }
 
         // Rediriger vers le profil de l'utilisateur
-        return $this->redirectToRoute('app_user_profile');
+        return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
     }
     
     #[Route('/quitterPartage/{id}', name: 'app_leave_exchange', methods: ['POST'])]
@@ -294,7 +294,7 @@ class JoinController extends AbstractController
         if (!$session || !$session->getExchange()) {
             $this->logger->error("Partage non trouvé", ['session_id' => $id]);
             $this->addFlash('error', 'Partage non trouvé');
-            return $this->redirectToRoute('app_user_profile');
+            return $this->redirectToRoute('app_user_profile', ['id' => $this->getUser()->getId()]);
         }
 
         // Récupérer l'échange associé à cette session
@@ -306,7 +306,7 @@ class JoinController extends AbstractController
         // Vérifier si l'utilisateur est bien le participant
         if ($exchange->getAttendee() !== $user) {
             $this->addFlash('error', 'Vous n\'êtes pas participant à ce partage');
-            return $this->redirectToRoute('app_user_profile');
+            return $this->redirectToRoute('app_user_profile', ['id' => $this->getUser()->getId()]);
         }
 
         try {
@@ -355,7 +355,7 @@ class JoinController extends AbstractController
         }
 
         // Rediriger vers le profil de l'utilisateur
-        return $this->redirectToRoute('app_user_profile');
+        return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
     }
     
     #[Route('/annulerCours/{id}', name: 'app_cancel_lesson', methods: ['POST'])]
@@ -370,7 +370,7 @@ class JoinController extends AbstractController
         if (!$session || !$session->getLesson()) {
             $this->logger->error("Cours non trouvé", ['session_id' => $id]);
             $this->addFlash('error', 'Cours non trouvé');
-            return $this->redirectToRoute('app_user_profile');
+            return $this->redirectToRoute('app_user_profile', ['id' => $this->getUser()->getId()]);
         }
 
         // Récupérer le cours associé à cette session
@@ -382,7 +382,7 @@ class JoinController extends AbstractController
         // Vérifier si l'utilisateur est bien l'hôte du cours
         if ($lesson->getHost() !== $user) {
             $this->addFlash('error', 'Vous n\'êtes pas l\'hôte de ce cours');
-            return $this->redirectToRoute('app_user_profile');
+            return $this->redirectToRoute('app_user_profile', ['id' => $this->getUser()->getId()]);
         }
 
         try {
@@ -446,7 +446,7 @@ class JoinController extends AbstractController
         }
 
         // Rediriger vers le profil de l'utilisateur
-        return $this->redirectToRoute('app_user_profile');
+        return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
     }
     
     #[Route('/annulerPartage/{id}', name: 'app_cancel_exchange', methods: ['POST'])]
@@ -461,7 +461,7 @@ class JoinController extends AbstractController
         if (!$session || !$session->getExchange()) {
             $this->logger->error("Partage non trouvé", ['session_id' => $id]);
             $this->addFlash('error', 'Partage non trouvé');
-            return $this->redirectToRoute('app_user_profile');
+            return $this->redirectToRoute('app_user_profile', ['id' => $this->getUser()->getId()]);
         }
 
         // Récupérer l'échange associé à cette session
@@ -473,7 +473,7 @@ class JoinController extends AbstractController
         // Vérifier si l'utilisateur est bien le créateur du partage
         if ($exchange->getRequester() !== $user) {
             $this->addFlash('error', 'Vous n\'êtes pas le créateur de ce partage');
-            return $this->redirectToRoute('app_user_profile');
+            return $this->redirectToRoute('app_user_profile', ['id' => $this->getUser()->getId()]);
         }
 
         try {
@@ -530,6 +530,6 @@ class JoinController extends AbstractController
         }
 
         // Rediriger vers le profil de l'utilisateur
-        return $this->redirectToRoute('app_user_profile');
+        return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
     }
 }

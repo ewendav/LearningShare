@@ -47,7 +47,7 @@ class SessionController extends AbstractController
             
             if (!$lesson || $lesson->getHost()->getId() !== $user->getId()) {
                 $this->addFlash('error', 'Vous n\'êtes pas autorisé à modifier ce cours.');
-                return $this->redirectToRoute('app_user_profile');
+                return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
             }
             
             $session = $lesson->getSession();
@@ -78,7 +78,7 @@ class SessionController extends AbstractController
             
             if (!$exchange || $exchange->getRequester()->getId() !== $user->getId()) {
                 $this->addFlash('error', 'Vous n\'êtes pas autorisé à modifier cet échange.');
-                return $this->redirectToRoute('app_user_profile');
+                return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
             }
             
             $session = $exchange->getSession();
@@ -101,7 +101,7 @@ class SessionController extends AbstractController
             ]);
         } else {
             $this->addFlash('error', 'Type de session non valide.');
-            return $this->redirectToRoute('app_user_profile');
+            return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
         }
     }
 
@@ -252,7 +252,7 @@ class SessionController extends AbstractController
         
         if (!$lesson || $lesson->getHost()->getId() !== $user->getId()) {
             $this->addFlash('error', 'Vous n\'êtes pas autorisé à modifier ce cours.');
-            return $this->redirectToRoute('app_user_profile');
+            return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
         }
         
         $session = $lesson->getSession();
@@ -295,7 +295,7 @@ class SessionController extends AbstractController
         
         $this->addFlash('success', 'Votre cours a été modifié avec succès.');
         
-        return $this->redirectToRoute('app_user_profile');
+        return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
     }
     
     #[Route('/session/update/exchange/{id}', name: 'app_exchange_update', methods: ['POST'])]
@@ -309,7 +309,7 @@ class SessionController extends AbstractController
         
         if (!$exchange || $exchange->getRequester()->getId() !== $user->getId()) {
             $this->addFlash('error', 'Vous n\'êtes pas autorisé à modifier cet échange.');
-            return $this->redirectToRoute('app_user_profile');
+            return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
         }
         
         $session = $exchange->getSession();
@@ -365,6 +365,6 @@ class SessionController extends AbstractController
         
         $this->addFlash('success', 'Votre échange a été modifié avec succès.');
         
-        return $this->redirectToRoute('app_user_profile');
+        return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
     }
 }

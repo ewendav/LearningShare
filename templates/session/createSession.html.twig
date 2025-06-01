@@ -48,11 +48,19 @@
                     {% if session_type == 'lesson' %}
                         document.getElementById('section-cours').style.display = 'block';
                         document.getElementById('section-echange').style.display = 'none';
-                        document.querySelector('.toggle-switch-input').checked = true;
+                        const toggleInput = document.querySelector('.toggle-switch-input');
+                        toggleInput.checked = true;
+                        // Force le repositionnement du slider
+                        const slider = document.querySelector('.slider');
+                        slider.style.transform = 'translateX(100%)';
                     {% else %}
                         document.getElementById('section-cours').style.display = 'none';
                         document.getElementById('section-echange').style.display = 'block';
-                        document.querySelector('.toggle-switch-input').checked = false;
+                        const toggleInput = document.querySelector('.toggle-switch-input');
+                        toggleInput.checked = false;
+                        // Force le repositionnement du slider
+                        const slider = document.querySelector('.slider');
+                        slider.style.transform = 'translateX(0%)';
                     {% endif %}
                 {% else %}
                     let checked = document.querySelector('.toggle-switch-input').checked;
@@ -64,7 +72,7 @@
         </script>
 
         <div id="section-echange">
-            <h1 class="page-title">{{ 'Échange'|trans }}</h1>
+            <h1 class="page-title">{% if edit_mode %}{{ 'Modification d\'un échange'|trans }}{% else %}{{ 'Création d\'un échange'|trans }}{% endif %}</h1>
             <form class="form-creation-session" action="{% if edit_mode and session_type == 'exchange' %}{{ path('app_exchange_update', {'id': session_id}) }}{% else %}{{ path('app_exchange_create') }}{% endif %}" method="POST">
 
                 <div class="horizontal-display">
@@ -131,7 +139,7 @@
 
         <div id="section-cours">
 
-            <h1 class="page-title">{{ 'Création d\'un cours'|trans }}</h1>
+            <h1 class="page-title">{% if edit_mode %}{{ 'Modification d\'un cours'|trans }}{% else %}{{ 'Création d\'un cours'|trans }}{% endif %}</h1>
 
             <form class="form-creation-session" action="{% if edit_mode and session_type == 'lesson' %}{{ path('app_course_update', {'id': session_id}) }}{% else %}{{ path('app_course_create') }}{% endif %}" method="POST">
 

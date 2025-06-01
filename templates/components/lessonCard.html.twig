@@ -11,7 +11,7 @@
         style="display:none;"
       {% endif %}
           src="{{ avatar_path }}" class="avatar" >
-      {% if app.user %}
+      {% if app.user and userId is defined and userId is not empty %}
         <p><a href="{{ path('app_user_profile', {'id': userId}) }}">{{userName}}</a></p>
       {% else %}
         <p>{{userName}}</p>
@@ -34,7 +34,7 @@
         style="opacity:0;"
       {% endif %}
           src="{{ avatar_path }}" class="avatar" >
-      {% if app.user %}
+      {% if app.user and userId is defined and userId is not empty %}
         <p><a href="{{ path('app_user_profile', {'id': userId}) }}">{{userName}}</a></p>
       {% else %}
         <p>{{userName}}</p>
@@ -44,7 +44,7 @@
     <h3 class="lesson-title">{{ "Cours"|trans }}</h3>
     <div class="flex" style="gap:.5rem; opacity : 0;" >
       <img src="{{ avatar_path }}" class="avatar" >
-      {% if app.user %}
+      {% if app.user and userId is defined and userId is not empty %}
         <p><a href="{{ path('app_user_profile', {'id': userId}) }}">{{userName}}</a></p>
       {% else %}
         <p>{{userName}}</p>
