@@ -69,9 +69,9 @@
 
                 <div class="horizontal-display">
                     <div class="input-label-display">
-                        <label for="skill_taught_id">{{ 'Catégorie'|trans }}</label>
+                        <label for="skill_taught_id">{{ 'Catégorie enseignée'|trans }}</label>
                         <select required class="input-goofy" id="skill_taught_id" name="skill_taught_id">
-                            <option value="" disabled{% if not (edit_mode and session_data.skill_taught_id is defined) %} selected{% endif %}>{{ 'Sélectionnez une catégorie'|trans }}</option>
+                            <option value="" disabled{% if not (edit_mode and session_data.skill_taught_id is defined) %} selected{% endif %}>{{ 'Sélectionnez une catégorie enseignée'|trans }}</option>
                             {% for category in categories %}
                                 <option value="{{ category.id }}"{% if edit_mode and session_data.skill_taught_id is defined and session_data.skill_taught_id == category.id %} selected{% endif %}>{{ category.name }}</option>
                             {% endfor %}
@@ -79,16 +79,16 @@
                     </div>
 
                     <div class="input-label-display">
-                        <label for="description">{{ 'Compétence'|trans }}</label>
-                        <input required class="input-goofy" id="description" name="description" placeholder="{{ 'Sélectionnez une compétence'|trans }}" value="{% if edit_mode and session_data.description is defined %}{{ session_data.description }}{% endif %}">
+                        <label for="description">{{ 'Compétence enseignée'|trans }}</label>
+                        <input required class="input-goofy" id="description" name="description" placeholder="{{ 'Sélectionnez une compétence enseignée'|trans }}" value="{% if edit_mode and session_data.description is defined %}{{ session_data.description }}{% endif %}">
                     </div>
                 </div>
 
                 <div class="horizontal-display">
                     <div class="input-label-display">
-                        <label for="skill_requested_id">{{ 'Catégorie'|trans }}</label>
+                        <label for="skill_requested_id">{{ 'Catégorie demandée'|trans }}</label>
                         <select required class="input-goofy" id="skill_requested_id" name="skill_requested_id">
-                            <option value="" disabled{% if not (edit_mode and session_data.skill_requested_id is defined) %} selected{% endif %}>{{ 'Sélectionnez une catégorie'|trans }}</option>
+                            <option value="" disabled{% if not (edit_mode and session_data.skill_requested_id is defined) %} selected{% endif %}>{{ 'Sélectionnez une catégorie demandée'|trans }}</option>
                             {% for category in categories %}
                                 <option value="{{ category.id }}"{% if edit_mode and session_data.skill_requested_id is defined and session_data.skill_requested_id == category.id %} selected{% endif %}>{{ category.name }}</option>
                             {% endfor %}
@@ -96,8 +96,8 @@
                     </div>
 
                     <div class="input-label-display">
-                        <label for="competence-echange-2">{{ 'Compétence'|trans }}</label>
-                        <input class="input-goofy" id="competence-echange-2" name="competence_requested" placeholder="{{ 'Sélectionnez une compétence'|trans }}" value="{% if edit_mode and session_data.competence_requested is defined %}{{ session_data.competence_requested }}{% endif %}">
+                        <label for="competence-echange-2">{{ 'Compétence demandée'|trans }}</label>
+                        <input class="input-goofy" id="competence-echange-2" name="competence_requested" placeholder="{{ 'Sélectionnez une compétence demandée'|trans }}" value="{% if edit_mode and session_data.competence_requested is defined %}{{ session_data.competence_requested }}{% endif %}">
                     </div>
                 </div>
 
