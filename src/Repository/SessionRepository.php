@@ -134,8 +134,8 @@ class SessionRepository extends ServiceEntityRepository
         string $q,
         ?Category $categoryGiven,
         ?Category $categoryRequested,
-        string $skillGiven,
-        string $skillRequested,
+        ?string $skillGiven,
+        ?string $skillRequested,
         ?\DateTimeInterface $dateStart,
         ?\DateTimeInterface $dateEnd,
         string $timeStart,
@@ -144,34 +144,32 @@ class SessionRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('s')
             ->join('s.exchange', 'e')
             ->join('s.skillTaught', 'st')
-            ->join('e.skillRequested', 'sr');
-
-        $qb->andWhere('e.attendee IS NULL');
+            ->join('e.skillRequested', 'sr')
+            ->andWhere('e.attendee IS NULL');
 
         if ($user) {
-            $qb
-               ->andWhere('e.requester != :user')
+            $qb->andWhere('e.requester != :user')
                ->setParameter('user', $user);
         }
 
         if (null !== $skillGiven) {
-            $qb->andWhere('sr.name LIKE :skillFilter')
-               ->setParameter('skillFilter', '%' . $skillGiven . '%');
+            $qb->andWhere('st.name LIKE :skillGiven')
+               ->setParameter('skillGiven', '%' . $skillGiven . '%');
         }
 
         if (null !== $categoryGiven) {
-            $qb->andWhere('st.category = :category')
-               ->setParameter('category', $categoryGiven);
-        }
-
-        if (null !== $categoryRequested) {
-            $qb->andWhere('st.category = :category')
-               ->setParameter('category', $categoryGiven);
+            $qb->andWhere('st.category = :categoryGiven')
+               ->setParameter('categoryGiven', $categoryGiven);
         }
 
         if (null !== $skillRequested) {
-            $qb->andWhere('sr.name LIKE :skillFilter')
-               ->setParameter('skillFilter', '%' . $skillRequested . '%');
+            $qb->andWhere('sr.name LIKE :skillRequested')
+               ->setParameter('skillRequested', '%' . $skillRequested . '%');
+        }
+
+        if (null !== $categoryRequested) {
+            $qb->andWhere('sr.category = :categoryRequested')
+               ->setParameter('categoryRequested', $categoryRequested);
         }
 
         if ($dateStart) {
@@ -179,8 +177,9 @@ class SessionRepository extends ServiceEntityRepository
                ->setParameter('dateStart', $dateStart->format('Y-m-d'));
         }
 
+        // If you need a date‐range, uncomment and adjust the following:
         // if ($dateEnd) {
-        //     $qb->andWhere('s.date = :dateEnd')
+        //     $qb->andWhere('s.date <= :dateEnd')
         //        ->setParameter('dateEnd', $dateEnd->format('Y-m-d'));
         // }
 

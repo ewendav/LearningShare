@@ -81,6 +81,7 @@
 
       {% else %}
 
+        <p style="text-decoration:underline;" >{{ "Veux apprendre"|trans }}</p>
       {% if skill_requested_category_id is defined and skill_requested_category_id is not empty %}
         {% set catId = skill_requested_category_id|number_format(0, '', '') %}
         <p>{{ "Catégorie"|trans }} : {{ categoriesIndexed[catId]['name']|default('') }}</p>
@@ -114,6 +115,7 @@
 
       {% else %}
 
+        <p style="text-decoration:underline;">{{ "Vous apprends"|trans }}</p>
       {% if skill_taught_category_id is defined and skill_taught_category_id is not empty %}
         {% set catId = skill_taught_category_id|number_format(0, '', '') %}
         <p>{{ "Catégorie"|trans }} : {{ categoriesIndexed[catId]['name']|default('') }}</p>
