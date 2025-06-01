@@ -21,10 +21,6 @@ final class Version20250601134212 extends AbstractMigration
     {
         // === CRÉATION DES TABLES ===
         
-        // Table blacklist
-        $this->addSql(<<<'SQL'
-            CREATE TABLE blacklist (id INT AUTO_INCREMENT NOT NULL, bad_words JSON DEFAULT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB
-        SQL);
         
         // Table category
         $this->addSql(<<<'SQL'
@@ -200,7 +196,7 @@ final class Version20250601134212 extends AbstractMigration
 
         // 5. Users (10 utilisateurs + 1 admin conservé)
         $adminPassword = '$2y$13$IbmRelIH/WiNgzmgIVgkyeZ2C.D0mT2sjZq.fWnrewmiPjrtcph9m'; // admin123
-        $userPassword = '$2y$13$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi'; // password
+        $userPassword = '$2y$13$alPiTVu4l0w/vqixg6peWOyA32ORrn6j4bC9kuXIntQpm/FmizhJy'; // password
         
         $this->addSql("INSERT INTO `user` (id, email, roles, password, firstname, lastname, biography, avatar_path, phone, balance) VALUES
             (1, 'admin@learningshare.com', '[\"ROLE_ADMIN\"]', '$adminPassword', 'Admin', 'System', 'Administrateur de la plateforme LearningShare', 'avatar-default.png', '0666666666', 1000),
@@ -228,41 +224,37 @@ final class Version20250601134212 extends AbstractMigration
             (9, 4, 3, 10),
             (10, 5, 9, 6)");
 
-        // 7. Exchanges
+        // 7. Exchanges (8 échanges : 4 libres + 4 avec participants)
         $this->addSql("INSERT INTO exchange (id, skill_requested_id, requester_id, attendee_id) VALUES
-            (1, 1, 9, 2),
-            (2, 4, 3, 4),
-            (3, 7, 6, 5),
-            (4, 9, 8, 7),
+            (1, 1, 9, NULL),
+            (2, 4, 3, NULL),
+            (3, 7, 6, NULL),
+            (4, 9, 8, NULL),
             (5, 11, 10, 3),
             (6, 2, 11, 6),
             (7, 8, 4, 5),
-            (8, 13, 7, 11),
-            (9, 14, 2, 8),
-            (10, 5, 5, 10)");
+            (8, 13, 7, 11)");
 
-        // 8. Sessions (mélange de lessons et exchanges)
+        // 8. Sessions (mélange de lessons et exchanges avec dates variées)
         $this->addSql("INSERT INTO session (id, cost_id, skill_taught_id, exchange_id, lesson_id, start_time, end_time, date, description) VALUES
-            (1, 2, 1, NULL, 1, '14:00:00', '16:00:00', '2025-06-05', 'Cours de PHP pour débutants'),
-            (2, 3, 4, NULL, 2, '10:00:00', '12:00:00', '2025-06-06', 'Anglais conversationnel avancé'),
-            (3, 2, 7, NULL, 3, '16:00:00', '18:00:00', '2025-06-07', 'Initiation au piano'),
-            (4, 3, 2, NULL, 4, '09:00:00', '11:00:00', '2025-06-08', 'JavaScript moderne ES6+'),
-            (5, 2, 9, NULL, 5, '15:00:00', '17:00:00', '2025-06-09', 'Tennis pour débutants'),
-            (6, 1, 1, 1, NULL, '18:00:00', '20:00:00', '2025-06-10', 'Échange PHP contre Python'),
-            (7, 1, 4, 2, NULL, '14:00:00', '15:30', '2025-06-11', 'Échange cuisine contre anglais'),
-            (8, 1, 7, 3, NULL, '19:00:00', '21:00:00', '2025-06-12', 'Échange JavaScript contre piano'),
-            (9, 1, 9, 4, NULL, '17:00:00', '18:30', '2025-06-13', 'Échange dessin contre tennis'),
-            (10, 2, 14, NULL, 6, '11:00:00', '13:00:00', '2025-06-14', 'Atelier de dessin artistique'),
-            (11, 3, 5, NULL, 7, '16:00:00', '18:00:00', '2025-06-15', 'Espagnol niveau intermédiaire'),
-            (12, 2, 13, NULL, 8, '14:00:00', '16:00:00', '2025-06-16', 'Mathématiques appliquées'),
-            (13, 2, 11, NULL, 9, '10:00:00', '12:00:00', '2025-06-17', 'Pâtisserie française'),
-            (14, 1, 11, 5, NULL, '15:00:00', '16:30', '2025-06-18', 'Échange espagnol contre pâtisserie'),
-            (15, 1, 2, 6, NULL, '20:00:00', '21:30', '2025-06-19', 'Échange maths contre JavaScript'),
-            (16, 3, 3, NULL, 10, '13:00:00', '15:00:00', '2025-06-20', 'Python avancé et frameworks'),
-            (17, 1, 8, 7, NULL, '18:30:00', '20:00:00', '2025-06-21', 'Échange anglais contre guitare'),
-            (18, 1, 13, 8, NULL, '16:00:00', '17:30', '2025-06-22', 'Échange tennis contre mathématiques'),
-            (19, 1, 14, 9, NULL, '19:00:00', '20:30', '2025-06-23', 'Échange PHP contre dessin'),
-            (20, 1, 5, 10, NULL, '17:00:00', '18:30', '2025-06-24', 'Échange piano contre espagnol')");
+            (1, 2, 1, NULL, 1, '14:00:00', '16:00:00', '2025-01-15', 'Cours de PHP pour débutants'),
+            (2, 3, 4, NULL, 2, '10:00:00', '12:00:00', '2025-01-22', 'Anglais conversationnel avancé'),
+            (3, 2, 7, NULL, 3, '16:00:00', '18:00:00', '2025-02-05', 'Initiation au piano'),
+            (4, 3, 2, NULL, 4, '09:00:00', '11:00:00', '2025-02-12', 'JavaScript moderne ES6+'),
+            (5, 2, 9, NULL, 5, '15:00:00', '17:00:00', '2025-02-20', 'Tennis pour débutants'),
+            (6, 1, 1, 1, NULL, '18:00:00', '20:00:00', '2025-03-03', 'Échange PHP contre Python - OUVERT'),
+            (7, 1, 4, 2, NULL, '14:00:00', '15:30', '2025-03-10', 'Échange cuisine contre anglais - OUVERT'),
+            (8, 1, 7, 3, NULL, '19:00:00', '21:00:00', '2025-03-18', 'Échange JavaScript contre piano - OUVERT'),
+            (9, 1, 9, 4, NULL, '17:00:00', '18:30', '2025-03-25', 'Échange dessin contre tennis - OUVERT'),
+            (10, 2, 14, NULL, 6, '11:00:00', '13:00:00', '2025-04-02', 'Atelier de dessin artistique'),
+            (11, 3, 5, NULL, 7, '16:00:00', '18:00:00', '2025-04-09', 'Espagnol niveau intermédiaire'),
+            (12, 2, 13, NULL, 8, '14:00:00', '16:00:00', '2025-04-16', 'Mathématiques appliquées'),
+            (13, 2, 11, NULL, 9, '10:00:00', '12:00:00', '2025-04-23', 'Pâtisserie française'),
+            (14, 1, 11, 5, NULL, '15:00:00', '16:30', '2025-05-07', 'Échange espagnol contre pâtisserie'),
+            (15, 1, 2, 6, NULL, '20:00:00', '21:30', '2025-05-14', 'Échange maths contre JavaScript'),
+            (16, 3, 3, NULL, 10, '13:00:00', '15:00:00', '2025-05-21', 'Python avancé et frameworks'),
+            (17, 1, 8, 7, NULL, '18:30:00', '20:00:00', '2025-05-28', 'Échange anglais contre guitare'),
+            (18, 1, 13, 8, NULL, '16:00:00', '17:30', '2025-06-04', 'Échange tennis contre mathématiques')");
 
         // 9. User_lesson (participants aux cours)
         $this->addSql("INSERT INTO user_lesson (user_id, lesson_id) VALUES 
@@ -296,15 +288,13 @@ final class Version20250601134212 extends AbstractMigration
             (15, 7, 4, 'Cours de tennis très bien structuré, j\\'ai beaucoup progressé.', 4),
             (16, 8, 2, 'Gabrielle est une artiste remarquable et une excellente prof.', 5),
             (17, 8, 7, 'Atelier de dessin fantastique, Gabrielle a beaucoup de talent.', 5),
-            (18, 8, 9, 'Très bon échange, j\\'ai appris de nouvelles techniques de dessin.', 4),
-            (19, 9, 2, 'Henri connaît très bien Python, explications claires et précises.', 4),
-            (20, 9, 6, 'Session Python très instructive, Henri est passionné par son sujet.', 4),
-            (21, 10, 5, 'Isabelle parle un espagnol parfait, cours très enrichissant.', 5),
-            (22, 10, 3, 'Excellent échange linguistique avec Isabelle, très pédagogue.', 5),
-            (23, 10, 7, 'Isabelle m\\'a aidé à perfectionner mon espagnol, je recommande !', 4),
-            (24, 11, 4, 'Julien explique les maths de façon très accessible.', 4),
-            (25, 11, 6, 'Cours de mathématiques excellent, Julien est très patient.', 5),
-            (26, 11, 8, 'Super échange maths contre pâtisserie, Julien est multi-talentueux !', 5)");
+            (18, 9, 2, 'Henri connaît très bien Python, explications claires et précises.', 4),
+            (19, 9, 6, 'Session Python très instructive, Henri est passionné par son sujet.', 4),
+            (20, 10, 5, 'Isabelle parle un espagnol parfait, cours très enrichissant.', 5),
+            (21, 10, 3, 'Excellent échange linguistique avec Isabelle, très pédagogue.', 5),
+            (22, 10, 7, 'Isabelle m\\'a aidé à perfectionner mon espagnol, je recommande !', 4),
+            (23, 11, 4, 'Julien explique les maths de façon très accessible.', 4),
+            (24, 11, 6, 'Cours de mathématiques excellent, Julien est très patient.', 5)");
 
         // Réinitialiser les auto-increments
         $this->addSql('ALTER TABLE category AUTO_INCREMENT = 8');
@@ -313,9 +303,9 @@ final class Version20250601134212 extends AbstractMigration
         $this->addSql('ALTER TABLE location AUTO_INCREMENT = 6');
         $this->addSql('ALTER TABLE `user` AUTO_INCREMENT = 12');
         $this->addSql('ALTER TABLE lesson AUTO_INCREMENT = 11');
-        $this->addSql('ALTER TABLE exchange AUTO_INCREMENT = 11');
-        $this->addSql('ALTER TABLE session AUTO_INCREMENT = 21');
-        $this->addSql('ALTER TABLE review AUTO_INCREMENT = 27');
+        $this->addSql('ALTER TABLE exchange AUTO_INCREMENT = 9');
+        $this->addSql('ALTER TABLE session AUTO_INCREMENT = 19');
+        $this->addSql('ALTER TABLE review AUTO_INCREMENT = 25');
     }
 
     public function down(Schema $schema): void
@@ -371,9 +361,6 @@ final class Version20250601134212 extends AbstractMigration
         SQL);
         
         // Suppression des tables
-        $this->addSql(<<<'SQL'
-            DROP TABLE blacklist
-        SQL);
         $this->addSql(<<<'SQL'
             DROP TABLE category
         SQL);
