@@ -108,11 +108,23 @@ final class DisplaySessions
 
     private function fetchSessions(?User $user): void
     {
+        // vérifie que les dates ne sont pas des string vide
+        // $this->dateStart = $this->dateStart == "" ? null : $this->dateStart;
+        // $this->dateEnd = $this->dateEnd ?? null;
+
+        // récupère l'objet categorie via le tab : categorie enseignée
         $categoryGiven = array_filter(
             $this->categories,
             fn ($cat) =>  $cat->getId() === (int)($this->categoryGiven)
         );
         $categoryGiven = $categoryGiven ? array_values($categoryGiven)[0] : null;
+
+        // récupère l'objet categorie demandée enseignée via le tab
+        $categoryRequested = array_filter(
+            $this->categories,
+            fn ($cat) =>  $cat->getId() === (int)($this->categoryRequested)
+        );
+        $categoryRequested = $categoryRequested ? array_values($categoryRequested)[0] : null;
 
         if ($this->lessonChecked) {
             $this->lessons = $this->sessionRepository->searchLessons(

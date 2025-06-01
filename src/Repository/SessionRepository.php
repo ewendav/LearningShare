@@ -102,14 +102,14 @@ class SessionRepository extends ServiceEntityRepository
         }
 
         if ($dateStart) {
-            $qb->andWhere('s.date >= :dateStart')
+            $qb->andWhere('s.date = :dateStart')
                ->setParameter('dateStart', $dateStart->format('Y-m-d'));
         }
 
-        if ($dateEnd) {
-            $qb->andWhere('s.date <= :dateEnd')
-               ->setParameter('dateEnd', $dateEnd->format('Y-m-d'));
-        }
+        // if ($dateEnd) {
+        //     $qb->andWhere('s.date = :dateEnd')
+        //        ->setParameter('dateEnd', $dateEnd->format('Y-m-d'));
+        // }
 
         if ('' !== $timeStart) {
             $qb->andWhere('s.startTime >= :timeStart')
@@ -173,14 +173,14 @@ class SessionRepository extends ServiceEntityRepository
         }
 
         if ($dateStart) {
-            $qb->andWhere('s.date >= :dateStart')
+            $qb->andWhere('s.date = :dateStart')
                ->setParameter('dateStart', $dateStart->format('Y-m-d'));
         }
 
-        if ($dateEnd) {
-            $qb->andWhere('s.date <= :dateEnd')
-               ->setParameter('dateEnd', $dateEnd->format('Y-m-d'));
-        }
+        // if ($dateEnd) {
+        //     $qb->andWhere('s.date = :dateEnd')
+        //        ->setParameter('dateEnd', $dateEnd->format('Y-m-d'));
+        // }
 
         if ('' !== $timeStart) {
             $qb->andWhere('s.startTime >= :timeStart')

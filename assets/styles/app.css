@@ -154,6 +154,7 @@ main {
   line-height: 2em;
   padding-inline: 0.5em;
   pointer-events: none;
+  z-index : 999;
 }
 
 .nav-anchor:hover::before {
@@ -492,4 +493,10 @@ input.toggle-switch-input:checked + .toggle-switch-slider .slider {
 }
 .dark-mode .sun {
   display: block;
+}
+
+.filter-box{
+  display : flex;
+  gap : 5vw;
+
 }
