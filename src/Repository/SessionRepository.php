@@ -92,9 +92,9 @@ class SessionRepository extends ServiceEntityRepository
                ->setParameter('user', $user);
         }
 
-        if ('' !== $q) {
-            $qb->andWhere('st.name LIKE :q')
-               ->setParameter('q', '%' . $q . '%');
+        if (null !== $skillGiven) {
+            $qb->andWhere('st.name LIKE :skillFilter')
+               ->setParameter('skillFilter', '%' . $skillGiven . '%');
         }
 
         if (null !== $categoryGiven) {
@@ -154,9 +154,9 @@ class SessionRepository extends ServiceEntityRepository
                ->setParameter('user', $user);
         }
 
-        if ('' !== $q) {
-            $qb->andWhere('st.name LIKE :q')
-               ->setParameter('q', '%' . $q . '%');
+        if (null !== $skillGiven) {
+            $qb->andWhere('sr.name LIKE :skillFilter')
+               ->setParameter('skillFilter', '%' . $skillGiven . '%');
         }
 
         if (null !== $categoryGiven) {
@@ -169,9 +169,9 @@ class SessionRepository extends ServiceEntityRepository
                ->setParameter('category', $categoryGiven);
         }
 
-        if (null !== $skillGiven) {
+        if (null !== $skillRequested) {
             $qb->andWhere('sr.name LIKE :skillFilter')
-               ->setParameter('skillFilter', '%' . $skillGiven . '%');
+               ->setParameter('skillFilter', '%' . $skillRequested . '%');
         }
 
         if ($dateStart) {
@@ -354,7 +354,7 @@ class SessionRepository extends ServiceEntityRepository
                 'skill_taught_id'       => $tskill->getId(),
                 'skill_taught_category_id' => $tskill->getCategory()->getId(),
                 'skill_taught_name'     => $tskill->getName(),
-        'full_address'          => $loc,
+        'full_address'          => $loc->getAdress() ?? "",
             ];
         }
 
@@ -393,7 +393,7 @@ class SessionRepository extends ServiceEntityRepository
                 'skill_taught_id'       => $tskill->getId(),
                 'skill_taught_category_id' => $tskill->getCategory()->getId(),
                 'skill_taught_name'     => $tskill->getName(),
-'full_address' => (string) $loc,
+        'full_address'          => $loc->getAdress() ?? "",
             ];
         }
 
