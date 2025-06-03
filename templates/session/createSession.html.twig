@@ -25,7 +25,13 @@
 
         <!-- Gestion de l'affichage initial -->
         <style>
-            {% if edit_mode and session_type == 'lesson' %}
+            {% if edit_mode or (clone_mode is defined and clone_mode) %}
+                .toggle-switch-container {
+                    display: none;
+                }
+            {% endif %}
+            
+            {% if (edit_mode or (clone_mode is defined and clone_mode)) and session_type == 'lesson' %}
                 #section-echange {
                     display: none;
                 }
@@ -44,7 +50,7 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', ()=>{
-                {% if edit_mode and session_type is defined %}
+                {% if (edit_mode or (clone_mode is defined and clone_mode)) and session_type is defined %}
                     {% if session_type == 'lesson' %}
                         document.getElementById('section-cours').style.display = 'block';
                         document.getElementById('section-echange').style.display = 'none';
@@ -72,23 +78,23 @@
         </script>
 
         <div id="section-echange">
-            <h1 class="page-title">{% if edit_mode %}{{ 'Modification d\'un échange'|trans }}{% else %}{{ 'Création d\'un échange'|trans }}{% endif %}</h1>
+            <h1 class="page-title">{% if edit_mode %}{{ 'Modification d\'un échange'|trans }}{% elseif (clone_mode is defined and clone_mode) %}{{ 'Clonage d\'un échange'|trans }}{% else %}{{ 'Création d\'un échange'|trans }}{% endif %}</h1>
             <form class="form-creation-session" action="{% if edit_mode and session_type == 'exchange' %}{{ path('app_exchange_update', {'id': session_id}) }}{% else %}{{ path('app_exchange_create') }}{% endif %}" method="POST">
 
                 <div class="horizontal-display">
                     <div class="input-label-display">
                         <label for="skill_taught_id">{{ 'Catégorie enseignée'|trans }}</label>
                         <select required class="input-goofy" id="skill_taught_id" name="skill_taught_id">
-                            <option value="" disabled{% if not (edit_mode and session_data.skill_taught_id is defined) %} selected{% endif %}>{{ 'Sélectionnez une catégorie enseignée'|trans }}</option>
+                            <option value="" disabled{% if not ((edit_mode or (clone_mode is defined and clone_mode)) and session_data.skill_taught_id is defined) %} selected{% endif %}>{{ 'Sélectionnez une catégorie enseignée'|trans }}</option>
                             {% for category in categories %}
-                                <option value="{{ category.id }}"{% if edit_mode and session_data.skill_taught_id is defined and session_data.skill_taught_id == category.id %} selected{% endif %}>{{ category.name }}</option>
+                                <option value="{{ category.id }}"{% if (edit_mode or (clone_mode is defined and clone_mode)) and session_data.skill_taught_id is defined and session_data.skill_taught_id == category.id %} selected{% endif %}>{{ category.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
 
                     <div class="input-label-display">
                         <label for="description">{{ 'Compétence enseignée'|trans }}</label>
-                        <input required class="input-goofy" id="description" name="description" placeholder="{{ 'Sélectionnez une compétence enseignée'|trans }}" value="{% if edit_mode and session_data.description is defined %}{{ session_data.description }}{% endif %}">
+                        <input required class="input-goofy" id="description" name="description" placeholder="{{ 'Sélectionnez une compétence enseignée'|trans }}" value="{% if (edit_mode or (clone_mode is defined and clone_mode)) and session_data.description is defined %}{{ session_data.description }}{% endif %}">
                     </div>
                 </div>
 
@@ -96,16 +102,16 @@
                     <div class="input-label-display">
                         <label for="skill_requested_id">{{ 'Catégorie demandée'|trans }}</label>
                         <select required class="input-goofy" id="skill_requested_id" name="skill_requested_id">
-                            <option value="" disabled{% if not (edit_mode and session_data.skill_requested_id is defined) %} selected{% endif %}>{{ 'Sélectionnez une catégorie demandée'|trans }}</option>
+                            <option value="" disabled{% if not ((edit_mode or (clone_mode is defined and clone_mode)) and session_data.skill_requested_id is defined) %} selected{% endif %}>{{ 'Sélectionnez une catégorie demandée'|trans }}</option>
                             {% for category in categories %}
-                                <option value="{{ category.id }}"{% if edit_mode and session_data.skill_requested_id is defined and session_data.skill_requested_id == category.id %} selected{% endif %}>{{ category.name }}</option>
+                                <option value="{{ category.id }}"{% if (edit_mode or (clone_mode is defined and clone_mode)) and session_data.skill_requested_id is defined and session_data.skill_requested_id == category.id %} selected{% endif %}>{{ category.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
 
                     <div class="input-label-display">
                         <label for="competence-echange-2">{{ 'Compétence demandée'|trans }}</label>
-                        <input class="input-goofy" id="competence-echange-2" name="competence_requested" placeholder="{{ 'Sélectionnez une compétence demandée'|trans }}" value="{% if edit_mode and session_data.competence_requested is defined %}{{ session_data.competence_requested }}{% endif %}">
+                        <input class="input-goofy" id="competence-echange-2" name="competence_requested" placeholder="{{ 'Sélectionnez une compétence demandée'|trans }}" value="{% if (edit_mode or (clone_mode is defined and clone_mode)) and session_data.competence_requested is defined %}{{ session_data.competence_requested }}{% endif %}">
                     </div>
                 </div>
 
@@ -139,7 +145,7 @@
 
         <div id="section-cours">
 
-            <h1 class="page-title">{% if edit_mode %}{{ 'Modification d\'un cours'|trans }}{% else %}{{ 'Création d\'un cours'|trans }}{% endif %}</h1>
+            <h1 class="page-title">{% if edit_mode %}{{ 'Modification d\'un cours'|trans }}{% elseif (clone_mode is defined and clone_mode) %}{{ 'Clonage d\'un cours'|trans }}{% else %}{{ 'Création d\'un cours'|trans }}{% endif %}</h1>
 
             <form class="form-creation-session" action="{% if edit_mode and session_type == 'lesson' %}{{ path('app_course_update', {'id': session_id}) }}{% else %}{{ path('app_course_create') }}{% endif %}" method="POST">
 
@@ -147,16 +153,16 @@
                     <div class="input-label-display">
                         <label for="skill_taught_id_cours">{{ 'Catégorie'|trans }}</label>
                         <select required class="input-goofy" id="skill_taught_id_cours" name="skill_taught_id">
-                            <option value="" disabled{% if not (edit_mode and session_data.skill_taught_id is defined) %} selected{% endif %}>{{ 'Sélectionnez une catégorie'|trans }}</option>
+                            <option value="" disabled{% if not ((edit_mode or (clone_mode is defined and clone_mode)) and session_data.skill_taught_id is defined) %} selected{% endif %}>{{ 'Sélectionnez une catégorie'|trans }}</option>
                             {% for category in categories %}
-                                <option value="{{ category.id }}"{% if edit_mode and session_data.skill_taught_id is defined and session_data.skill_taught_id == category.id %} selected{% endif %}>{{ category.name }}</option>
+                                <option value="{{ category.id }}"{% if (edit_mode or (clone_mode is defined and clone_mode)) and session_data.skill_taught_id is defined and session_data.skill_taught_id == category.id %} selected{% endif %}>{{ category.name }}</option>
                             {% endfor %}
                         </select>
                     </div>
 
                     <div class="input-label-display">
                         <label for="description_cours">{{ 'Compétence'|trans }}</label>
-                        <input required class="input-goofy" id="description_cours" name="description" placeholder="{{ 'Sélectionnez une compétence'|trans }}" value="{% if edit_mode and session_data.description is defined %}{{ session_data.description }}{% endif %}">
+                        <input required class="input-goofy" id="description_cours" name="description" placeholder="{{ 'Sélectionnez une compétence'|trans }}" value="{% if (edit_mode or (clone_mode is defined and clone_mode)) and session_data.description is defined %}{{ session_data.description }}{% endif %}">
                     </div>
                 </div>
 
@@ -193,26 +199,26 @@
                 <div class="horizontal-display">
                     <div class="input-label-display">
                         <label for="address">{{ 'Adresse'|trans }}</label>
-                        <input required class="input-goofy" type="text" id="address" name="address" placeholder="{{ 'Entrez l\'adresse'|trans }}" value="{% if edit_mode and session_data.address is defined %}{{ session_data.address }}{% endif %}">
+                        <input required class="input-goofy" type="text" id="address" name="address" placeholder="{{ 'Entrez l\'adresse'|trans }}" value="{% if (edit_mode or (clone_mode is defined and clone_mode)) and session_data.address is defined %}{{ session_data.address }}{% endif %}">
                     </div>
                 </div>
 
                 <div class="horizontal-display">
                     <div class="input-label-display">
                         <label for="city">{{ 'Ville'|trans }}</label>
-                        <input required class="input-goofy" type="text" id="city" name="city" placeholder="{{ 'Entrez la ville'|trans }}" value="{% if edit_mode and session_data.city is defined %}{{ session_data.city }}{% endif %}">
+                        <input required class="input-goofy" type="text" id="city" name="city" placeholder="{{ 'Entrez la ville'|trans }}" value="{% if (edit_mode or (clone_mode is defined and clone_mode)) and session_data.city is defined %}{{ session_data.city }}{% endif %}">
                     </div>
 
                     <div class="input-label-display">
                         <label for="zip_code">{{ 'Code postal'|trans }}</label>
-                        <input required class="input-goofy" type="text" id="zip_code" name="zip_code" placeholder="{{ 'Entrez le code postal'|trans }}" value="{% if edit_mode and session_data.zip_code is defined %}{{ session_data.zip_code }}{% endif %}">
+                        <input required class="input-goofy" type="text" id="zip_code" name="zip_code" placeholder="{{ 'Entrez le code postal'|trans }}" value="{% if (edit_mode or (clone_mode is defined and clone_mode)) and session_data.zip_code is defined %}{{ session_data.zip_code }}{% endif %}">
                     </div>
                 </div>
 
                 <div class="horizontal-display">
                     <div class="input-label-display">
                         <label for="max_attendees">{{ 'Nombre maximum de participants'|trans }}</label>
-                        <input required class="input-goofy" type="number" id="max_attendees" name="max_attendees" placeholder="{{ 'Sélectionnez le nombre maximum de participants'|trans }}" value="{% if edit_mode and session_data.max_attendees is defined %}{{ session_data.max_attendees }}{% endif %}">
+                        <input required class="input-goofy" type="number" id="max_attendees" name="max_attendees" placeholder="{{ 'Sélectionnez le nombre maximum de participants'|trans }}" value="{% if (edit_mode or (clone_mode is defined and clone_mode)) and session_data.max_attendees is defined %}{{ session_data.max_attendees }}{% endif %}">
                     </div>
                 </div>
 
