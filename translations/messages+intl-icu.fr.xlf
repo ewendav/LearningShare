@@ -469,6 +469,18 @@
         <source>Évolution du nombre de sessions (12 derniers mois)</source>
         <target>Évolution du nombre de sessions (12 derniers mois)</target>
       </trans-unit>
+      <trans-unit id="abcd123" resname="Création d'un échange">
+        <source>Création d'un échange</source>
+        <target>Création d'un échange</target>
+      </trans-unit>
+      <trans-unit id="efgh456" resname="Modification d'un échange">
+        <source>Modification d'un échange</source>
+        <target>Modification d'un échange</target>
+      </trans-unit>
+      <trans-unit id="ijkl789" resname="Modification d'un cours">
+        <source>Modification d'un cours</source>
+        <target>Modification d'un cours</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
