@@ -381,24 +381,24 @@ class SessionController extends AbstractController
     {
         $user = $this->getUser();
         $categories = $em->getRepository(Category::class)->findAll();
-        
+
         if ($type === 'lesson') {
             $session = $em->getRepository(Session::class)->find($id);
             $lesson = $session ? $session->getLesson() : null;
-            
+
             if (!$lesson) {
                 $this->addFlash('error', 'Session introuvable.');
                 return $this->redirectToRoute('home');
             }
-            
+
             // Vérification de propriété : seul le créateur peut cloner
             if ($lesson->getHost()->getId() !== $user->getId()) {
                 $this->addFlash('error', 'Vous n\'êtes pas autorisé à cloner ce cours.');
                 return $this->redirectToRoute('home');
             }
-            
+
             $location = $lesson->getLocation();
-            
+
             return $this->render('session/createSession.html.twig', [
                 'title' => 'Clonage d\'un cours',
                 'categories' => $categories,
@@ -414,21 +414,21 @@ class SessionController extends AbstractController
                     'max_attendees' => $lesson->getMaxAttendees(),
                 ]
             ]);
-        } else if ($type === 'exchange') {
+        } elseif ($type === 'exchange') {
             $session = $em->getRepository(Session::class)->find($id);
             $exchange = $session ? $session->getExchange() : null;
-            
+
             if (!$exchange) {
                 $this->addFlash('error', 'Session introuvable.');
                 return $this->redirectToRoute('home');
             }
-            
+
             // Vérification de propriété : seul le créateur peut cloner
             if ($exchange->getRequester()->getId() !== $user->getId()) {
                 $this->addFlash('error', 'Vous n\'êtes pas autorisé à cloner cet échange.');
                 return $this->redirectToRoute('home');
             }
-            
+
             return $this->render('session/createSession.html.twig', [
                 'title' => 'Clonage d\'un échange',
                 'categories' => $categories,
@@ -448,4 +448,3 @@ class SessionController extends AbstractController
         }
     }
 }
->>>>>>> 0639b9e8cb785d2d1e7781596576d474397615d6
