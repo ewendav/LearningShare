@@ -577,6 +577,18 @@
         <source>Modifier le cours</source>
         <target>Modifier le cours</target>
       </trans-unit>
+      <trans-unit id="w7z659Q" resname="Prix cours :">
+        <source>Prix cours :</source>
+        <target>Prix cours :</target>
+      </trans-unit>
+      <trans-unit id="QiVqHS9" resname="Gain échange :">
+        <source>Gain échange :</source>
+        <target>Gain échange :</target>
+      </trans-unit>
+      <trans-unit id="8Ld.90b" resname="Pas de sessions à venir">
+        <source>Pas de sessions à venir</source>
+        <target>Pas de sessions à venir</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>

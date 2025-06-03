@@ -630,7 +630,7 @@
         <target>Taught Category</target>
       </trans-unit>
       <trans-unit id="jNUb6WG" resname="vide">
-        <source>Vide</source>
+        <source>vide</source>
         <target>Empty</target>
       </trans-unit>
       <trans-unit id="CX82LBV" resname="Categorie demandee">
@@ -656,6 +656,18 @@
       <trans-unit id="_pO3.s_" resname="Modification d'un cours">
         <source>Modification d'un cours</source>
         <target>Editing a course</target>
+      </trans-unit>
+      <trans-unit id="w7z659Q" resname="Prix cours :">
+        <source>Prix cours :</source>
+        <target>Lesson gain :</target>
+      </trans-unit>
+      <trans-unit id="QiVqHS9" resname="Gain échange :">
+        <source>Gain échange :</source>
+        <target>Exchange gain :</target>
+      </trans-unit>
+      <trans-unit id="8Ld.90b" resname="Pas de sessions à venir">
+        <source>Pas de sessions à venir</source>
+        <target>No upcoming sessions</target>
       </trans-unit>
     </body>
   </file>
