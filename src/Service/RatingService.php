@@ -67,20 +67,29 @@ class RatingService
             ->setParameter('now', $now)
             ->andWhere(
                 $queryBuilder->expr()->orX(
+                    // Cas 1: rater a participé à un cours hébergé par userToRate
                     $queryBuilder->expr()->andX(
                         $queryBuilder->expr()->isNotNull('l.id'),
                         $queryBuilder->expr()->eq('l.host', ':userToRate'),
                         $queryBuilder->expr()->eq('la.id', ':rater')
                     ),
+                    // Cas 2: userToRate a participé à un cours hébergé par rater
+                    $queryBuilder->expr()->andX(
+                        $queryBuilder->expr()->isNotNull('l.id'),
+                        $queryBuilder->expr()->eq('l.host', ':rater'),
+                        $queryBuilder->expr()->eq('la.id', ':userToRate')
+                    ),
+                    // Cas 3: rater était demandeur, userToRate était participant dans un échange
+                    $queryBuilder->expr()->andX(
+                        $queryBuilder->expr()->isNotNull('e.id'),
+                        $queryBuilder->expr()->eq('e.requester', ':rater'),
+                        $queryBuilder->expr()->eq('e.attendee', ':userToRate')
+                    ),
+                    // Cas 4: userToRate était demandeur, rater était participant dans un échange
                     $queryBuilder->expr()->andX(
                         $queryBuilder->expr()->isNotNull('e.id'),
                         $queryBuilder->expr()->eq('e.requester', ':userToRate'),
                         $queryBuilder->expr()->eq('e.attendee', ':rater')
-                    ),
-                    $queryBuilder->expr()->andX(
-                        $queryBuilder->expr()->isNotNull('e.id'),
-                        $queryBuilder->expr()->eq('e.attendee', ':userToRate'),
-                        $queryBuilder->expr()->eq('e.requester', ':rater')
                     )
                 )
             )

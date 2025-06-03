@@ -99,9 +99,14 @@
     {% set viewed_profile_id = app.request.attributes.get('id') %}
     {% set is_viewing_own_profile = viewed_profile_id is null or viewed_profile_id|number_format == app.user.id %}
     
+    {# Check if session is in the past #}
+    {% set current_date = "now"|date("Y-m-d") %}
+    {% set current_time = "now"|date("H:i:s") %}
+    {% set is_past_session = (dateDebut < current_date) or (dateDebut == current_date and endTime|date('H:i:s') < current_time) %}
+    
     {% if app.user.id == userId %}
-      {# User is the host of the course - show cancel button only if viewing own profile #}
-      {% if is_viewing_own_profile %}
+      {# User is the host of the course - show cancel button only if viewing own profile and session is not past #}
+      {% if is_viewing_own_profile and not is_past_session %}
         <div style="display: flex; gap: 10px; margin-bottom: 10px;">
           <a href="{{ path('app_session_edit', {'id': session_id, 'type': 'lesson'}) }}" style="flex: 1;">
             <button class="form-button" style="width:100%; background-color:#28a745;" type="button">
@@ -117,37 +122,45 @@
         </form>
       {% endif %}
     {% else %}
-      {# User is not the host - show join/leave buttons #}
-      {% set userAttending = false %}
-      {% for attendee in app.user.lessonsAttended %}
-        {% if attendee.session is not null and attendee.session.id == session_id %}
-          {% set userAttending = true %}
-        {% endif %}
-      {% endfor %}
-      
-      {% if not userAttending %}
-        <form action="{{ path('app_join_lesson', {'id': session_id}) }}" method="POST">
-          {% if csrf_protection is defined and csrf_protection %}
-            <input type="hidden" name="token" value="{{ csrf_token('join-lesson-' ~ session_id) }}">
+      {# User is not the host - show join/leave buttons only if session is not past #}
+      {% if not is_past_session %}
+        {% set userAttending = false %}
+        {% for attendee in app.user.lessonsAttended %}
+          {% if attendee.session is not null and attendee.session.id == session_id %}
+            {% set userAttending = true %}
           {% endif %}
-          <button class="form-button green-bg" style="width:100%" type="submit">{{ "Rejoindre le cours"|trans }}</button>
-        </form>
-      {% else %}
-        {# Show leave button only if viewing own profile #}
-        {% if is_viewing_own_profile %}
-          <form action="{{ path('app_leave_lesson', {'id': session_id}) }}" method="POST">
+        {% endfor %}
+        
+        {% if not userAttending %}
+          <form action="{{ path('app_join_lesson', {'id': session_id}) }}" method="POST">
             {% if csrf_protection is defined and csrf_protection %}
-              <input type="hidden" name="token" value="{{ csrf_token('leave-lesson-' ~ session_id) }}">
+              <input type="hidden" name="token" value="{{ csrf_token('join-lesson-' ~ session_id) }}">
             {% endif %}
-            <button class="form-button" style="width:100%; background-color:#d9534f;" type="submit">{{ "Se désinscrire"|trans }}</button>
+            <button class="form-button green-bg" style="width:100%" type="submit">{{ "Rejoindre le cours"|trans }}</button>
           </form>
+        {% else %}
+          {# Show leave button only if viewing own profile #}
+          {% if is_viewing_own_profile %}
+            <form action="{{ path('app_leave_lesson', {'id': session_id}) }}" method="POST">
+              {% if csrf_protection is defined and csrf_protection %}
+                <input type="hidden" name="token" value="{{ csrf_token('leave-lesson-' ~ session_id) }}">
+              {% endif %}
+              <button class="form-button" style="width:100%; background-color:#d9534f;" type="submit">{{ "Se désinscrire"|trans }}</button>
+            </form>
+          {% endif %}
         {% endif %}
       {% endif %}
     {% endif %}
   {% else %}
-    <a href="{{ path('app_login') }}">
-      <button style="width:100%" class="form-button green-bg" type="button">{{ "Rejoindre le cours"|trans }}</button>
-    </a>
+    {% set current_date = "now"|date("Y-m-d") %}
+    {% set current_time = "now"|date("H:i:s") %}
+    {% set is_past_session = (dateDebut < current_date) or (dateDebut == current_date and endTime|date('H:i:s') < current_time) %}
+    
+    {% if not is_past_session %}
+      <a href="{{ path('app_login') }}">
+        <button style="width:100%" class="form-button green-bg" type="button">{{ "Rejoindre le cours"|trans }}</button>
+      </a>
+    {% endif %}
   {% endif %}
 
 </div>
