@@ -367,4 +367,77 @@ class SessionController extends AbstractController
         
         return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
     }
+
+    #[Route('/session/clone/{id}/{type}', name: 'app_session_clone')]
+    #[IsGranted('ROLE_USER')]
+    public function clone(int $id, string $type, EntityManagerInterface $em): Response
+    {
+        $user = $this->getUser();
+        $categories = $em->getRepository(Category::class)->findAll();
+        
+        if ($type === 'lesson') {
+            $session = $em->getRepository(Session::class)->find($id);
+            $lesson = $session ? $session->getLesson() : null;
+            
+            if (!$lesson) {
+                $this->addFlash('error', 'Session introuvable.');
+                return $this->redirectToRoute('home');
+            }
+            
+            // Vérification de propriété : seul le créateur peut cloner
+            if ($lesson->getHost()->getId() !== $user->getId()) {
+                $this->addFlash('error', 'Vous n\'êtes pas autorisé à cloner ce cours.');
+                return $this->redirectToRoute('home');
+            }
+            
+            $location = $lesson->getLocation();
+            
+            return $this->render('session/createSession.html.twig', [
+                'title' => 'Clonage d\'un cours',
+                'categories' => $categories,
+                'edit_mode' => false,
+                'clone_mode' => true,
+                'session_type' => 'lesson',
+                'session_data' => [
+                    'skill_taught_id' => $session->getSkillTaught()->getCategory()->getId(),
+                    'description' => $session->getSkillTaught()->getName(),
+                    'address' => $location->getAdress(),
+                    'city' => $location->getCity(),
+                    'zip_code' => $location->getZipCode(),
+                    'max_attendees' => $lesson->getMaxAttendees(),
+                ]
+            ]);
+        } else if ($type === 'exchange') {
+            $session = $em->getRepository(Session::class)->find($id);
+            $exchange = $session ? $session->getExchange() : null;
+            
+            if (!$exchange) {
+                $this->addFlash('error', 'Session introuvable.');
+                return $this->redirectToRoute('home');
+            }
+            
+            // Vérification de propriété : seul le créateur peut cloner
+            if ($exchange->getRequester()->getId() !== $user->getId()) {
+                $this->addFlash('error', 'Vous n\'êtes pas autorisé à cloner cet échange.');
+                return $this->redirectToRoute('home');
+            }
+            
+            return $this->render('session/createSession.html.twig', [
+                'title' => 'Clonage d\'un échange',
+                'categories' => $categories,
+                'edit_mode' => false,
+                'clone_mode' => true,
+                'session_type' => 'exchange',
+                'session_data' => [
+                    'skill_taught_id' => $session->getSkillTaught()->getCategory()->getId(),
+                    'description' => $session->getSkillTaught()->getName(),
+                    'skill_requested_id' => $exchange->getSkillRequested()->getCategory()->getId(),
+                    'competence_requested' => $exchange->getSkillRequested()->getName(),
+                ]
+            ]);
+        } else {
+            $this->addFlash('error', 'Type de session non valide.');
+            return $this->redirectToRoute('home');
+        }
+    }
 }
