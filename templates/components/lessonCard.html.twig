@@ -19,7 +19,11 @@
     </div>
 
       {% if ownLesson %}
+        <div  style="gap:1rem!important" class="vertical-display">
+
       <h3 class="lesson-title"> {{ "Vous enseignez"|trans }}</h3>
+      <p  class="lesson-title"> {{ current_attendees }} / {{ max_attendees }} attendees</p>
+    </div>
       {% else %}
       <h3 class="lesson-title"> {{ "Vous apprenez"|trans }}</h3>
       {% endif %}

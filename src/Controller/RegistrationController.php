@@ -59,16 +59,16 @@ class RegistrationController extends AbstractController
                     );
 
                     // Mettre à jour le chemin dans l'entité
-                    $user->setAvatarPath($newFilename);
+                    $user->setAvatarPath("uploads/avatars/" + $newFilename);
                 } catch (FileException $e) {
                     $this->addFlash('error', 'Un problème est survenu lors du téléchargement de l\'avatar.');
 
                     // Définir un avatar par défaut en cas d'erreur
-                    $user->setAvatarPath('default.png');
+                    $user->setAvatarPath('uploads/avatars/default.png');
                 }
             } else {
                 // Définir un avatar par défaut si aucun n'est fourni
-                $user->setAvatarPath('default.png');
+                $user->setAvatarPath('uploads/avatars/default.png');
             }
 
             $entityManager->persist($user);

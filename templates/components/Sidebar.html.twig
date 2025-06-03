@@ -53,6 +53,9 @@
           'dateDebut': session.date_session,
           'startTime': session.start_time,
           'endTime': session.end_time,
+          "accepter_user_id" : session.accepter_user_id,
+      "accepter_first_name" : session.accepter_first_name,
+      "accepter_last_name" : session.accepter_last_name,
           'session_id': "j",
         } %}
       {% endfor %}
@@ -74,6 +77,8 @@
           'dateDebut': session.date_session,
           'startTime': session.start_time,
           'endTime': session.end_time,
+          'max_attendees' : session.max_attendees,
+          'current_attendees' : session.current_attendees,
           'session_id': "j",
         } %}
       {% endfor %}

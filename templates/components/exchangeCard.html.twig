@@ -18,9 +18,18 @@
         {% endif %}
     </div>
 
+        <div  style="gap:1rem!important" class="vertical-display">
+
       <h3 class="lesson-title"> {{ "Vous partagez"|trans }}
       </h3>
+      {% if accepter_user_id != null %}
+      <p  class="lesson-title">  <a href="/profile/{{accepter_user_id}}">
+Participant : {{accepter_first_name}} 
+        {{accepter_last_name}}
 
+      </a></p>
+      {% endif %}
+    </div>
       </div>
 
     {% else %}

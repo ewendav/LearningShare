@@ -24,8 +24,7 @@ class ProfileController extends AbstractController
         EntityManagerInterface $em,
         CategoryRepository     $categoryRepository,
         RatingService          $ratingService
-    ): Response
-    {
+    ): Response {
         // Si aucun ID n'est fourni, utiliser l'utilisateur connecté
         if (!$id) {
             $userId = $this->getUser() ? $this->getUser()->getId() : null;
@@ -351,3 +350,4 @@ class ProfileController extends AbstractController
         }
     }
 }
+
