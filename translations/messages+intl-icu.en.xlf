@@ -645,6 +645,18 @@
         <source>Rechercher la competence demandee</source>
         <target>Search for requested skill</target>
       </trans-unit>
+      <trans-unit id="abcd123" resname="Création d'un échange">
+        <source>Création d'un échange</source>
+        <target>Creating an exchange</target>
+      </trans-unit>
+      <trans-unit id="efgh456" resname="Modification d'un échange">
+        <source>Modification d'un échange</source>
+        <target>Editing an exchange</target>
+      </trans-unit>
+      <trans-unit id="ijkl789" resname="Modification d'un cours">
+        <source>Modification d'un cours</source>
+        <target>Editing a course</target>
+      </trans-unit>
     </body>
   </file>
 </xliff>
