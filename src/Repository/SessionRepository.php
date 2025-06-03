@@ -84,7 +84,8 @@ class SessionRepository extends ServiceEntityRepository
         ->join('s.lesson', 'l')
         ->join('s.skillTaught', 'st')
         ->addSelect('l', 'st')
-        ->leftJoin('l.attendees', 'a');
+        ->leftJoin('l.attendees', 'a')
+        ->andWhere('s.date > CURRENT_DATE() OR (s.date = CURRENT_DATE() AND s.endTime > CURRENT_TIME())');
 
         if ($user) {
             $qb->andWhere('l.host != :user')
@@ -145,7 +146,8 @@ class SessionRepository extends ServiceEntityRepository
             ->join('s.exchange', 'e')
             ->join('s.skillTaught', 'st')
             ->join('e.skillRequested', 'sr')
-            ->andWhere('e.attendee IS NULL');
+            ->andWhere('e.attendee IS NULL')
+            ->andWhere('s.date > CURRENT_DATE() OR (s.date = CURRENT_DATE() AND s.endTime > CURRENT_TIME())');
 
         if ($user) {
             $qb->andWhere('e.requester != :user')

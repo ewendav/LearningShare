@@ -28,7 +28,7 @@ class RegistrationController extends AbstractController
         $user = new User();
 
         // Initialiser les valeurs par défaut
-        $user->setBalance(0); // Solde initial à 0
+        $user->setBalance(100); // Solde initial de 100 tokens
         $user->setRoles(['ROLE_USER']); // Rôle par défaut
 
         $form = $this->createForm(RegistrationFormType::class, $user);
