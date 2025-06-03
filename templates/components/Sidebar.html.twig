@@ -10,11 +10,11 @@
         </div>
         <div style="width:80%;border:2px solid red;border-radius:5px;padding:3px;margin-top:-25px;font-size:0.8em;color:#666;font-weight:bold;">
           <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
-            <span>Prix cours : </span>
+            <span>{{ 'Prix cours : '|trans }}</span>
             <span>25</span>
           </div>
           <div style="display:flex;justify-content:space-between;">
-            <span>Gain échange : </span>
+            <span>{{ 'Gain échange : '|trans }}</span>
             <span>40</span>
           </div>
         </div>
@@ -39,7 +39,7 @@
 
     {# Vérifie si userSessions.cours ET userSessions.partage sont vides #}
     {% if userSessions.cours is empty and userSessions.partage is empty %}
-      <p>pas de sessions à venir</p>
+      <p>{{ 'Pas de sessions à venir'|trans }}</p>
     {% else %}
       {# --- ÉCHANGES (“partage”) --- #}
       {% for session in userSessions.partage %}
