@@ -657,13 +657,13 @@
         <source>Modification d'un cours</source>
         <target>Editing a course</target>
       </trans-unit>
-      <trans-unit id="w7z659Q" resname="Prix cours :">
+      <trans-unit id="w7z659Q" resname="Prix cours : ">
         <source>Prix cours :</source>
-        <target>Lesson gain :</target>
+        <target>Lesson price : </target>
       </trans-unit>
-      <trans-unit id="QiVqHS9" resname="Gain échange :">
+      <trans-unit id="QiVqHS9" resname="Gain échange : ">
         <source>Gain échange :</source>
-        <target>Exchange gain :</target>
+        <target>Exchange gain : </target>
       </trans-unit>
       <trans-unit id="8Ld.90b" resname="Pas de sessions à venir">
         <source>Pas de sessions à venir</source>
