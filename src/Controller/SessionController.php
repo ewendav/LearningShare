@@ -12,6 +12,7 @@ use App\Form\LessonType;
 use App\Form\ExchangeType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -32,27 +33,33 @@ class SessionController extends AbstractController
             'edit_mode' => false,
         ]);
     }
-    
+
+    #[Route('/session/json', name: 'app_session_export_json')]
+    public function exportJson($json): JsonResponse
+    {
+        return new JsonResponse($json);
+    }
+
     #[Route('/session/edit/{id}/{type}', name: 'app_session_edit')]
     #[IsGranted('ROLE_USER')]
     public function edit(int $id, string $type, Request $request, EntityManagerInterface $em): Response
     {
         $user = $this->getUser();
         $categories = $em->getRepository(Category::class)->findAll();
-        
+
         if ($type === 'lesson') {
             // Récupérer d'abord la session, puis la leçon associée
-        $session = $em->getRepository(Session::class)->find($id);
-        $lesson = $session ? $session->getLesson() : null;
-            
+            $session = $em->getRepository(Session::class)->find($id);
+            $lesson = $session ? $session->getLesson() : null;
+
             if (!$lesson || $lesson->getHost()->getId() !== $user->getId()) {
                 $this->addFlash('error', 'Vous n\'êtes pas autorisé à modifier ce cours.');
                 return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
             }
-            
+
             $session = $lesson->getSession();
             $location = $lesson->getLocation();
-            
+
             return $this->render('session/createSession.html.twig', [
                 'title' => 'Modification d\'un cours',
                 'categories' => $categories,
@@ -71,18 +78,18 @@ class SessionController extends AbstractController
                     'max_attendees' => $lesson->getMaxAttendees(),
                 ]
             ]);
-        } else if ($type === 'exchange') {
+        } elseif ($type === 'exchange') {
             // Récupérer d'abord la session, puis l'échange associé
-        $session = $em->getRepository(Session::class)->find($id);
-        $exchange = $session ? $session->getExchange() : null;
-            
+            $session = $em->getRepository(Session::class)->find($id);
+            $exchange = $session ? $session->getExchange() : null;
+
             if (!$exchange || $exchange->getRequester()->getId() !== $user->getId()) {
                 $this->addFlash('error', 'Vous n\'êtes pas autorisé à modifier cet échange.');
                 return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
             }
-            
+
             $session = $exchange->getSession();
-            
+
             return $this->render('session/createSession.html.twig', [
                 'title' => 'Modification d\'un échange',
                 'categories' => $categories,
@@ -240,7 +247,7 @@ class SessionController extends AbstractController
 
         return $this->redirectToRoute('home', ['success' => 'partage_cree']);
     }
-    
+
     #[Route('/session/update/lesson/{id}', name: 'app_course_update', methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
     public function updateCourse(int $id, Request $request, EntityManagerInterface $em): Response
@@ -249,55 +256,55 @@ class SessionController extends AbstractController
         // Récupérer d'abord la session, puis la leçon associée
         $session = $em->getRepository(Session::class)->find($id);
         $lesson = $session ? $session->getLesson() : null;
-        
+
         if (!$lesson || $lesson->getHost()->getId() !== $user->getId()) {
             $this->addFlash('error', 'Vous n\'êtes pas autorisé à modifier ce cours.');
             return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
         }
-        
+
         $session = $lesson->getSession();
         $location = $lesson->getLocation();
-        
+
         // Mettre à jour la location
         $location->setAdress($request->request->get('address'));
         $location->setZipCode($request->request->get('zip_code'));
         $location->setCity($request->request->get('city'));
-        
+
         // Mettre à jour la compétence enseignée
         $skillName = $request->request->get('description');
         $categoryId = $request->request->get('skill_taught_id');
         $category = $em->getRepository(Category::class)->find($categoryId);
-        
+
         $skill = $em->getRepository(Skill::class)->findOneBy([
             'name' => $skillName,
             'category' => $category
         ]);
-        
+
         if (!$skill) {
             $skill = new Skill();
             $skill->setName($skillName);
             $skill->setCategory($category);
             $skill->setSearchCounter(0);
-            
+
             $em->persist($skill);
         }
-        
+
         // Mettre à jour la session
         $session->setStartTime(new \DateTime($request->request->get('start_time')));
         $session->setEndTime(new \DateTime($request->request->get('end_time')));
         $session->setDate(new \DateTime($request->request->get('date_session')));
         $session->setSkillTaught($skill);
-        
+
         // Mettre à jour le cours
         $lesson->setMaxAttendees((int)$request->request->get('max_attendees'));
-        
+
         $em->flush();
-        
+
         $this->addFlash('success', 'Votre cours a été modifié avec succès.');
-        
+
         return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
     }
-    
+
     #[Route('/session/update/exchange/{id}', name: 'app_exchange_update', methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
     public function updateExchange(int $id, Request $request, EntityManagerInterface $em): Response
@@ -306,65 +313,65 @@ class SessionController extends AbstractController
         // Récupérer d'abord la session, puis l'échange associé
         $session = $em->getRepository(Session::class)->find($id);
         $exchange = $session ? $session->getExchange() : null;
-        
+
         if (!$exchange || $exchange->getRequester()->getId() !== $user->getId()) {
             $this->addFlash('error', 'Vous n\'êtes pas autorisé à modifier cet échange.');
             return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
         }
-        
+
         $session = $exchange->getSession();
-        
+
         // Mettre à jour la compétence enseignée
         $skillTaughtName = $request->request->get('description');
         $categoryTaughtId = $request->request->get('skill_taught_id');
         $categoryTaught = $em->getRepository(Category::class)->find($categoryTaughtId);
-        
+
         $skillTaught = $em->getRepository(Skill::class)->findOneBy([
             'name' => $skillTaughtName,
             'category' => $categoryTaught
         ]);
-        
+
         if (!$skillTaught) {
             $skillTaught = new Skill();
             $skillTaught->setName($skillTaughtName);
             $skillTaught->setCategory($categoryTaught);
             $skillTaught->setSearchCounter(0);
-            
+
             $em->persist($skillTaught);
         }
-        
+
         // Mettre à jour la compétence demandée
         $skillRequestedName = $request->request->get('competence_requested');
         $categoryRequestedId = $request->request->get('skill_requested_id');
         $categoryRequested = $em->getRepository(Category::class)->find($categoryRequestedId);
-        
+
         $skillRequested = $em->getRepository(Skill::class)->findOneBy([
             'name' => $skillRequestedName,
             'category' => $categoryRequested
         ]);
-        
+
         if (!$skillRequested) {
             $skillRequested = new Skill();
             $skillRequested->setName($skillRequestedName);
             $skillRequested->setCategory($categoryRequested);
             $skillRequested->setSearchCounter(0);
-            
+
             $em->persist($skillRequested);
         }
-        
+
         // Mettre à jour la session
         $session->setStartTime(new \DateTime($request->request->get('start_time')));
         $session->setEndTime(new \DateTime($request->request->get('end_time')));
         $session->setDate(new \DateTime($request->request->get('date_session')));
         $session->setSkillTaught($skillTaught);
-        
+
         // Mettre à jour l'échange
         $exchange->setSkillRequested($skillRequested);
-        
+
         $em->flush();
-        
+
         $this->addFlash('success', 'Votre échange a été modifié avec succès.');
-        
+
         return $this->redirectToRoute('app_user_profile', ['id' => $user->getId()]);
     }
 }

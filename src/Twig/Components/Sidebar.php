@@ -2,12 +2,17 @@
 
 namespace App\Twig\Components;
 
+use App\Entity\Exchange;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
+use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\Bundle\SecurityBundle\Security;
 use App\Repository\SessionRepository;
 use App\Repository\CategoryRepository;
+use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Serializer\SerializerInterface;
 
 // must be imported
 
@@ -36,13 +41,19 @@ final class Sidebar
         $this->categoryRepository = $categoryRepository;
     }
 
-    /**
-        * @LiveProp(writable: false)
-        */
+    #[LiveProp(writable: false)]
     public array $userSessions = [
         'cours'   => [],
         'partage' => [],
     ];
+
+
+    #[LiveAction]
+    public function export(SerializerInterface $serializer): JsonResponse
+    {
+        $jsonContent = $this->userSessions;
+        return new JsonResponse($jsonContent, 200, []);
+    }
 
     public function mount(): void
     {
