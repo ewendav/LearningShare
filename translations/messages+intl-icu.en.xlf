@@ -630,8 +630,8 @@
         <target>Taught Category</target>
       </trans-unit>
       <trans-unit id="jNUb6WG" resname="vide">
-        <source>vide</source>
-        <target>empty</target>
+        <source>Vide</source>
+        <target>Empty</target>
       </trans-unit>
       <trans-unit id="CX82LBV" resname="Categorie demandee">
         <source>Categorie demandee</source>
@@ -645,15 +645,15 @@
         <source>Rechercher la competence demandee</source>
         <target>Search for requested skill</target>
       </trans-unit>
-      <trans-unit id="abcd123" resname="Création d'un échange">
+      <trans-unit id="Y06lL7k" resname="Création d'un échange">
         <source>Création d'un échange</source>
         <target>Creating an exchange</target>
       </trans-unit>
-      <trans-unit id="efgh456" resname="Modification d'un échange">
+      <trans-unit id="Rv5BjQ8" resname="Modification d'un échange">
         <source>Modification d'un échange</source>
         <target>Editing an exchange</target>
       </trans-unit>
-      <trans-unit id="ijkl789" resname="Modification d'un cours">
+      <trans-unit id="_pO3.s_" resname="Modification d'un cours">
         <source>Modification d'un cours</source>
         <target>Editing a course</target>
       </trans-unit>
